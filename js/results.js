@@ -2,6 +2,9 @@ const key = "KZmupnUS"; // API-Key
 const chosenLocation = "&cities=" + localStorage.getItem("location"); // get location from local storage
 const type = "&types=" + localStorage.getItem("type"); // get type of category from local storage
 
+console.log(chosenLocation);
+console.log(type);
+
 getData();
 
 // get data from SMAPI
