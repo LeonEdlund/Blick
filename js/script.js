@@ -25,7 +25,6 @@ function init(){
 window.addEventListener("load", init)
 
 function openDialog(id){
-    console.log(id)
     id.showModal()
     let close = document.querySelectorAll(".close")
     for(let a = 0; a < close.length; a++)
@@ -38,8 +37,8 @@ function closeDialog(id){
     id.close()
     minBudget = parseInt(input.value)
     let newValue = parseInt(uInput.value)
+    console.log(newValue)
     utgifter.push(newValue)
-    console.log(utgifter)
     setBudget()
     setExpenses()
 
@@ -54,7 +53,6 @@ function setExpenses(){
 let utgift = document.querySelector("#utgifter")
     utgifter.innerHTML = ""
     for(let b=0;b < utgifter.length; b++){
-    console.log(utgifter[b])
     utgift.innerHTML += "<li class = 'utgift'>" +utgifter[b]+"</li>"
     }
     calculateRest()
@@ -66,7 +64,6 @@ function calculateRest(){
 
     for(let c = 0; c < utgifter.length; c++){
         spent += utgifter[c]
-        console.log(spent)
     }
 
     let kvar = document.querySelector("#kvar")
