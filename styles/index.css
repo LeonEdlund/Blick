@@ -1,0 +1,29 @@
+header{
+    background-image: url(../temporary-img/header.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 30vh;
+    position: relative;
+}
+
+.header-text{
+    color: white;
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+}
+
+.choices{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.choices a{
+    background-color: aqua;
+    border-radius: 20px;
+    width: 45%;
+    padding: 20px;
+    margin: 5px;
+}
