@@ -1,16 +1,48 @@
 const key = "KZmupnUS"; // API-Key
-let chosenLocation; // vald plats
-const type = "types=" + localStorage.getItem("type"); // get type of category from local storage
+let storedLocation; // location from localStorage
+let chosenLocation; // chosen location for SMAPI
+let chosenType; // chosen category for SMAPI
+let type;
 
-// get location from local storage
-if (localStorage.getItem("location") == "öland"){
-  chosenLocation = "provinces=" + localStorage.getItem("location");
-} else {
-  chosenLocation = "cities=" + localStorage.getItem("location"); 
+function init() {
+  type = localStorage.getItem("type");
+  storedLocation = localStorage.getItem("location");
+
+  // get location from local storage
+  if (storedLocation == "öland") {
+    chosenLocation = "provinces=" + localStorage.getItem("location");
+  } else {
+    chosenLocation = "cities=" + localStorage.getItem("location");
+  }
+
+  switch(type) {
+    case "food":
+      type = "types=food"
+      changeTitle("mat & dryck");
+      break;
+    case "nature":
+      type = "types=activity"
+      changeTitle("naturupplevelser");
+      break;
+    case "culture":
+      type = "types=activity"
+      changeTitle("kultur");
+      break;
+    case "activity":
+      type = "types=activity"
+      changeTitle("aktiviteter");
+  }
+
+  // get data when page loads
+  getData();
 }
+window.addEventListener("load", init);
 
-// get data when page loads
-getData();
+// change title on page
+function changeTitle (category) {
+  let title = document.querySelector("#page-title");
+  title.innerText = category;
+}
 
 // get data from SMAPI
 async function getData() {
@@ -24,6 +56,7 @@ async function getData() {
   }
 }
 
+// Prints results from SMAPI in list
 function printResults(data) {
   const list = document.querySelector("#list-of-results");
   list.innerHTML = "";
