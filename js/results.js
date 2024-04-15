@@ -1,21 +1,32 @@
 const key = "KZmupnUS"; // API-Key
 let storedLocation; // location from localStorage
 let chosenLocation; // chosen location for SMAPI
+let usersLat;
+let usersLong;
 let chosenType; // chosen category for SMAPI
 let type;
 
 function init() {
   type = localStorage.getItem("type");
   storedLocation = localStorage.getItem("location");
+  usersLat = localStorage.getItem("latitude");
+  usersLong = localStorage.getItem("longitude");
 
   // get location from local storage
-  if (storedLocation == "öland") {
-    chosenLocation = "provinces=" + localStorage.getItem("location");
-  } else {
-    chosenLocation = "cities=" + localStorage.getItem("location");
+  switch (storedLocation) {
+    case "my-location":
+      chosenLocation = "";
+      break;
+    case "öland":
+      chosenLocation = "provinces=" + localStorage.getItem("location");
+      break;
+    default:
+      chosenLocation = "cities=" + localStorage.getItem("location");
   }
 
-  switch(type) {
+  console.log(storedLocation);
+
+  switch (type) {
     case "food":
       type = "types=food"
       changeTitle("mat & dryck");
@@ -39,7 +50,7 @@ function init() {
 window.addEventListener("load", init);
 
 // change title on page
-function changeTitle (category) {
+function changeTitle(category) {
   let title = document.querySelector("#page-title");
   title.innerText = category;
 }
@@ -79,23 +90,23 @@ function printResults(data) {
 
     // add info to result-info-div
     resultInfoDiv.classList.add("result-info");
-    
+
     // add info to img
     img.src = "temporary-img/Artboard 1.svg";
-    
+
     // add info to titleElem
     const title = document.createTextNode(`${result.name}`);
     titleElem.appendChild(title);
-    
-    
+
+
     // add info to typeElem
     const description = document.createTextNode(`${result.description}`);
     descriptionElem.appendChild(description);
-    
+
     // add elements to resultInfoDiv
     resultInfoDiv.appendChild(titleElem);
     resultInfoDiv.appendChild(descriptionElem);
-    
+
     // add elements to newLink
     newLink.appendChild(img);
     newLink.appendChild(resultInfoDiv);
