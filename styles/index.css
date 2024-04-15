@@ -14,16 +14,26 @@ header{
 }
 
 .choices{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
 }
 
 .choices a{
-    background-color: aqua;
-    border-radius: 20px;
-    width: 45%;
     padding: 20px;
     margin: 5px;
+    text-align: center;
+}
+
+.choices img{
+    background-color: brown;
+    height: 12vh;
+    border-radius: 20px;
+    width: 12vh;
+}
+
+h3{
+    font-size: 1rem;
 }
