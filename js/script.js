@@ -41,16 +41,35 @@ function closeDialog(id){
     utgifter.push(newValue)
     console.log(utgifter)
     setBudget()
-    
+    setExpenses()
+
 }
 
 function setBudget(){
     let av = document.querySelector("#av")
     av.innerHTML = minBudget
-    let utgift = document.querySelector("#utgifter")
-    utgifter.innerHTML = ""
-    for(let b=0;b < utgifter.length; b++){
-    utgift.innerHTML += "<li class = 'utgift'>" +utgifter[b]+"</li>"
-    }
 }
 
+function setExpenses(){
+let utgift = document.querySelector("#utgifter")
+    utgifter.innerHTML = ""
+    for(let b=0;b < utgifter.length; b++){
+    console.log(utgifter[b])
+    utgift.innerHTML += "<li class = 'utgift'>" +utgifter[b]+"</li>"
+    }
+    calculateRest()
+}
+
+function calculateRest(){
+    
+    let spent = 0;
+
+    for(let c = 0; c < utgifter.length; c++){
+        spent += utgifter[c]
+        console.log(spent)
+    }
+
+    let kvar = document.querySelector("#kvar")
+    kvar.innerHTML = minBudget -= spent
+
+}
