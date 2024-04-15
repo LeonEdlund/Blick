@@ -73,10 +73,14 @@ async function getData() {
 
 // Prints results from SMAPI in list
 function printResults(data) {
+  const amount = document.querySelector("#sort p");
+  amount.innerText = `Antal resultat: ${data.length}`;
   const list = document.querySelector("#list-of-results");
   list.innerHTML = "";
+
   data.forEach((result) => {
-    //console.log(result)
+    let score = result.rating.substring(0,3);
+    let priceFrom = getPrice(result.price_range);
 
     // create all elements
     const newLi = document.createElement("li");
@@ -86,6 +90,10 @@ function printResults(data) {
     const titleElem = document.createElement("h2");
     const descriptionElem = document.createElement("p");
     const distanceElem = document.createElement("p");
+    const extraInfoDiv = document.createElement("div");
+    
+
+    
 
     // add info to link
     newLink.href = "#"
@@ -102,10 +110,29 @@ function printResults(data) {
     const title = document.createTextNode(`${result.name}`);
     titleElem.appendChild(title);
 
-
-    // add info to typeElem
+    // add info to descriptionElem
     const description = document.createTextNode(`${result.description}`);
     descriptionElem.appendChild(description);
+
+    // add info to extraInfoDiv
+    const ratingDiv = document.createElement("div");
+    const rating = document.createElement("p");
+    const ratingInfo = document.createTextNode(`${score}/5`);
+    rating.appendChild(ratingInfo);
+
+    const price = document.createElement("p");
+    const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
+    price.appendChild(priceInfo);
+
+    extraInfoDiv.classList.add("result-extra-info")
+    ratingDiv.classList.add("rating");
+
+    ratingDiv.appendChild(rating);
+    extraInfoDiv.appendChild(ratingDiv);
+    extraInfoDiv.appendChild(price);
+
+    // add info to rating
+    //const 
 
     // add elements to resultInfoDiv
     resultInfoDiv.appendChild(titleElem);
@@ -114,8 +141,17 @@ function printResults(data) {
     // add elements to newLink
     newLink.appendChild(img);
     newLink.appendChild(resultInfoDiv);
+    newLink.appendChild(extraInfoDiv);
 
     // print out elements on page
     list.appendChild(newLi);
   });
+}
+
+function getPrice(priceRange) {
+  let index = priceRange.indexOf("-");
+  if(index >= 0){
+    let price = priceRange.substring(0,index);
+    return price;
+  } 
 }
