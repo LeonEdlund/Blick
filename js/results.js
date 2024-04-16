@@ -1,3 +1,4 @@
+// globala variabler
 const key = "KZmupnUS"; // API-Key
 let storedLocation; // location from localStorage
 let chosenLocation; // chosen location for SMAPI
@@ -7,8 +8,19 @@ let chosenType; // chosen category for SMAPI
 let type;
 let method = "method=getAll"; // vilken metod som ska användas
 let description = "";
+let sort;
+let sortBy = "";
 
 function init() {
+  sort = document.querySelector("select");
+  sort.addEventListener("change", sortResults);
+
+  getUserChoices()
+  getData();
+}
+window.addEventListener("load", init);
+
+function getUserChoices() {
   type = localStorage.getItem("type");
   storedLocation = localStorage.getItem("location");
   usersLat = localStorage.getItem("latitude");
@@ -26,8 +38,6 @@ function init() {
     default:
       chosenLocation = "municipalities=" + localStorage.getItem("location") + " kommun";
   }
-
-  console.log(storedLocation);
 
   switch (type) {
     case "food":
@@ -48,21 +58,11 @@ function init() {
       description = "descriptions=nöjespark,temapark,älgpark,djurpark,simhall,gokart,zipline,nöjescenter,paintballcenter,hälsocenter,golfbana,bowlinghall,klippklättring,skateboardpark"
       changeTitle("aktiviteter");
   }
-
-  // get data when page loads
-  getData();
-}
-window.addEventListener("load", init);
-
-// change title on page
-function changeTitle(category) {
-  let title = document.querySelector("#page-title");
-  title.innerText = category;
 }
 
 // get data from SMAPI
 async function getData() {
-  const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}`);
+  const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
   const data = await response.json();
   if (data.header.status === `OK`) {
     //console.log(data.payload);
@@ -154,6 +154,12 @@ function printResults(data) {
   });
 }
 
+// change title on page
+function changeTitle(category) {
+  let title = document.querySelector("#page-title");
+  title.innerText = category;
+}
+
 // get first number of price_range
 function getPrice(priceRange) {
   let index = priceRange.indexOf("-");
@@ -162,6 +168,28 @@ function getPrice(priceRange) {
     return price;
   } 
 }
+
+function sortResults() {
+  switch (sort.value) {
+    case "priceASC":
+      sortBy = "sort_in=ASC&order_by=price_range";
+      getData();
+      break;
+    case "priceDESC":
+      sortBy = "sort_in=DESC&order_by=price_range";
+      getData();
+      break;
+    case "ratingASC":
+      sortBy = "sort_in=ASC&order_by=rating";
+      getData();
+      break;
+    case "ratingDESC":
+      sortBy = "sort_in=DESC&order_by=rating";
+      getData();
+      break;
+  }
+}
+
 
 // calculate distance from user *CHAT-GPT HJÄLP*
 function calculateDistance(lat1, lon1, lat2, lon2) {
