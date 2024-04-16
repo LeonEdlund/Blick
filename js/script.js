@@ -1,5 +1,6 @@
-let spendings = []
-let amountSpent = 0;
+let spendings = []//ALEX - array för utgifter
+let amountSpent = 0;//ALEX -  hur mycket användaren spenderat
+let minBudget = 0;//ALEX - Användarens budget
 //ALEX-initiering av programmet
 function init(){
 
@@ -86,7 +87,6 @@ function newSpendFunc (wrong){
     let save = document.querySelector("#close")
     save.addEventListener("click", function(){checkIfNumber(newSpendDialog, input, false)})
 
-
     if(wrong == true){
         input.style.backgroundColor = "red";
     }
@@ -107,10 +107,41 @@ console.log(spendings)
 for(b = 0; b < spendings.length; b++){
 let c = spendings[b];
 ul.innerHTML+= "<li class='"+c.category+"'><h3>"+c.category+"</h3>"+ c.name + " för "+c.price+"</li>"
-
 amountSpent += c.price
-console.log(amountSpent)
-
 }
+calculatePerCategory()
 setBudget()
+}
+//ALEX - räkna ut spenderat per kategori
+function calculatePerCategory(){
+    let catOne = 0;
+    let catTwo = 0;
+    let catThree= 0;
+    let catFour= 0;
+    let catFive= 0;
+for(let d = 0; d < spendings.length; d++){
+    switch(spendings[d].category){
+        case "cat1":
+            catOne += spendings[d].price;
+        case "cat2":
+            catTwo += spendings[d].price;
+        case "cat3":
+            catThree += spendings[d].price;
+        case "cat4":
+            catFour += spendings[d].price;
+        case "cat5":
+            catFive += spendings[d].price;
+    }
+}
+    let general = document.querySelector("#general");
+    general.innerHTML= "<li> cat1 "+catOne+"</li><li> cat2 "+catTwo+"</li><li> cat3 "+catThree+"</li><li> cat4 "+catFour+"</li><li> cat5 "+catFive+"</li>"
+
+    let generalCat = document.querySelectorAll("#general li")
+    for(let e = 0; e < generalCat.length; e++){
+        if(generalCat[e].innerHTML==0){
+            console.log("hej")
+            generalCat[e].style.visbility = hidden;
+        }
+    }
+
 }
