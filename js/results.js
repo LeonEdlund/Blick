@@ -24,7 +24,7 @@ function init() {
       chosenLocation = "provinces=" + localStorage.getItem("location");
       break;
     default:
-      chosenLocation = "cities=" + localStorage.getItem("location");
+      chosenLocation = "municipalities=" + localStorage.getItem("location") + " kommun";
   }
 
   console.log(storedLocation);
