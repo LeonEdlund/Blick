@@ -35,7 +35,8 @@ function init() {
       changeTitle("mat & dryck");
       break;
     case "nature":
-      type = "types=activity"
+      // type = "types=activity"
+      description = "descriptions=älgpark,camping"
       changeTitle("naturupplevelser");
       break;
     case "culture":
