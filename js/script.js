@@ -88,15 +88,21 @@ function newSpendFunc (wrong){
         input.style.backgroundColor = "red";
     }
 }
-
+//ALEX - Constructor för objekt för utgift
 function Spending(name, price, category){
     this.name = name;
     this.price = price;
     this.category = category;
     
-    listSpednings
+    listSpednings()
 }
-
+//ALEX - Skriver ut alla utgifter
 function listSpednings(){
-    
+let ul = document.querySelector("#ul")
+ul.innerHTML = ""
+console.log(spendings)
+for(b = 0; b < spendings.length; b++){
+let c = spendings[b];
+ul.innerHTML+= "<li class='"+c.category+"'><h3>"+c.category+"</h3>"+ c.name + " för "+c.price+"</li>"
+}
 }
