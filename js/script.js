@@ -1,4 +1,5 @@
 let spendings = []
+let amountSpent = 0;
 //ALEX-initiering av programmet
 function init(){
 
@@ -68,10 +69,12 @@ function checkIfNumber(close, input, newBudget){
     
 
 }
-//ALEX - Sätter budgeten
+//ALEX - Sätter budgeten och räknar ut vad som är kvar av den
 function setBudget (){
-    let budgetElem = document.querySelector("#av")
-    budgetElem.innerHTML = minBudget
+    let budgetElemLeft = document.querySelector("#av")
+    budgetElemLeft.innerHTML = minBudget
+    let budgetElem = document.querySelector("#kvar")
+    budgetElem.innerHTML = (minBudget - amountSpent)
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc (wrong){
@@ -104,5 +107,10 @@ console.log(spendings)
 for(b = 0; b < spendings.length; b++){
 let c = spendings[b];
 ul.innerHTML+= "<li class='"+c.category+"'><h3>"+c.category+"</h3>"+ c.name + " för "+c.price+"</li>"
+
+amountSpent += c.price
+console.log(amountSpent)
+
 }
+setBudget()
 }
