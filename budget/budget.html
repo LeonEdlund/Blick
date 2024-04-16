@@ -10,7 +10,7 @@
     <h3 id="kvar">kvar</h3>
     <h3 id="av">av</h3>
     <button id="newTripBtn">Ny resa</button>
-    <button id="nyUtgift">Ny utigft</button>
+    <button id="newSpendBtn">Ny utigft</button>
     
     <dialog id="newTripDialog">
         <label for="belopp">Skriv in din budget för resan
@@ -24,11 +24,28 @@
         
     </ul>
 
-    <dialog id="uDialog">
-        <label for="belopp">
-            <input type="text" id="utgift">
-            <button class="close">Stäng</button>
+    <dialog id="newSpendDialog">
+        <label for="name">
+            Namn
+            <input type="text" id="name">
+
         </label>
+
+        <label for="amount">
+            Pris
+            <input type="text" id="amount">
+        </label>
+
+        <label for="category">
+            
+            <input type="radio" id="cat1" name="option" class="option">
+            <input type="radio" id="cat2" name="option" class="option">
+            <input type="radio" id="cat3" name="option" class="option">
+            <input type="radio" id="cat4" name="option" class="option">
+            <input type="radio" id="cat5" name="option" class="option">
+        </label>
+
+        <button id="close">Lägg till</button>
     </dialog>
 
 </body>
