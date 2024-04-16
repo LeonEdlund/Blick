@@ -79,7 +79,7 @@ function printResults(data) {
   list.innerHTML = "";
 
   data.forEach((result) => {
-    let score = result.rating.substring(0,3);
+    let score = Math.round(result.rating);
     let priceFrom = getPrice(result.price_range);
 
     // create all elements
@@ -92,9 +92,6 @@ function printResults(data) {
     const distanceElem = document.createElement("p");
     const extraInfoDiv = document.createElement("div");
     
-
-    
-
     // add info to link
     newLink.href = "#"
     newLink.classList.add("list-item");
@@ -148,6 +145,7 @@ function printResults(data) {
   });
 }
 
+// get first number of price_range
 function getPrice(priceRange) {
   let index = priceRange.indexOf("-");
   if(index >= 0){
