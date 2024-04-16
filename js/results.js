@@ -81,6 +81,9 @@ function printResults(data) {
   data.forEach((result) => {
     let score = Math.round(result.rating);
     let priceFrom = getPrice(result.price_range);
+    let lat = result.lat;
+    let lng = result.lng;
+    let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
 
     // create all elements
     const newLi = document.createElement("li");
@@ -111,6 +114,10 @@ function printResults(data) {
     const description = document.createTextNode(`${result.description}`);
     descriptionElem.appendChild(description);
 
+    // add info to distanceElem
+    const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
+    distanceElem.appendChild(distanceInfo);
+
     // add info to extraInfoDiv
     const ratingDiv = document.createElement("div");
     const rating = document.createElement("p");
@@ -134,6 +141,7 @@ function printResults(data) {
     // add elements to resultInfoDiv
     resultInfoDiv.appendChild(titleElem);
     resultInfoDiv.appendChild(descriptionElem);
+    resultInfoDiv.appendChild(distanceElem);
 
     // add elements to newLink
     newLink.appendChild(img);
@@ -152,4 +160,25 @@ function getPrice(priceRange) {
     let price = priceRange.substring(0,index);
     return price;
   } 
+}
+
+// calculate distance from user *CHAT-GPT HJÄLP*
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  // Radius of the Earth in kilometers
+  let R = 6371;
+
+  // Convert degrees to radians
+  let dLat = (lat2 - lat1) * Math.PI / 180;
+  let dLon = (lon2 - lon1) * Math.PI / 180;
+  // Convert latitudes to radians
+  lat1 = lat1 * Math.PI / 180;
+  lat2 = lat2 * Math.PI / 180;
+
+  // Haversine formula
+  let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  let distance = R * c; // Distance in kilometers
+  let distanceRounded = Math.round(distance * 10) / 10
+  return distanceRounded;
 }
