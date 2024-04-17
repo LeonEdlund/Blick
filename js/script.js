@@ -146,7 +146,7 @@ function calculatePerCategory() {
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> Boende " + catOne + "</li><li> resa " + catTwo + "</li><li> Mat och Dryck " + catThree + "</li><li> Aktiviteter " + catFour + "</li><li> Övrigt " + catFive + "</li>"
+    general.innerHTML = "<li> Boende " + catOne + "</li><li> Resa " + catTwo + "</li><li> Mat och Dryck " + catThree + "</li><li> Aktiviteter " + catFour + "</li><li> Övrigt " + catFive + "</li>"
 
     let generalCat = document.querySelectorAll("#general li p")
     for (let e = 0; e < generalCat.length; e++) {
