@@ -1,56 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/budget.css">
     <script src="../js/script.js" defer></script>
-    <title>Document</title>
+
 </head>
+
 <body>
-    <h3 id="kvar">kvar</h3>
-    <h3 id="av">av</h3>
-    <button id="newTripBtn">Ny resa</button>
-    <button id="newSpendBtn">Ny utigft</button>
-    
-    <dialog id="newTripDialog">
-        <label for="belopp">Skriv in din budget för resan
-            <input type="text" id="moneyToSpend">
-            <button id="save">spara</button>
-        </label>
-    </dialog>
-    
-    <h2>Utgifter</h2>
-    <ul id="general">
+    <header>
+        <h3 id="kvar">Kvar:</h3>
+        <h3 id="av">Av:</h3>
+        <button id="newTripBtn">Ny resa</button>
+        <button id="newSpendBtn">Ny utigft</button>
 
-    </ul>
+    </header>
+    <hr>
 
-    <ul id="ul">
-        
-    </ul>
+    <div class="menu-bar">
+        <a href="index.html">Hem</a>
+        <a href="index.html">Budget</a>
+        <a href="index.html">Önskelista</a>
+      </div>
 
-    <dialog id="newSpendDialog">
-        <label for="name">
-            Namn
-            <input type="text" id="name">
+    <div class="cate">
+        <h2>Utgifter</h2>
+        <ul id="general">
+        </ul>
+    </div>
+    <hr>
 
-        </label>
+    <div class="expenditure">
+        <ul id="ul">
+        </ul>
+    </div>
 
-        <label for="amount">
-            Pris
-            <input type="text" id="amount">
-        </label>
+    <div class="dialog">
+        <dialog id="newTripDialog">
+            <label for="belopp">Skriv in din budget för resan
+                <input type="text" id="moneyToSpend">
+                <button id="save">spara</button>
+            </label>
+        </dialog>
 
-        <label for="category">
-            
-            <input type="radio" id="cat1" name="option" class="option">
-            <input type="radio" id="cat2" name="option" class="option">
-            <input type="radio" id="cat3" name="option" class="option">
-            <input type="radio" id="cat4" name="option" class="option">
-            <input type="radio" id="cat5" name="option" class="option">
-        </label>
+        <dialog id="newSpendDialog">
+            <label for="name">
+                Namn
+                <input type="text" id="name">
+            </label>
+            <label for="amount">
+                Pris
+                <input type="text" id="amount">
+            </label>
+            <label for="category">
+                <input type="radio" id="cat1" name="option" class="option">
+                <input type="radio" id="cat2" name="option" class="option">
+                <input type="radio" id="cat3" name="option" class="option">
+                <input type="radio" id="cat4" name="option" class="option">
+                <input type="radio" id="cat5" name="option" class="option">
+            </label>
+            <button id="close">Lägg till</button>
+        </dialog>
 
-        <button id="close">Lägg till</button>
-    </dialog>
-
+    </div>
 </body>
+
 </html>
