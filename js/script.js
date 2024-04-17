@@ -106,13 +106,13 @@ function Spending(name, price, category) {
 //ALEX - Skriver ut alla utgifter
 function listSpednings() {
     let ul = document.querySelector("#ul")
-    ul.innerHTML = ""
+    ul.innerHTML = "";
     amountSpent = 0;
     for (b = 0; b < spendings.length; b++) {
         let c = spendings[b];
         console.log(b)
         console.log(c)
-        ul.innerHTML += "<li class='" + c.category + "'><h3>" + c.category + "</h3>" + c.name + " för " + c.price + "<button class='remove'>Ta bort</button></li>"
+        ul.innerHTML += "<li class='" + c.category + "'><h3>" + c.name + "</h3>" + " För: " + c.price + "<button class='remove'>Ta bort</button></li>"
         amountSpent += c.price
     }
     removeBtnFunc()
@@ -138,7 +138,7 @@ function calculatePerCategory() {
                 catThree += spendings[d].price
                 break;
             case "cat4":
-                catFour += spendings[d].price
+                catFour += spendings[d].price;
                 break;
             case "cat5":
                 catFive += spendings[d].price
@@ -146,7 +146,7 @@ function calculatePerCategory() {
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> cat1 " + catOne + "</li><li> cat2 " + catTwo + "</li><li> cat3 " + catThree + "</li><li> cat4" + catFour + "</li><li> cat5 " + catFive + "</li>"
+    general.innerHTML = "<li> Mat och dryck " + catOne + "</li><li> Aktiviteter " + catTwo + "</li><li> Naturupplevelse " + catThree + "</li><li> Kultur " + catFour + "</li><li> Boenede " + catFive + "</li>";
 
     let generalCat = document.querySelectorAll("#general li p")
     for (let e = 0; e < generalCat.length; e++) {
@@ -165,7 +165,7 @@ function removeBtnFunc(remove, e){
     }
     if(remove == true){
         spendings.splice(e, 1)
-        console.log(spendings)
-        listSpednings()
+        console.log(spendings);
+        listSpednings();
     }
 }

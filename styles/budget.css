@@ -7,5 +7,37 @@ header {
 
 #kvar {
     padding-top: 50px;
-    
 }
+
+.cate {
+    text-align: center;
+    margin: 20px;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70vw;
+    height: 45vh;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+dialog label{
+    display: block;
+    margin-bottom: 10px;
+}
+
+dialog option {
+    margin-right: 10px;
+}
+
+dialog button {
+    display: block; 
+    width: 100%; 
+    padding: 10px 0;
+    margin-top: 20px; 
+}
+
