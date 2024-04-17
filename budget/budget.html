@@ -8,32 +8,41 @@
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/budget.css">
     <script src="../js/script.js" defer></script>
-
 </head>
 
 <body>
-    <h3 id="kvar">kvar</h3>
-    <h3 id="av">av</h3>
-    <button id="removeTrip">ta bort</button>
-    <button id="newSpendBtn">Ny utigft</button>
-    <button id="changeBudget">Sätt budget</button>
-    
-    <dialog id="newTripDialog">
-        <label for="belopp">Skriv in din budget för resan
-            <input type="text" id="moneyToSpend">
-            <button id="save">spara</button>
-        </label>
-    </dialog>
-    
-    <h2>Utgifter</h2>
-    <ul id="general">
 
-    </ul>
+    <header>
+        <h3 id="kvar">kvar</h3>
+        <h3 id="av">av</h3>
+        <button id="removeTrip">ta bort</button>
+        <button id="newSpendBtn">Ny utigft</button>
+        <button id="changeBudget">Sätt budget</button>
+    </header>
 
-    <ul id="ul">
-        
-    </ul>
+    <div class="menu-bar">
+        <a href="index.html">Hem</a>
+        <a href="index.html">Budget</a>
+        <a href="index.html">Önskelista</a>
+      </div>
 
+    <div class="cate">
+        <h2>Utgifter</h2>
+        <ul id="general">
+        </ul>
+    </div>
+    <div class="expenditure">
+        <ul id="ul">
+        </ul>
+    </div>
+
+    <div class="dialog">
+        <dialog id="newTripDialog">
+            <label for="belopp">Skriv in din budget för resan
+                <input type="text" id="moneyToSpend">
+                <button id="save">spara</button>
+            </label>
+        </dialog>
         <dialog id="newSpendDialog">
             <label for="name">
                 Namn
@@ -52,7 +61,6 @@
             </label>
             <button id="close">Lägg till</button>
         </dialog>
-
     </div>
 </body>
 
