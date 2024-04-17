@@ -128,25 +128,25 @@ function calculatePerCategory() {
     let catFive = 0;
     for (let d = 0; d < spendings.length; d++) {
         switch (spendings[d].category) {
-            case "cat1":
+            case "boende":
                 catOne += spendings[d].price
                 break;
-            case "cat2":
+            case "resa":
                 catTwo += spendings[d].price
                 break;
-            case "cat3":
+            case "MatochDryck":
                 catThree += spendings[d].price
                 break;
-            case "cat4":
+            case "Aktiviteter":
                 catFour += spendings[d].price
                 break;
-            case "cat5":
+            case "övrigt":
                 catFive += spendings[d].price
                 break;
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> cat1 " + catOne + "</li><li> cat2 " + catTwo + "</li><li> cat3 " + catThree + "</li><li> cat4" + catFour + "</li><li> cat5 " + catFive + "</li>"
+    general.innerHTML = "<li> Boende " + catOne + "</li><li> resa " + catTwo + "</li><li> Mat och Dryck " + catThree + "</li><li> Aktiviteter " + catFour + "</li><li> Övrigt " + catFive + "</li>"
 
     let generalCat = document.querySelectorAll("#general li p")
     for (let e = 0; e < generalCat.length; e++) {
