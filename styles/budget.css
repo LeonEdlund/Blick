@@ -25,7 +25,7 @@ dialog {
     padding: 20px;
 }
 
-dialog label{
+dialog label {
     display: block;
     margin-bottom: 10px;
 }
@@ -35,9 +35,27 @@ dialog option {
 }
 
 dialog button {
-    display: block; 
-    width: 100%; 
+    display: block;
+    width: 100%;
     padding: 10px 0;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
+.expenditure {
+    margin: 20px;
+}
+
+#general,
+#ul {
+    list-style: none;
+}
+
+#ul li {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr;
+    background-color: rgb(195, 195, 195);
+    color: black;
+    padding: 20px;
+    margin-bottom: 1em;
+    border-radius: 15px;
+}
