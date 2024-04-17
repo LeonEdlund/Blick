@@ -4,11 +4,14 @@ let minBudget = 0;//ALEX - Användarens budget
 //ALEX-initiering av programmet
 function init() {
 
-    let newTripBtn = document.querySelector("#newTripBtn")
+    let newTripBtn = document.querySelector("#changeBudget")
     newTripBtn.addEventListener("click", newTripFunc)
 
     let newSpendBtn = document.querySelector("#newSpendBtn")
     newSpendBtn.addEventListener("click", newSpendFunc)
+
+    let removeTrip = document.querySelector("#removeTrip")
+    removeTrip.addEventListener("click", function(){location.reload()})
 
 }
 window.addEventListener("load", init)
@@ -36,7 +39,6 @@ function checkIfNumber(close, input, newBudget) {
     let number = parseInt(input.value)
 
     if (isNaN(number)) {
-        console.log("hej")
         if (newBudget == true) {
             newTripFunc(true)
         }
@@ -59,8 +61,8 @@ function checkIfNumber(close, input, newBudget) {
                     category = options[a].getAttribute("id")
                 }
             }
-
             spendings.push(new Spending(name, number, category))
+            listSpednings()
         }
 
 
@@ -87,7 +89,9 @@ function newSpendFunc(wrong) {
     let input = document.querySelector("#amount")
 
     let save = document.querySelector("#close")
-    save.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
+    let cloneSave = save.cloneNode(true)
+    save.parentElement.replaceChild(cloneSave, save)
+    cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
 
     if (wrong == true) {
         input.style.backgroundColor = "red";
@@ -98,19 +102,20 @@ function Spending(name, price, category) {
     this.name = name;
     this.price = price;
     this.category = category;
-
-    listSpednings()
 }
 //ALEX - Skriver ut alla utgifter
 function listSpednings() {
     let ul = document.querySelector("#ul")
     ul.innerHTML = ""
-    console.log(spendings)
+    amountSpent = 0;
     for (b = 0; b < spendings.length; b++) {
         let c = spendings[b];
-        ul.innerHTML = "<li class='" + c.category + "'><h3>" + c.category + "</h3>" + c.name + " för " + c.price + "</li>"
+        console.log(b)
+        console.log(c)
+        ul.innerHTML += "<li class='" + c.category + "'><h3>" + c.category + "</h3>" + c.name + " för " + c.price + "<button class='remove'>Ta bort</button></li>"
         amountSpent += c.price
     }
+    removeBtnFunc()
     calculatePerCategory()
     setBudget()
 }
@@ -124,26 +129,43 @@ function calculatePerCategory() {
     for (let d = 0; d < spendings.length; d++) {
         switch (spendings[d].category) {
             case "cat1":
-                catOne += spendings[d].price;
+                catOne += spendings[d].price
+                break;
             case "cat2":
-                catTwo += spendings[d].price;
+                catTwo += spendings[d].price
+                break;
             case "cat3":
-                catThree += spendings[d].price;
+                catThree += spendings[d].price
+                break;
             case "cat4":
-                catFour += spendings[d].price;
+                catFour += spendings[d].price
+                break;
             case "cat5":
-                catFive += spendings[d].price;
+                catFive += spendings[d].price
+                break;
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> cat1 " + catOne + "</li><li> cat2 " + catTwo + "</li><li> cat3 " + catThree + "</li><li> cat4 " + catFour + "</li><li> cat5 " + catFive + "</li>"
+    general.innerHTML = "<li> cat1 " + catOne + "</li><li> cat2 " + catTwo + "</li><li> cat3 " + catThree + "</li><li> cat4" + catFour + "</li><li> cat5 " + catFive + "</li>"
 
-    let generalCat = document.querySelectorAll("#general li")
+    let generalCat = document.querySelectorAll("#general li p")
     for (let e = 0; e < generalCat.length; e++) {
-        if (generalCat[e].innerHTML == 0) {
-            console.log("hej")
-            generalCat[e].style.visbility = hidden;
+        console.log(generalCat[e].innerHTML)
+        if (generalCat[e].innerHTML === 0) {
+            generalCat[e].style.visbility = "hidden";
         }
     }
 
+}
+
+function removeBtnFunc(remove, e){
+    let removeBtns = document.querySelectorAll(".remove")
+    for(let f = 0; f < removeBtns.length; f++){
+        removeBtns[f].addEventListener("click", function(){removeBtnFunc(true, this.parentElement)})
+    }
+    if(remove == true){
+        spendings.splice(e, 1)
+        console.log(spendings)
+        listSpednings()
+    }
 }

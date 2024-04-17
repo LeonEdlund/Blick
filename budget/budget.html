@@ -12,40 +12,27 @@
 </head>
 
 <body>
-    <header>
-        <h3 id="kvar">Kvar:</h3>
-        <h3 id="av">Av:</h3>
-        <button id="newTripBtn">Ny resa</button>
-        <button id="newSpendBtn">Ny utigft</button>
+    <h3 id="kvar">kvar</h3>
+    <h3 id="av">av</h3>
+    <button id="removeTrip">ta bort</button>
+    <button id="newSpendBtn">Ny utigft</button>
+    <button id="changeBudget">Sätt budget</button>
+    
+    <dialog id="newTripDialog">
+        <label for="belopp">Skriv in din budget för resan
+            <input type="text" id="moneyToSpend">
+            <button id="save">spara</button>
+        </label>
+    </dialog>
+    
+    <h2>Utgifter</h2>
+    <ul id="general">
 
-    </header>
-    <hr>
+    </ul>
 
-    <div class="menu-bar">
-        <a href="index.html">Hem</a>
-        <a href="index.html">Budget</a>
-        <a href="index.html">Önskelista</a>
-      </div>
-
-    <div class="cate">
-        <h2>Utgifter</h2>
-        <ul id="general">
-        </ul>
-    </div>
-    <hr>
-
-    <div class="expenditure">
-        <ul id="ul">
-        </ul>
-    </div>
-
-    <div class="dialog">
-        <dialog id="newTripDialog">
-            <label for="belopp">Skriv in din budget för resan
-                <input type="text" id="moneyToSpend">
-                <button id="save">spara</button>
-            </label>
-        </dialog>
+    <ul id="ul">
+        
+    </ul>
 
         <dialog id="newSpendDialog">
             <label for="name">
