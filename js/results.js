@@ -4,6 +4,7 @@ let chosenLocation; // chosen location for SMAPI
 let storedCategory; // users chosen category
 let usersLat; // users latitude
 let usersLng; // users longitude
+let resultsArray = []; // array with results from SMAPI
 
 // variables for SMAPI URL
 const key = "KZmupnUS"; // API-Key
@@ -85,19 +86,26 @@ async function getData() {
   }
 }
 
+
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
   list.innerHTML = "";
+
   amountElem.innerText = `Antal resultat: ${data.length}`;
   let fragment = document.createDocumentFragment();
 
+  resultsArray = [];
   data.forEach((result) => {
-    let newLi = document.createElement("li");
-    newLi.innerHTML = generateHTML(result);
-    // let newLi = maybe(result);
+    
+    // let newLi = document.createElement("li");
+    // newLi.innerHTML = generateHTML(result);
+    
+    let newLi = generateHTML(result);
+    resultsArray.push(newLi); // Save results in array
+    
     fragment.appendChild(newLi);
   });
-
+  console.log(resultsArray);
   list.appendChild(fragment);
 }
 
@@ -109,23 +117,70 @@ function generateHTML(result) {
   let lng = result.lng;
   let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
 
-  let newLink = `
-    <a href="#" class="list-item">
-      <img src="temporary-img/Artboard 1.svg" alt="">
-      <div class="result-info">
-        <h2>${result.name}</h2>
-        <p>${result.description}</p>
-        <p>Avstånd: ${distanceFromUser} Km</p>
-      </div>
-      <div class="result-extra-info">
-        <div class="rating">
-          <p>${score}/5</p>
-        </div>
-        <p>Pris från: ${priceFrom} Kr</p>
-      </div>
-    </a>`
+  // create all elements
+  const newLi = document.createElement("li");
+  const newLink = document.createElement("a");
+  const resultInfoDiv = document.createElement("div");
+  const img = document.createElement("img");
+  const titleElem = document.createElement("h2");
+  const descriptionElem = document.createElement("p");
+  const distanceElem = document.createElement("p");
+  const extraInfoDiv = document.createElement("div");
 
-  return newLink;
+  // add info to link
+  newLink.href = "#"
+  newLink.classList.add("list-item");
+  newLi.appendChild(newLink);
+
+  // add info to result-info-div
+  resultInfoDiv.classList.add("result-info");
+
+  // add info to img
+  img.src = "temporary-img/Artboard 1.svg";
+
+  // add info to titleElem
+  const title = document.createTextNode(`${result.name}`);
+  titleElem.appendChild(title);
+
+  // add info to descriptionElem
+  const description = document.createTextNode(`${result.description}`);
+  descriptionElem.appendChild(description);
+
+  // add info to distanceElem
+  const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
+  distanceElem.appendChild(distanceInfo);
+
+  // add info to extraInfoDiv
+  const ratingDiv = document.createElement("div");
+  const rating = document.createElement("p");
+  const ratingInfo = document.createTextNode(`${score}/5`);
+  rating.appendChild(ratingInfo);
+
+  const price = document.createElement("p");
+  const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
+  price.appendChild(priceInfo);
+
+  extraInfoDiv.classList.add("result-extra-info")
+  ratingDiv.classList.add("rating");
+
+  ratingDiv.appendChild(rating);
+  extraInfoDiv.appendChild(ratingDiv);
+  extraInfoDiv.appendChild(price);
+  // add elements to resultInfoDiv
+  resultInfoDiv.appendChild(titleElem);
+  resultInfoDiv.appendChild(descriptionElem);
+  resultInfoDiv.appendChild(distanceElem);
+
+  // add elements to newLink
+  newLink.appendChild(img);
+  newLink.appendChild(resultInfoDiv);
+  newLink.appendChild(extraInfoDiv);
+
+  // add id
+  newLi.setAttribute("data-distance", distanceFromUser);
+
+  // print out elements on page
+  return newLi;
 }
 
 // Leon - Change title on page
@@ -161,6 +216,30 @@ function sortResults() {
       sortBy = "sort_in=DESC&order_by=rating";
       getData();
       break;
+    case "distanceASC": 
+      sortDistance("asc");
+      break;
+    case "distanceDESC":
+      sortDistance("desc");
+  }
+
+  function sortDistance(order) {
+    if (order === "asc"){
+      resultsArray.sort((a, b) => a.dataset.distance - b.dataset.distance);
+      printResultsByDistance();
+    } else if (order === "desc") {
+      resultsArray.sort((a,b) => b.dataset.distance - a.dataset.distance);
+      printResultsByDistance();
+    }
+  }
+
+  function printResultsByDistance() {
+    list.innerHTML = "";
+    let fragment = document.createDocumentFragment(); 
+    resultsArray.forEach((result) => {
+      fragment.appendChild(result);
+    });
+    list.appendChild(fragment);
   }
 }
 
@@ -184,73 +263,3 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   let distanceRounded = Math.round(distance * 10) / 10
   return distanceRounded;
 }
-
-// function maybe(result) {
-//   let score = Math.round(result.rating);
-//   let priceFrom = getPrice(result.price_range);
-//   let lat = result.lat;
-//   let lng = result.lng;
-//   let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
-
-//   // create all elements
-//   const newLi = document.createElement("li");
-//   const newLink = document.createElement("a");
-//   const resultInfoDiv = document.createElement("div");
-//   const img = document.createElement("img");
-//   const titleElem = document.createElement("h2");
-//   const descriptionElem = document.createElement("p");
-//   const distanceElem = document.createElement("p");
-//   const extraInfoDiv = document.createElement("div");
-
-//   // add info to link
-//   newLink.href = "#"
-//   newLink.classList.add("list-item");
-//   newLi.appendChild(newLink);
-
-//   // add info to result-info-div
-//   resultInfoDiv.classList.add("result-info");
-
-//   // add info to img
-//   img.src = "temporary-img/Artboard 1.svg";
-
-//   // add info to titleElem
-//   const title = document.createTextNode(`${result.name}`);
-//   titleElem.appendChild(title);
-
-//   // add info to descriptionElem
-//   const description = document.createTextNode(`${result.description}`);
-//   descriptionElem.appendChild(description);
-
-//   // add info to distanceElem
-//   const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
-//   distanceElem.appendChild(distanceInfo);
-
-//   // add info to extraInfoDiv
-//   const ratingDiv = document.createElement("div");
-//   const rating = document.createElement("p");
-//   const ratingInfo = document.createTextNode(`${score}/5`);
-//   rating.appendChild(ratingInfo);
-
-//   const price = document.createElement("p");
-//   const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
-//   price.appendChild(priceInfo);
-
-//   extraInfoDiv.classList.add("result-extra-info")
-//   ratingDiv.classList.add("rating");
-
-//   ratingDiv.appendChild(rating);
-//   extraInfoDiv.appendChild(ratingDiv);
-//   extraInfoDiv.appendChild(price);
-//   // add elements to resultInfoDiv
-//   resultInfoDiv.appendChild(titleElem);
-//   resultInfoDiv.appendChild(descriptionElem);
-//   resultInfoDiv.appendChild(distanceElem);
-
-//   // add elements to newLink
-//   newLink.appendChild(img);
-//   newLink.appendChild(resultInfoDiv);
-//   newLink.appendChild(extraInfoDiv);
-
-//   // print out elements on page
-//   return newLi;
-// }
