@@ -128,25 +128,25 @@ function calculatePerCategory() {
     let catFive = 0;
     for (let d = 0; d < spendings.length; d++) {
         switch (spendings[d].category) {
-            case "cat1":
+            case "boende":
                 catOne += spendings[d].price
                 break;
-            case "cat2":
+            case "resa":
                 catTwo += spendings[d].price
                 break;
-            case "cat3":
+            case "MatochDryck":
                 catThree += spendings[d].price
                 break;
-            case "cat4":
-                catFour += spendings[d].price;
+            case "Aktiviteter":
+                catFour += spendings[d].price
                 break;
-            case "cat5":
+            case "övrigt":
                 catFive += spendings[d].price
                 break;
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> Mat och dryck " + catOne + "</li><li> Aktiviteter " + catTwo + "</li><li> Naturupplevelse " + catThree + "</li><li> Kultur " + catFour + "</li><li> Boenede " + catFive + "</li>";
+    general.innerHTML = "<li> Boende " + catOne + "</li><li> Resa " + catTwo + "</li><li> Mat och Dryck " + catThree + "</li><li> Aktiviteter " + catFour + "</li><li> Övrigt " + catFive + "</li>"
 
     let generalCat = document.querySelectorAll("#general li p")
     for (let e = 0; e < generalCat.length; e++) {

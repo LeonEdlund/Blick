@@ -1,45 +1,58 @@
-// globala variabler
-const key = "KZmupnUS"; // API-Key
+// Global variables
 let storedLocation; // location from localStorage
 let chosenLocation; // chosen location for SMAPI
-let usersLat;
-let usersLng;
-let chosenType; // chosen category for SMAPI
-let type;
+let storedCategory; // users chosen category
+let usersLat; // users latitude
+let usersLng; // users longitude
+
+// variables for SMAPI URL
+const key = "KZmupnUS"; // API-Key
 let method = "method=getAll"; // vilken metod som ska användas
-let description = "";
-let sort;
-let sortBy = "";
+let type; // Types for SMAPI
+let description = ""; // description
+let sortBy = ""; // variable for sorting SMAPI data
+
+// HTML-Elements
+let sort; // list for sorting
+let amountElem; // element for amounts of results
+let list // UL element for results
+let title; // Element for title on page
 
 function init() {
+  title = document.querySelector("#page-title");
   sort = document.querySelector("select");
-  sort.addEventListener("change", sortResults);
+  amountElem = document.querySelector("#sort p")
+  list = document.querySelector("#list-of-results");
 
   getUserChoices()
   getData();
+
+  sort.addEventListener("change", sortResults);
 }
 window.addEventListener("load", init);
 
+// Leon - get users choices from localStorage
 function getUserChoices() {
-  type = localStorage.getItem("type");
+  storedCategory = localStorage.getItem("type");
   storedLocation = localStorage.getItem("location");
   usersLat = localStorage.getItem("latitude");
   usersLng = localStorage.getItem("longitude");
 
-  // get location from local storage
+  // Set correct SMAPI url variable based on location
   switch (storedLocation) {
     case "my-position":
       method = "method=getFromLatLng"
       chosenLocation = `lat=${usersLat}&lng=${usersLng}`;
       break;
     case "öland":
-      chosenLocation = "provinces=" + localStorage.getItem("location");
+      chosenLocation = `provinces=${storedLocation}`;
       break;
     default:
-      chosenLocation = "municipalities=" + localStorage.getItem("location") + " kommun";
+      chosenLocation = `municipalities=${storedLocation} kommun`;
   }
 
-  switch (type) {
+  // Set correct SMAPI url variable based on category
+  switch (storedCategory) {
     case "food":
       type = "types=food"
       changeTitle("mat & dryck");
@@ -60,7 +73,7 @@ function getUserChoices() {
   }
 }
 
-// get data from SMAPI
+// Leon - get data from SMAPI
 async function getData() {
   const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
   const data = await response.json();
@@ -72,103 +85,64 @@ async function getData() {
   }
 }
 
-// Prints results from SMAPI in list
+// Leon - Prints results from SMAPI in list
 function printResults(data) {
-  const amount = document.querySelector("#sort p");
-  amount.innerText = `Antal resultat: ${data.length}`;
-  const list = document.querySelector("#list-of-results");
   list.innerHTML = "";
+  amountElem.innerText = `Antal resultat: ${data.length}`;
+  let fragment = document.createDocumentFragment();
 
   data.forEach((result) => {
-    let score = Math.round(result.rating);
-    let priceFrom = getPrice(result.price_range);
-    let lat = result.lat;
-    let lng = result.lng;
-    let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
-
-    // create all elements
-    const newLi = document.createElement("li");
-    const newLink = document.createElement("a");
-    const resultInfoDiv = document.createElement("div");
-    const img = document.createElement("img");
-    const titleElem = document.createElement("h2");
-    const descriptionElem = document.createElement("p");
-    const distanceElem = document.createElement("p");
-    const extraInfoDiv = document.createElement("div");
-    
-    // add info to link
-    newLink.href = "#"
-    newLink.classList.add("list-item");
-    newLi.appendChild(newLink);
-
-    // add info to result-info-div
-    resultInfoDiv.classList.add("result-info");
-
-    // add info to img
-    img.src = "temporary-img/Artboard 1.svg";
-
-    // add info to titleElem
-    const title = document.createTextNode(`${result.name}`);
-    titleElem.appendChild(title);
-
-    // add info to descriptionElem
-    const description = document.createTextNode(`${result.description}`);
-    descriptionElem.appendChild(description);
-
-    // add info to distanceElem
-    const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
-    distanceElem.appendChild(distanceInfo);
-
-    // add info to extraInfoDiv
-    const ratingDiv = document.createElement("div");
-    const rating = document.createElement("p");
-    const ratingInfo = document.createTextNode(`${score}/5`);
-    rating.appendChild(ratingInfo);
-
-    const price = document.createElement("p");
-    const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
-    price.appendChild(priceInfo);
-
-    extraInfoDiv.classList.add("result-extra-info")
-    ratingDiv.classList.add("rating");
-
-    ratingDiv.appendChild(rating);
-    extraInfoDiv.appendChild(ratingDiv);
-    extraInfoDiv.appendChild(price);
-
-    // add info to rating
-    //const 
-
-    // add elements to resultInfoDiv
-    resultInfoDiv.appendChild(titleElem);
-    resultInfoDiv.appendChild(descriptionElem);
-    resultInfoDiv.appendChild(distanceElem);
-
-    // add elements to newLink
-    newLink.appendChild(img);
-    newLink.appendChild(resultInfoDiv);
-    newLink.appendChild(extraInfoDiv);
-
-    // print out elements on page
-    list.appendChild(newLi);
+    let newLi = document.createElement("li");
+    newLi.innerHTML = generateHTML(result);
+    // let newLi = maybe(result);
+    fragment.appendChild(newLi);
   });
+
+  list.appendChild(fragment);
 }
 
-// change title on page
+// Leon - Generate html for results from SMAPI
+function generateHTML(result) {
+  let score = Math.round(result.rating);
+  let priceFrom = getPrice(result.price_range);
+  let lat = result.lat;
+  let lng = result.lng;
+  let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
+
+  let newLink = `
+    <a href="#" class="list-item">
+      <img src="temporary-img/Artboard 1.svg" alt="">
+      <div class="result-info">
+        <h2>${result.name}</h2>
+        <p>${result.description}</p>
+        <p>Avstånd: ${distanceFromUser} Km</p>
+      </div>
+      <div class="result-extra-info">
+        <div class="rating">
+          <p>${score}/5</p>
+        </div>
+        <p>Pris från: ${priceFrom} Kr</p>
+      </div>
+    </a>`
+
+  return newLink;
+}
+
+// Leon - Change title on page
 function changeTitle(category) {
-  let title = document.querySelector("#page-title");
   title.innerText = category;
 }
 
-// get first number of price_range
+// Leon - get first number of price_range
 function getPrice(priceRange) {
   let index = priceRange.indexOf("-");
-  if(index >= 0){
-    let price = priceRange.substring(0,index);
+  if (index >= 0) {
+    let price = priceRange.substring(0, index);
     return price;
-  } 
+  }
 }
 
+// Leon - Sort results
 function sortResults() {
   switch (sort.value) {
     case "priceASC":
@@ -190,8 +164,7 @@ function sortResults() {
   }
 }
 
-
-// calculate distance from user *CHAT-GPT HJÄLP*
+// Leon - calculate distance from user *CHAT-GPT HJÄLP*
 function calculateDistance(lat1, lon1, lat2, lon2) {
   // Radius of the Earth in kilometers
   let R = 6371;
@@ -211,3 +184,73 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   let distanceRounded = Math.round(distance * 10) / 10
   return distanceRounded;
 }
+
+// function maybe(result) {
+//   let score = Math.round(result.rating);
+//   let priceFrom = getPrice(result.price_range);
+//   let lat = result.lat;
+//   let lng = result.lng;
+//   let distanceFromUser = calculateDistance(usersLat, usersLng, lat, lng);
+
+//   // create all elements
+//   const newLi = document.createElement("li");
+//   const newLink = document.createElement("a");
+//   const resultInfoDiv = document.createElement("div");
+//   const img = document.createElement("img");
+//   const titleElem = document.createElement("h2");
+//   const descriptionElem = document.createElement("p");
+//   const distanceElem = document.createElement("p");
+//   const extraInfoDiv = document.createElement("div");
+
+//   // add info to link
+//   newLink.href = "#"
+//   newLink.classList.add("list-item");
+//   newLi.appendChild(newLink);
+
+//   // add info to result-info-div
+//   resultInfoDiv.classList.add("result-info");
+
+//   // add info to img
+//   img.src = "temporary-img/Artboard 1.svg";
+
+//   // add info to titleElem
+//   const title = document.createTextNode(`${result.name}`);
+//   titleElem.appendChild(title);
+
+//   // add info to descriptionElem
+//   const description = document.createTextNode(`${result.description}`);
+//   descriptionElem.appendChild(description);
+
+//   // add info to distanceElem
+//   const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
+//   distanceElem.appendChild(distanceInfo);
+
+//   // add info to extraInfoDiv
+//   const ratingDiv = document.createElement("div");
+//   const rating = document.createElement("p");
+//   const ratingInfo = document.createTextNode(`${score}/5`);
+//   rating.appendChild(ratingInfo);
+
+//   const price = document.createElement("p");
+//   const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
+//   price.appendChild(priceInfo);
+
+//   extraInfoDiv.classList.add("result-extra-info")
+//   ratingDiv.classList.add("rating");
+
+//   ratingDiv.appendChild(rating);
+//   extraInfoDiv.appendChild(ratingDiv);
+//   extraInfoDiv.appendChild(price);
+//   // add elements to resultInfoDiv
+//   resultInfoDiv.appendChild(titleElem);
+//   resultInfoDiv.appendChild(descriptionElem);
+//   resultInfoDiv.appendChild(distanceElem);
+
+//   // add elements to newLink
+//   newLink.appendChild(img);
+//   newLink.appendChild(resultInfoDiv);
+//   newLink.appendChild(extraInfoDiv);
+
+//   // print out elements on page
+//   return newLi;
+// }
