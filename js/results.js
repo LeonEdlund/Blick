@@ -128,7 +128,7 @@ function generateHTML(result) {
   const extraInfoDiv = document.createElement("div");
 
   // add info to link
-  newLink.href = `choice.html?id=${result.id}`;
+  newLink.href = `result.html?id=${result.id}`;
   newLink.classList.add("list-item");
   newLi.appendChild(newLink);
 
