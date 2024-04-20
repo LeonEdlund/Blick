@@ -8,15 +8,19 @@ const zoom = 13;
 // HTML-elements
 let headerElem;
 let mainElem;
-
+let goBackBtn;
 
 function init() {
   let id = Number(getId("id"));
   headerElem = document.querySelector("header");
-  mainElem = document.querySelector("#information")
+  mainElem = document.querySelector("#information");
+  goBackBtn = document.querySelector("#go-back");
+
+  goBackBtn.addEventListener("click", () => {
+    window.location.href = "results.html"
+  })
 
   getData(id);
-  
 }
 window.addEventListener("load", init);
 
