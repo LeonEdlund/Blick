@@ -3,7 +3,10 @@ const storageTypeName = "type";
 const pageId = document.querySelector("body").id 
 const choices = document.querySelectorAll(".choices a");
 
-if (pageId == "cities") userLocation(); // get user location
+
+if (pageId == "cities") {
+  userLocation(); // get user location
+} 
 
 // save users choices
 choices.forEach((element) =>
@@ -36,12 +39,12 @@ function userLocation() {
     localStorage.setItem("latitude", lat);
     localStorage.removeItem("longitude");
     localStorage.setItem("longitude", long);
-    console.log(localStorage.getItem("longitude"));
-    console.log(localStorage.getItem("latitude"));
-    //window.location.href = "categories.html";
   }
 
   function error(error) {
+    document.querySelector("#my-position").href = "#";
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
     console.log(error);
   }
 }
