@@ -86,8 +86,8 @@ function showMap() {
 
   var map = L.map('map').setView([lat, lng], zoom);
   var marker = L.marker([lat, lng]).addTo(map);
-  var userLocationMarker = L.marker([usersLat, usersLng]).addTo(map);
-  userLocationMarker.bindPopup("<b>Din Position");
+  // var userLocationMarker = L.marker([usersLat, usersLng]).addTo(map);
+  // userLocationMarker.bindPopup("<b>Din Position");
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
