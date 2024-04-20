@@ -24,13 +24,24 @@ function init() {
   sort = document.querySelector("select");
   amountElem = document.querySelector("#sort p")
   list = document.querySelector("#list-of-results");
-
+  
   getUserChoices()
-  getData();
+  sort.addEventListener("change", () => {
+    sessionStorage.clear();
+    sortResults()
+  });
 
-  sort.addEventListener("change", sortResults);
+  // wait for data to load and scroll to last point 
+  getData();
 }
 window.addEventListener("load", init);
+
+// Leon - save scroll position
+window.addEventListener("unload", () => {
+  const scrollPosition = window.scrollY;
+  sessionStorage.setItem("scrollPosition", scrollPosition.toString());
+  sessionStorage.setItem("sortOption", sort.selectedIndex.toString());
+});
 
 // Leon - get users choices from localStorage
 function getUserChoices() {
@@ -38,6 +49,11 @@ function getUserChoices() {
   storedLocation = localStorage.getItem("location");
   usersLat = localStorage.getItem("latitude");
   usersLng = localStorage.getItem("longitude");
+
+  // if no choices, go to index
+  if(!storedCategory || !storedLocation){
+    window.location.href = "index.html";
+  }
 
   // Set correct SMAPI url variable based on location
   switch (storedLocation) {
@@ -79,13 +95,12 @@ async function getData() {
   const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
   const data = await response.json();
   if (data.header.status === `OK`) {
-    //console.log(data.payload);
     printResults(data.payload);
+    //scrollToLastPosition();
   } else {
     console.log(data.header);
   }
 }
-
 
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
@@ -147,8 +162,10 @@ function generateHTML(result) {
   descriptionElem.appendChild(description);
 
   // add info to distanceElem
-  const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
-  distanceElem.appendChild(distanceInfo);
+  if(usersLat && usersLng){
+    const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
+    distanceElem.appendChild(distanceInfo);
+  }
 
   // add info to extraInfoDiv
   const ratingDiv = document.createElement("div");
@@ -217,20 +234,12 @@ function sortResults() {
       getData();
       break;
     case "distanceASC": 
-      sortDistance("asc");
-      break;
-    case "distanceDESC":
-      sortDistance("desc");
-  }
-
-  function sortDistance(order) {
-    if (order === "asc"){
       resultsArray.sort((a, b) => a.dataset.distance - b.dataset.distance);
       printResultsByDistance();
-    } else if (order === "desc") {
-      resultsArray.sort((a,b) => b.dataset.distance - a.dataset.distance);
+      break;
+    case "distanceDESC":
+      resultsArray.sort((a, b) => b.dataset.distance - a.dataset.distance);
       printResultsByDistance();
-    }
   }
 
   function printResultsByDistance() {
@@ -263,3 +272,4 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   let distanceRounded = Math.round(distance * 10) / 10
   return distanceRounded;
 }
+
