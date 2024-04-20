@@ -14,12 +14,14 @@ let description = ""; // description
 let sortBy = ""; // variable for sorting SMAPI data
 
 // HTML-Elements
+let main;
 let sort; // list for sorting
 let amountElem; // element for amounts of results
 let list // UL element for results
 let title; // Element for title on page
 
 async function init() {
+  main = document.querySelector("main");
   title = document.querySelector("#page-title");
   sort = document.querySelector("select");
   amountElem = document.querySelector("#sort p")
@@ -94,15 +96,20 @@ function getUserChoices() {
 
 // Leon - get data from SMAPI
 async function getData() {
-  const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
-  const data = await response.json();
-  if (data.header.status === `OK`) {
-    printResults(data.payload);
-    //scrollToLastPosition();
-  } else {
-    console.log(data.header);
+  try {
+    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
+  
+    const data = await response.json();
+    if (data.header.status === `OK`) {
+      printResults(data.payload);
+    } else {
+      console.log(data.header);
+      errorMessage();
+    }
+  } catch(error) {
+    errorMessage();
   }
-}
+  }
 
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
@@ -251,6 +258,27 @@ function sortResults() {
     });
     list.appendChild(fragment);
   }
+}
+
+// Leon - Show error incase of smapi failure
+function errorMessage() {
+  main.innerHTML = "";
+  const newHeader = document.createElement("h1");
+  const newHeaderText = document.createTextNode("något gick fel!");
+  newHeader.appendChild(newHeaderText);
+
+  const newP = document.createElement("p");
+  const newPText = document.createTextNode("gå tillbaka till startsidan");
+  newP.appendChild(newPText);
+
+  const newA = document.createElement("a");
+  newA.href = "index.html";
+  const newAText = document.createTextNode("Gå tillbaka");
+  newA.appendChild(newAText);
+
+  main.appendChild(newHeader);
+  main.appendChild(newP);
+  main.appendChild(newA);
 }
 
 // Leon - calculate distance from user *CHAT-GPT HJÄLP*
