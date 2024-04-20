@@ -19,7 +19,7 @@ let amountElem; // element for amounts of results
 let list // UL element for results
 let title; // Element for title on page
 
-function init() {
+async function init() {
   title = document.querySelector("#page-title");
   sort = document.querySelector("select");
   amountElem = document.querySelector("#sort p")
@@ -32,7 +32,9 @@ function init() {
   });
 
   // wait for data to load and scroll to last point 
-  getData();
+  await getData();
+  
+  scrollToLastPosition();
 }
 window.addEventListener("load", init);
 
@@ -120,7 +122,6 @@ function printResults(data) {
     
     fragment.appendChild(newLi);
   });
-  console.log(resultsArray);
   list.appendChild(fragment);
 }
 
@@ -273,3 +274,15 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return distanceRounded;
 }
 
+// Leon - scroll to last position and save sorting
+function scrollToLastPosition() {
+  const savedPosition = sessionStorage.getItem("scrollPosition");
+  const savedSortOption = sessionStorage.getItem("sortOption");
+  if (savedPosition) {
+    window.scrollTo(0, parseInt(savedPosition, 10));
+  }
+  if (savedSortOption) {
+    sort.selectedIndex = savedSortOption;
+    sortResults();
+  }
+}
