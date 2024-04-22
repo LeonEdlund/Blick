@@ -4,7 +4,7 @@ let minBudget = 0;//ALEX - Användarens budget
 let fromResult;
 //ALEX-initiering av programmet
 function init() {
-    
+    getStorage()
     fromResult = document.cookie
     if(fromResult.length > 0){
         cookieFunc()
@@ -189,12 +189,26 @@ function cookieFunc(){
 }
 
 function setStorage(){
-let dataToSave;
+let dataToSave = "/";
 for(let j = 0; j < spendings.length; j++){
 let name = spendings[j].name
 let price = spendings[j].price
 let category = spendings[j].category
 dataToSave+=name+"&"+price+"&"+category+"/"
 }
-   
+console.log(dataToSave)
+localStorage.setItem("storedData", dataToSave) 
+}
+
+function getStorage(){
+    let storedData = localStorage.getItem("storedData")
+    let dataArray = storedData.split("/")
+    for(let l = 0; l < dataArray.length; l++){
+        if(dataArray[l].length > 0){
+        let dataArrayArray = dataArray[l].split("&")
+        spendings.push(new Spending(dataArrayArray[0], parseInt(dataArrayArray[1]), dataArrayArray[2]))
+        console.log(spendings)
+        listSpednings()
+        }
+    }
 }
