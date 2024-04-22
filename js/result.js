@@ -32,21 +32,26 @@ function getId(param) {
 
 // Leon - get data from SMAPI
 async function getData(id) {
-  const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getAll&ids=${id}`);
-  if (!response.ok) {
-    console.log(`HTTP error! status: ${response.status}`);
+  try {
+    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getAll&ids=${id}`);
+
+    if (!response.ok) {
+      console.log(`Error status: ${response.status}`);
+    }
+
+    let data = await response.json();
+    if (data.header.status === `OK`) {
+      data = data.payload[0];
+      lat = data.lat;
+      lng = data.lng;
+      generateHTML(data);
+      showMap();
+    } else {
+      console.log(data.header);
+    }
   }
-
-  let data = await response.json();
-
-  if (data.header.status === `OK`) {
-    data = data.payload[0];
-    lat = data.lat;
-    lng = data.lng;
-    generateHTML(data);
-    showMap();
-  } else {
-    console.log(data.header);
+  catch (error) {
+    console.log(`Fetch error ${error.message}`);
   }
 }
 
@@ -57,7 +62,7 @@ function generateHTML(data) {
     let mainHtml = ""
 
     headerHtml =
-    `<div id="header-left-side">
+      `<div id="header-left-side">
       <h1>${data.name}</h1>
       <h2>${data.description}</h2>
       <p>Prisklass: ${data.price_range}Kr</p>
@@ -73,7 +78,7 @@ function generateHTML(data) {
     `<h2>Information</h2>
     <p>${data.text}</p><button id=toBudget>Lägg till i din budget</button>`;
 
-    headerElem.innerHTML = headerHtml; 
+    headerElem.innerHTML = headerHtml;
     mainElem.innerHTML = mainHtml;
     resultToBudget(data)
   }

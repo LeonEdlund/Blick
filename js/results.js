@@ -26,7 +26,7 @@ async function init() {
   sort = document.querySelector("select");
   amountElem = document.querySelector("#sort p")
   list = document.querySelector("#list-of-results");
-  
+
   getUserChoices()
   sort.addEventListener("change", () => {
     sessionStorage.clear();
@@ -35,7 +35,7 @@ async function init() {
 
   // wait for data to load and scroll to last point 
   await getData();
-  
+
   scrollToLastPosition();
 }
 window.addEventListener("load", init);
@@ -55,7 +55,7 @@ function getUserChoices() {
   usersLng = localStorage.getItem("longitude");
 
   // if no choices, go to index
-  if(!storedCategory || !storedLocation){
+  if (!storedCategory || !storedLocation) {
     window.location.href = "index.html";
   }
 
@@ -98,7 +98,11 @@ function getUserChoices() {
 async function getData() {
   try {
     const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&${method}&${type}&${chosenLocation}&${description}&${sortBy}`);
-  
+
+    if (!response.ok) {
+      console.log(`Error status: ${response.status}`);
+    }
+
     const data = await response.json();
     if (data.header.status === `OK`) {
       printResults(data.payload);
@@ -106,10 +110,10 @@ async function getData() {
       console.log(data.header);
       errorMessage();
     }
-  } catch(error) {
+  } catch (error) {
     errorMessage();
   }
-  }
+}
 
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
@@ -120,13 +124,13 @@ function printResults(data) {
 
   resultsArray = [];
   data.forEach((result) => {
-    
+
     // let newLi = document.createElement("li");
     // newLi.innerHTML = generateHTML(result);
-    
+
     let newLi = generateHTML(result);
     resultsArray.push(newLi); // Save results in array
-    
+
     fragment.appendChild(newLi);
   });
   list.appendChild(fragment);
@@ -170,7 +174,7 @@ function generateHTML(result) {
   descriptionElem.appendChild(description);
 
   // add info to distanceElem
-  if(usersLat && usersLng){
+  if (usersLat && usersLng) {
     const distanceInfo = document.createTextNode(`Avstånd: ${distanceFromUser} Km`)
     distanceElem.appendChild(distanceInfo);
   }
@@ -241,7 +245,7 @@ function sortResults() {
       sortBy = "sort_in=DESC&order_by=rating";
       getData();
       break;
-    case "distanceASC": 
+    case "distanceASC":
       resultsArray.sort((a, b) => a.dataset.distance - b.dataset.distance);
       printResultsByDistance();
       break;
@@ -252,7 +256,7 @@ function sortResults() {
 
   function printResultsByDistance() {
     list.innerHTML = "";
-    let fragment = document.createDocumentFragment(); 
+    let fragment = document.createDocumentFragment();
     resultsArray.forEach((result) => {
       fragment.appendChild(result);
     });
