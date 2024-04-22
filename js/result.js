@@ -71,10 +71,11 @@ function generateHTML(data) {
 
     mainHtml =
     `<h2>Information</h2>
-    <p>${data.text}</p>`;
+    <p>${data.text}</p><button id=toBudget>Lägg till i din budget</button>`;
 
     headerElem.innerHTML = headerHtml; 
     mainElem.innerHTML = mainHtml;
+    resultToBudget(data)
   }
 }
 
@@ -93,4 +94,14 @@ function showMap() {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
+}
+
+function resultToBudget(data){
+  let toBudget = document.querySelector("#toBudget")
+  toBudget.innerHTML = "<a href='budget/budget.html'>Lägg till i din budget</a>" 
+  let now = new Date()
+  now.setTime(now.getTime() + (1*60*1000))
+  document.cookie="fromResult="+data.name+";expires="+now
+  console.log(document.cookie)
+
 }
