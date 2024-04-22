@@ -157,13 +157,14 @@ function calculatePerCategory() {
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> Boende " + catOne + "</li><li> Resa " + catTwo + "</li><li> Mat och Dryck " + catThree + "</li><li> Aktiviteter " + catFour + "</li><li> Övrigt " + catFive + "</li>"
+    general.innerHTML = "<li> Boende <p>" + catOne + "</p></li><li> Resa <p>" + catTwo + "</p></li><li> Mat och Dryck <p>" + catThree + "</p></li><li> Aktiviteter <p>" + catFour + "</p></li><li> Övrigt <p>" + catFive + "</p></li>"
 
     let generalCat = document.querySelectorAll("#general li p")
+    console.log(generalCat)
     for (let e = 0; e < generalCat.length; e++) {
         console.log(generalCat[e].innerHTML)
-        if (generalCat[e].innerHTML === 0) {
-            generalCat[e].style.visbility = "hidden";
+        if (generalCat[e].innerHTML == 0) {
+            generalCat[e].parentElement.style.display = "none";
         }
     }
 
