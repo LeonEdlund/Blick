@@ -21,7 +21,7 @@ a {
 }
 
 .menu-bar{
-  background-color: black;
+  background-color: teal;
   overflow: hidden;
   position: fixed;
   bottom: 0;
@@ -35,6 +35,12 @@ a {
   color: white;
   padding: 10px;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.5rem;
   padding-left: 20px;
+}
+
+.menu-bar img {
+  display: block;
+  height: 24px;
+  width: 24px;
 }
