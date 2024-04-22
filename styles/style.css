@@ -1,4 +1,10 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --margin: 0 30px;
+  --main-text-color: hsl(0,0,15);
+}
 
 *,
 *::before,
@@ -8,8 +14,8 @@
   padding: 0;
 }
 
-:root {
-  --margin: 0 30px;
+html {
+  font-family: inter;
 }
 
 main {
@@ -21,22 +27,23 @@ a {
 }
 
 .menu-bar{
-  background-color: teal;
-  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
   position: fixed;
   bottom: 0;
   width: 100%;
-  text-align: center;
-
+  background-color: rgb(255, 255, 255);
+  padding: 10px 30px;
+  z-index: 10;
 }
 
 .menu-bar a{
-  display: inline-block;
-  color: white;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--main-text-color);
   text-decoration: none;
   font-size: 0.5rem;
-  padding-left: 20px;
 }
 
 .menu-bar img {

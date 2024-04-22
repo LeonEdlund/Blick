@@ -1,0 +1,48 @@
+header {
+    background-image: url(../temporary-img/header.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 31vh;
+    position: relative;
+
+    font-size: 1rem;
+}
+
+.header-text {
+    color: white;
+    position: absolute;
+    bottom: 0;
+    margin: 5px 25px;
+    font-weight: 700;
+}
+
+.choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 50px 0px;
+    gap: 3rem;
+    list-style: none;
+}
+
+.choices a {
+    text-align: center;
+    color: var(--main-text-color);
+}
+
+.choices h2 {
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.choices img {
+    background-color: brown;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 30px;
+}
+
+h3 {
+    font-size: 1rem;
+}

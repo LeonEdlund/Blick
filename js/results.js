@@ -30,7 +30,7 @@ async function init() {
   getUserChoices()
   sort.addEventListener("change", () => {
     sessionStorage.clear();
-    sortResults()
+    sortResults();
   });
 
   // wait for data to load and scroll to last point 
@@ -119,7 +119,7 @@ async function getData() {
 function printResults(data) {
   list.innerHTML = "";
 
-  amountElem.innerText = `Antal resultat: ${data.length}`;
+  amountElem.innerText = `Antal resultat: ${data.length} st`;
   let fragment = document.createDocumentFragment();
 
   resultsArray = [];
@@ -186,7 +186,8 @@ function generateHTML(result) {
   rating.appendChild(ratingInfo);
 
   const price = document.createElement("p");
-  const priceInfo = document.createTextNode(`Pris från: ${priceFrom} Kr`);
+  const priceInfo = document.createTextNode(`Från: ${priceFrom} Kr`);
+  price.classList.add("price");
   price.appendChild(priceInfo);
 
   extraInfoDiv.classList.add("result-extra-info")
