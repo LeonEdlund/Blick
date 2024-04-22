@@ -1,8 +1,14 @@
 let spendings = []//ALEX - array för utgifter
 let amountSpent = 0;//ALEX -  hur mycket användaren spenderat
 let minBudget = 0;//ALEX - Användarens budget
+let fromResult;
 //ALEX-initiering av programmet
 function init() {
+    
+    fromResult = document.cookie
+    if(fromResult.length > 0){
+        cookieFunc()
+    }
 
     let newTripBtn = document.querySelector("#changeBudget")
     newTripBtn.addEventListener("click", newTripFunc)
@@ -96,6 +102,10 @@ function newSpendFunc(wrong) {
     if (wrong == true) {
         input.style.backgroundColor = "red";
     }
+    if (wrong = fromResult){
+        let name = document.querySelector("#name")
+        name.value = fromResult
+    }
 }
 //ALEX - Constructor för objekt för utgift
 function Spending(name, price, category) {
@@ -118,6 +128,7 @@ function listSpednings() {
     removeBtnFunc()
     calculatePerCategory()
     setBudget()
+    setStorage()
 }
 //ALEX - räkna ut spenderat per kategori
 function calculatePerCategory() {
@@ -168,4 +179,22 @@ function removeBtnFunc(remove, e){
         console.log(spendings);
         listSpednings();
     }
+}
+//hämmtar cookie som sparas i result.html och startar sedan inläggningen av denna i budgeten
+function cookieFunc(){
+    let cookieArray = fromResult.split("=")
+    fromResult = cookieArray[1]
+    newSpendFunc(fromResult)
+
+}
+
+function setStorage(){
+let dataToSave;
+for(let j = 0; j < spendings.length; j++){
+let name = spendings[j].name
+let price = spendings[j].price
+let category = spendings[j].category
+dataToSave+=name+"&"+price+"&"+category+"/"
+}
+   
 }
