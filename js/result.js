@@ -76,9 +76,12 @@ function generateHTML(data) {
     headerElem.innerHTML = headerHtml;
     mainElem.innerHTML = mainHtml;
 
-    document.querySelector("#favorit").addEventListener("click", favorit);
+    document.querySelector("#favorit").addEventListener("click", () => {
+      favorit(data);
+    });
     
     resultToBudget(data)
+
   }
 
   function generateSvg() {
@@ -119,5 +122,19 @@ function resultToBudget(data){
 
 }
 
-function favorit() {
+function favorit(data) {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+  let found = false;
+
+  for(let i = 0; i < wishlist.length; i++){
+    if(wishlist[i].id == data.id){
+      found = true;
+      break;
+    }
+  }
+
+  if(!found){
+    wishlist.push(data);
+    localStorage.setItem(("wishlist"), JSON.stringify(wishlist));
+  }
 }
