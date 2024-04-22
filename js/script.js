@@ -188,7 +188,7 @@ function cookieFunc(){
     newSpendFunc(fromResult)
 
 }
-
+//sparar användarens val
 function setStorage(){
 let dataToSave = "/";
 for(let j = 0; j < spendings.length; j++){
@@ -200,7 +200,7 @@ dataToSave+=name+"&"+price+"&"+category+"/"
 console.log(dataToSave)
 localStorage.setItem("storedData", dataToSave) 
 }
-
+//hämtar tidigare val 
 function getStorage(){
     let storedData = localStorage.getItem("storedData")
     let dataArray = storedData.split("/")
