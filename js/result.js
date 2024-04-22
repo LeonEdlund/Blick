@@ -95,7 +95,7 @@ function showMap() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 }
-
+//användaren kan lägga in en utgift driekt via result
 function resultToBudget(data){
   let toBudget = document.querySelector("#toBudget")
   toBudget.innerHTML = "<a href='budget/budget.html'>Lägg till i din budget</a>" 
