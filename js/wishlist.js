@@ -12,7 +12,7 @@ function showWishList() {
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
     wishlist.forEach(item => {
         const itemElem = document.createElement("div");
-        itemElem.innerHTML = `<a href="result.html?id=${item.id}"><h3>${item.name}</h3><p>${item.description}</p><p>${item.price_range} Kr</p></a><button onclick='remove("${item.id}")'>TA BORT</button>`;
+        itemElem.innerHTML = `<a href="result.html?id=${item.id}"><h3>${item.name}</h3><p>${item.description}</p><p>${item.price_range} Kr</p></a><button onclick='remove("${item.id}")'><img src="temporary-img/trash.svg" alt="trash"></button>`;
         wList.appendChild(itemElem);
     });
 }
