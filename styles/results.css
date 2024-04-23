@@ -1,3 +1,7 @@
+body {
+  background: linear-gradient(#ffffff 2%, #f7f7f7 12%);
+}
+
 #price-range {
   padding: 1em;
   border-bottom: 1px solid rgb(201, 201, 201);
@@ -123,4 +127,11 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: #64B3DF;
+}
+
+.back-div {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: #ffffff;
 }

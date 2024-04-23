@@ -8,17 +8,11 @@ const zoom = 13;
 // HTML-elements
 let headerElem;
 let mainElem;
-let goBackBtn;
 
 function init() {
   let id = Number(getId("id"));
   headerElem = document.querySelector("header");
   mainElem = document.querySelector("#information");
-  goBackBtn = document.querySelector("#go-back");
-
-  goBackBtn.addEventListener("click", () => {
-    window.location.href = "results.html"
-  })
 
   getData(id);
 }
@@ -95,7 +89,6 @@ function generateHTML(data) {
   }
 }
 
-
 // Leon - Show leaflet map
 function showMap() {
   let usersLat = localStorage.getItem("latitude");
@@ -111,7 +104,8 @@ function showMap() {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 }
-//användaren kan lägga in en utgift driekt via result
+
+//Alexander - användaren kan lägga in en utgift driekt via result
 function resultToBudget(data){
   let toBudget = document.querySelector("#toBudget")
   toBudget.innerHTML = "<a href='budget/budget.html'>Lägg till i din budget</a>" 
@@ -122,6 +116,7 @@ function resultToBudget(data){
 
 }
 
+// Jesper
 function favorit(data) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   let found = false;

@@ -19,9 +19,7 @@ header {
 .choices {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 50px 0px;
+    margin-top: 50px;
     gap: 3rem;
     list-style: none;
 }
@@ -43,6 +41,11 @@ header {
     border-radius: 30px;
 }
 
-h3 {
-    font-size: 1rem;
+.back-div button {
+    background-color: white;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
 }
