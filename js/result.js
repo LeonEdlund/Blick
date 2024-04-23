@@ -73,8 +73,9 @@ function generateHTML(data) {
     document.querySelector("#favorit").addEventListener("click", () => {
       favorit(data);
     });
+    let toBudget = document.querySelector("#toBudget")
+    toBudget.addEventListener("click",function(){resultToBudget(data)} )
     
-    resultToBudget(data)
 
   }
 
@@ -107,13 +108,12 @@ function showMap() {
 
 //Alexander - användaren kan lägga in en utgift driekt via result
 function resultToBudget(data){
-  let toBudget = document.querySelector("#toBudget")
-  toBudget.innerHTML = "<a href='budget/budget.html'>Lägg till i din budget</a>" 
   let now = new Date()
-  now.setTime(now.getTime() + (1*60*1000))
+  now.setTime(now.getTime() + (0.1*60*1000))
+  console.log(now)
   document.cookie="fromResult="+data.name+";expires="+now
   console.log(document.cookie)
-
+  window.location.href = "budget/budget.html"
 }
 
 // Jesper

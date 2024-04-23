@@ -89,6 +89,8 @@ function setBudget() {
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
+    let name = document.querySelector("#name")
+    name.value = ""
     let newSpendDialog = document.querySelector("#newSpendDialog")
     newSpendDialog.showModal()
 
