@@ -205,6 +205,9 @@ localStorage.setItem("storedData", dataToSave)
 //hämtar tidigare val 
 function getStorage(){
     let storedData = localStorage.getItem("storedData")
+    if(storedData == null){
+        return;
+    }
     let dataArray = storedData.split("/")
     for(let l = 0; l < dataArray.length; l++){
         if(dataArray[l].length > 0){
