@@ -108,11 +108,11 @@ function showMap() {
 
 //Alexander - användaren kan lägga in en utgift driekt via result
 function resultToBudget(data){
-  let now = new Date()
-  now.setTime(now.getTime() + (0.1*60*1000))
-  console.log(now)
-  document.cookie="fromResult="+data.name+";expires="+now
-  console.log(document.cookie)
+  let category = localStorage.getItem("type")
+  if(category=="food"){
+    category = "MatochDryck"
+  }else{category="Aktiviteter"}
+  sessionStorage.setItem("fromResult", data.name+"&"+category)
   window.location.href = "budget/budget.html"
 }
 

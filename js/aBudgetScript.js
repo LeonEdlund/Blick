@@ -1,13 +1,14 @@
 let spendings = []//ALEX - array för utgifter
 let amountSpent = 0;//ALEX -  hur mycket användaren spenderat
 let minBudget = 0;//ALEX - Användarens budget
-let fromResult;
+let fromResultOne;
+let fromResultTwo;
 //ALEX-initiering av programmet
 function init() {
     getStorage()
-    fromResult = document.cookie
+    fromResult = sessionStorage.getItem("fromResult")
     if(fromResult.length > 0){
-        cookieFunc()
+        fromResultFunc()
     }
 
     let newTripBtn = document.querySelector("#changeBudget")
@@ -93,9 +94,9 @@ function newSpendFunc(wrong) {
     name.value = ""
     let newSpendDialog = document.querySelector("#newSpendDialog")
     newSpendDialog.showModal()
-
+    let exit = document.querySelector("#exit")
+    exit.addEventListener("click", function(){newSpendDialog.close()})
     let input = document.querySelector("#amount")
-
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
@@ -106,7 +107,10 @@ function newSpendFunc(wrong) {
     }
     if (wrong = fromResult){
         let name = document.querySelector("#name")
-        name.value = fromResult
+        let radio = document.querySelector(fromResultTwo)
+        radio.checked = true;
+        name.value = fromResultOne
+
     }
 }
 //ALEX - Constructor för objekt för utgift
@@ -183,10 +187,13 @@ function removeBtnFunc(remove, e){
         listSpednings();
     }
 }
-//hämmtar cookie som sparas i result.html och startar sedan inläggningen av denna i budgeten
-function cookieFunc(){
-    let cookieArray = fromResult.split("=")
-    fromResult = cookieArray[1]
+//hämmtar sessionStorage som sparas i result.html och startar sedan inläggningen av denna i budgeten
+function fromResultFunc(){
+    let storageArray = fromResult.split("&")
+    fromResultOne = storageArray[0]
+    fromResultTwo = "#"+storageArray[1]
+    console.log(fromResultTwo)
+    sessionStorage.setItem("fromResult", "")
     newSpendFunc(fromResult)
 
 }
