@@ -5,6 +5,7 @@ let storedCategory; // users chosen category
 let usersLat; // users latitude
 let usersLng; // users longitude
 let resultsArray = []; // array with results from SMAPI
+let pageName;
 
 // variables for SMAPI URL
 const key = "KZmupnUS"; // API-Key
@@ -42,9 +43,12 @@ window.addEventListener("load", init);
 
 // Leon - save scroll position
 window.addEventListener("unload", () => {
-  const scrollPosition = window.scrollY;
-  sessionStorage.setItem("scrollPosition", scrollPosition.toString());
-  sessionStorage.setItem("sortOption", sort.selectedIndex.toString());
+  const scrollPosition = {
+    "scrollPosition": window.scrollY,
+    "fromPage": pageName,
+    "sortOption": sort.selectedIndex
+  };
+  sessionStorage.setItem("scrollPosition", JSON.stringify(scrollPosition));
 });
 
 // Leon - get users choices from localStorage
@@ -73,24 +77,29 @@ function getUserChoices() {
   }
 
   // Set correct SMAPI url variable based on category
+  let title = "";
   switch (storedCategory) {
     case "food":
       type = "types=food"
-      changeTitle("mat & dryck");
+      title = "mat & dryck";
+      changeTitle(title);
       break;
     case "nature":
       // type = "types=activity"
       description = "descriptions=älgpark,camping"
-      changeTitle("naturupplevelser");
+      title = "naturupplevelser";
+      changeTitle(title);
       break;
     case "culture":
       type = "types=attraction"
-      changeTitle("kultur");
+      title = "kultur";
+      changeTitle(title);
       break;
     case "activity":
       type = "types=activity";
       description = "descriptions=nöjespark,temapark,älgpark,djurpark,simhall,gokart,zipline,nöjescenter,paintballcenter,hälsocenter,golfbana,bowlinghall,klippklättring,skateboardpark"
-      changeTitle("aktiviteter");
+      title = "aktiviteter";
+      changeTitle(title);
   }
 }
 
@@ -215,6 +224,7 @@ function generateHTML(result) {
 
 // Leon - Change title on page
 function changeTitle(category) {
+  pageName = category;
   title.innerText = category;
 }
 
@@ -309,13 +319,11 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 // Leon - scroll to last position and save sorting
 function scrollToLastPosition() {
-  const savedPosition = sessionStorage.getItem("scrollPosition");
-  const savedSortOption = sessionStorage.getItem("sortOption");
-  if (savedPosition) {
-    window.scrollTo(0, parseInt(savedPosition, 10));
-  }
-  if (savedSortOption) {
-    sort.selectedIndex = savedSortOption;
+  const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
+
+  if (savedPosition.fromPage == pageName) {
+    sort.selectedIndex = savedPosition.sortOption;
+    window.scrollTo(0, savedPosition.scrollPosition);
     sortResults();
   }
 }
