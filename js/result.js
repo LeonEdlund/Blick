@@ -64,8 +64,10 @@ function generateHTML(data) {
     </div>`;
 
     mainHtml =
-    `<h2>Information</h2>
-    <p>${data.text}</p><button id=toBudget>Lägg till i din budget</button>`;
+    `<button id=toBudget>Lägg till i din budget</button>
+    <h2>Information</h2>
+    <p>${data.text}</p>
+    `;
 
     headerElem.innerHTML = headerHtml;
     mainElem.innerHTML = mainHtml;
@@ -118,6 +120,7 @@ function resultToBudget(data){
 
 // Jesper
 function favorit(data) {
+  document.querySelector("#Layer_1 path").style.fill = "red";
   let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   let found = false;
 
