@@ -84,9 +84,9 @@ function checkIfNumber(close, input, newBudget) {
 //ALEX - Sätter budgeten och räknar ut vad som är kvar av den
 function setBudget() {
     let budgetElemLeft = document.querySelector("#av")
-    budgetElemLeft.innerHTML = minBudget
+    budgetElemLeft.innerHTML = "Av: " + minBudget;
     let budgetElem = document.querySelector("#kvar")
-    budgetElem.innerHTML = (minBudget - amountSpent)
+    budgetElem.innerHTML = "Kvar: " + (minBudget - amountSpent)
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
