@@ -105,16 +105,7 @@ body {
   font-size: 0.8em;
 }
 
-.rating {
-  display: flex;
-  align-items: center;
-  background-color: #64B3DF;
-  color: white;
-  width: min-content;
-  padding: 0.5rem;
-  aspect-ratio: 1/1;
-  border-radius: 10px;
-}
+
 
 .result-extra-info {
   display: flex;
