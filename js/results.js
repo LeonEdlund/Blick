@@ -86,7 +86,7 @@ function getUserChoices() {
       break;
     case "nature":
       // type = "types=activity"
-      description = "descriptions=älgpark,camping"
+      description = "descriptions=älgpark,camping,naturreservat"
       title = "naturupplevelser";
       changeTitle(title);
       break;
