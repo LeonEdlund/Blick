@@ -5,7 +5,7 @@ let fromResultOne;
 let fromResultTwo;
 //ALEX-initiering av programmet
 function init() {
-    getStorage()
+    getStorage();
     fromResult = sessionStorage.getItem("fromResult")
     if(fromResult.length > 0){
         fromResultFunc()

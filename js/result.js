@@ -115,7 +115,7 @@ function resultToBudget(data){
     category = "MatochDryck"
   }else{category="Aktiviteter"}
   sessionStorage.setItem("fromResult", data.name+"&"+category)
-  window.location.href = "budget/budget.html"
+  window.location.href = "budget.html"
 }
 
 // Jesper

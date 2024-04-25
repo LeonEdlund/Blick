@@ -36,7 +36,7 @@ async function init() {
 
   // wait for data to load and scroll to last point 
   await getData();
-
+  
   scrollToLastPosition();
 }
 window.addEventListener("load", init);
