@@ -1,7 +1,3 @@
-body {
-  background: linear-gradient(#ffffff 2%, #f7f7f7 12%);
-}
-
 #price-range {
   padding: 1em;
   border-bottom: 1px solid rgb(201, 201, 201);
@@ -104,8 +100,6 @@ body {
 .result-info p {
   font-size: 0.8em;
 }
-
-
 
 .result-extra-info {
   display: flex;
