@@ -112,8 +112,8 @@ function showMap() {
 function resultToBudget(data){
   let category = localStorage.getItem("type")
   if(category=="food"){
-    category = "MatochDryck"
-  }else{category="Aktiviteter"}
+    category = "food-drink"
+  }else{category="activity"}
   sessionStorage.setItem("fromResult", data.name+"&"+category)
   window.location.href = "budget.html"
 }

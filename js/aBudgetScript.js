@@ -11,13 +11,13 @@ function init() {
         fromResultFunc()
     }
 
-    let newTripBtn = document.querySelector("#changeBudget")
+    let newTripBtn = document.querySelector("#change-budget")
     newTripBtn.addEventListener("click", newTripFunc)
 
-    let newSpendBtn = document.querySelector("#newSpendBtn")
+    let newSpendBtn = document.querySelector("#new-spend-btn")
     newSpendBtn.addEventListener("click", newSpendFunc)
 
-    let removeTrip = document.querySelector("#removeTrip")
+    let removeTrip = document.querySelector("#remove-trip")
     removeTrip.addEventListener("click", function(){location.reload()})
 
 }
@@ -25,10 +25,10 @@ window.addEventListener("load", init)
 
 //ALEX - öppnar en dialog för att användaren ska kunna skriva in sin budget för resan
 function newTripFunc(wrong) {
-    let newTripDialog = document.querySelector("#newTripDialog");
+    let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
 
-    let input = document.querySelector("#moneyToSpend")
+    let input = document.querySelector("#money-to-spend")
 
     let save = document.querySelector("#save")
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
@@ -92,7 +92,7 @@ function setBudget() {
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
     name.value = ""
-    let newSpendDialog = document.querySelector("#newSpendDialog")
+    let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function(){newSpendDialog.close()})
@@ -145,19 +145,19 @@ function calculatePerCategory() {
     let catFive = 0;
     for (let d = 0; d < spendings.length; d++) {
         switch (spendings[d].category) {
-            case "boende":
+            case "accommodation":
                 catOne += spendings[d].price
                 break;
-            case "resa":
+            case "trip":
                 catTwo += spendings[d].price
                 break;
-            case "MatochDryck":
+            case "food-drink":
                 catThree += spendings[d].price
                 break;
-            case "Aktiviteter":
+            case "activity":
                 catFour += spendings[d].price
                 break;
-            case "övrigt":
+            case "other":
                 catFive += spendings[d].price
                 break;
         }
