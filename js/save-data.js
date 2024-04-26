@@ -1,30 +1,34 @@
-const storageLocationName = "location";
-const storageTypeName = "type";
-const pageId = document.querySelector("body").id 
-const choices = document.querySelectorAll(".choices a");
+function init() {
+  const storageLocationName = "location";
+  const storageTypeName = "type";
+  const pageId = document.querySelector("body").id 
+  const choices = document.querySelectorAll(".choices a");
+  
+  
+  if (pageId == "cities") {
+    userLocation(); // get user location
+  } 
+  
+  // save users choices
+  choices.forEach((element) =>
+    element.addEventListener("click", () => {
+      switch (pageId) {
+        case "cities":
+          let location = element.id;
+          localStorage.removeItem(storageLocationName);
+          localStorage.setItem(storageLocationName, location);
+          break;
+        case "category":
+          let category = element.id;
+          localStorage.removeItem(storageTypeName);
+          localStorage.setItem(storageTypeName, category);
+          break;
+      }
+    })
+  );
 
-
-if (pageId == "cities") {
-  userLocation(); // get user location
-} 
-
-// save users choices
-choices.forEach((element) =>
-  element.addEventListener("click", () => {
-    switch (pageId) {
-      case "cities":
-        let location = element.id;
-        localStorage.removeItem(storageLocationName);
-        localStorage.setItem(storageLocationName, location);
-        break;
-      case "category":
-        let category = element.id;
-        localStorage.removeItem(storageTypeName);
-        localStorage.setItem(storageTypeName, category);
-        break;
-    }
-  })
-);
+}
+window.addEventListener("load", init);
 
 // save users location
 function userLocation() {
