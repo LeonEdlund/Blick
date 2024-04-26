@@ -1,36 +1,43 @@
-// Global variables
-let storedLocation; // location from localStorage
-let chosenLocation; // chosen location for SMAPI
-let storedCategory; // users chosen category
-let usersLat; // users latitude
-let usersLng; // users longitude
-let resultsArray = []; // array with results from SMAPI
-let pageName;
+const USER_CHOICES = {
+  location: localStorage.getItem("location"),
+  category: localStorage.getItem("type"),
+  lat: localStorage.getItem("latitude"),
+  lng: localStorage.getItem("longitude")
+}
 
-// variables for SMAPI URL
-const API_CONFIG = {
+const DOM_ELEMENTS = {
+  sort: document.querySelector("select"),
+  list: document.querySelector("#list-of-results")
+}
+
+let API_PARAMS = {
   key: "KZmupnUS",
   controller: "establishment",
   method: "method=getAll",
+  location: "",
   types: "",
   description: "",
-  //sortBy: ""
+  sortBy: ""
 }
 
-// HTML-Elements
-let sort, list;
+let APP_DATA = {
+  results: [],
+  pageName: ""
+}
 
 // initializing 
 window.addEventListener("load", init);
 window.addEventListener("unload", saveScrollPosition);
 
 async function init() {
-  sort = document.querySelector("select");
-  list = document.querySelector("#list-of-results");
-  sort.addEventListener("change", sortResults);
+  if (!USER_CHOICES.category || !USER_CHOICES.location) {
+    window.location.href = "index.html";
+  }
+  
+  DOM_ELEMENTS.sort.addEventListener("change", sortResults);
 
-  getUserChoices()
   changeTitle();
+  setURLParams();
   await getData();
   scrollToLastPosition();
 }
@@ -46,60 +53,48 @@ function changeTitle() {
     activity: "Aktiviteter",
   };
 
-  const title = categoryTitles[storedCategory];
-  pageName = title;
+  const title = categoryTitles[USER_CHOICES.category];
+  APP_DATA.pageName = title;
   titleElem.textContent = title;
 }
 
-// Leon - get users choices from localStorage
-function getUserChoices() {
-  storedCategory = localStorage.getItem("type");
-  storedLocation = localStorage.getItem("location");
-  usersLat = localStorage.getItem("latitude");
-  usersLng = localStorage.getItem("longitude");
-
-  // if no choices, go to index
-  if (!storedCategory || !storedLocation) {
-    window.location.href = "index.html";
-  }
-
-  // Set correct SMAPI url variable based on location
-  switch (storedLocation) {
+function setURLParams() {
+  const { location, category, lat, lng, } = USER_CHOICES;
+  switch (location) {
     case "my-position":
-      API_CONFIG.method = "method=getFromLatLng"
-      chosenLocation = `lat=${usersLat}&lng=${usersLng}`;
+      API_PARAMS.method = "method=getFromLatLng"
+      API_PARAMS.location = `lat=${lat}&lng=${lng}`;
       break;
     case "öland":
-      chosenLocation = `provinces=${storedLocation}`;
+      API_PARAMS.location = `provinces=${location}`;
       break;
     default:
-      chosenLocation = `municipalities=${storedLocation} kommun`;
+      API_PARAMS.location = `municipalities=${location} kommun`;
+      break;
   }
 
-  // Set correct SMAPI url variable based on category
-  switch (storedCategory) {
+  switch (category) {
     case "food":
-      API_CONFIG.types = "types=food"
+      API_PARAMS.types = "types=food"
       break;
     case "nature":
-      // type = "types=activity"
-      API_CONFIG.description = "descriptions=älgpark,camping,naturreservat"
+      API_PARAMS.description = "descriptions=älgpark,camping,naturreservat"
       break;
     case "culture":
-      API_CONFIG.types = "types=attraction"
+      API_PARAMS.types = "types=attraction"
       break;
     case "activity":
-      API_CONFIG.types = "types=activity";
-      API_CONFIG.description = "descriptions=nöjespark,temapark,älgpark,djurpark,simhall,gokart,zipline,nöjescenter,paintballcenter,hälsocenter,golfbana,bowlinghall,klippklättring,skateboardpark"
+      API_PARAMS.types = "types=activity";
+      API_PARAMS.description = "descriptions=nöjespark,temapark,älgpark,djurpark,simhall,gokart,zipline,nöjescenter,paintballcenter,hälsocenter,golfbana,bowlinghall,klippklättring,skateboardpark"
       break;
   }
 }
 
 // Leon - get data from SMAPI
 async function getData() {
-  const { key, controller, method, types, description, sortBy } = API_CONFIG;
+  const { key, controller, method, location, types, description, sortBy } = API_PARAMS;
   const baseURL = `https://smapi.lnu.se/api/?api_key=${key}`;
-  const URLParams = `&controller=${controller}&${method}&${types}&${chosenLocation}&${description}`;
+  const URLParams = `&controller=${controller}&${method}&${types}&${location}&${description}&${sortBy}`;
   const URL = baseURL + URLParams;
   const response = await fetch(URL);
 
@@ -118,25 +113,31 @@ async function getData() {
 
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
-  const amountElem = document.querySelector("#sort p");
+  const { list } = DOM_ELEMENTS;
+  let { results } = APP_DATA;
+
   list.innerHTML = "";
-
+  const amountElem = document.querySelector("#sort p");
   amountElem.innerText = `Antal resultat: ${data.length} st`;
-  let fragment = document.createDocumentFragment();
 
-  resultsArray = [];
+  const fragment = document.createDocumentFragment();
+  
+  results.length = 0;
   data.forEach((result) => {
     let newLi = generateHTML(result);
-    resultsArray.push(newLi); // Save results in array
+    results.push(newLi); // Save results in array
     fragment.appendChild(newLi);
   });
+  console.log(results);
   list.appendChild(fragment);
 }
 
+// Print out the results from sorted array 
 function printSortedResults() {
+  const { list } = DOM_ELEMENTS;
   list.innerHTML = "";
   let fragment = document.createDocumentFragment();
-  resultsArray.forEach((result) => {
+  APP_DATA.results.forEach((result) => {
     fragment.appendChild(result);
   });
   list.appendChild(fragment);
@@ -148,7 +149,7 @@ function generateHTML(result) {
   let priceFrom = getPrice(result.price_range);
   let lat = result.lat;
   let lng = result.lng;
-  let distance = calculateDistance(usersLat, usersLng, lat, lng);
+  let distance = calculateDistance(USER_CHOICES.lat, USER_CHOICES.lng, lat, lng);
 
   // create all elements
   const li = document.createElement("li");
@@ -158,7 +159,7 @@ function generateHTML(result) {
     <div class="result-info">
       <h2>${result.name}</h2>
       <p>${result.description}</p>
-      ${usersLat && usersLng ? `<p>Avstånd: ${distance} Km</p>` : ""}
+      ${USER_CHOICES.lat && USER_CHOICES.lng ? `<p>Avstånd: ${distance} Km</p>` : ""}
     </div>
     <div class="result-extra-info">
       <div class="rating"><p>${score}/5</p></div>
@@ -167,25 +168,27 @@ function generateHTML(result) {
   </a>`;
 
   li.setAttribute("data-distance", distance);
-  li.setAttribute("data-price", priceFrom);
-  li.setAttribute("data-rating", result.rating);
   return li;
 }
 
 // Leon - Sort results
 function sortResults() {
-  resultsArray = resultsArray.sort((a, b) => {
-    const [dataA, dataB] = [a.dataset, b.dataset];
-    switch (sort.value) {
-      case "priceASC":
-        return dataA.price - dataB.price;
-      case "ratingASC":
-        return dataB.rating - dataA.rating;
-      case "distanceASC":
-        return dataA.distance - dataB.distance;
-    }
-  });
-  printSortedResults();
+  console.log(APP_DATA.results)
+  switch (DOM_ELEMENTS.sort.value) {
+    case "priceASC":
+      API_PARAMS.sortBy = "sort_in=ASC&order_by=price_range";
+      getData();
+      break;
+    case "ratingDESC":
+      API_PARAMS.sortBy = "sort_in=DESC&order_by=rating";
+      getData();
+      break;
+    case "distanceASC":
+      APP_DATA.results.sort((a, b) => a.dataset.distance - b.dataset.distance);
+      console.log(APP_DATA.results)
+      printSortedResults();
+      break;
+  }
 }
 
 // Leon - get first number of price_range
@@ -221,8 +224,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,
-    fromPage: pageName,
-    sortOption: sort.selectedIndex
+    fromPage: APP_DATA.pageName,
+    sortOption: DOM_ELEMENTS.sort.selectedIndex
   };
   sessionStorage.setItem("scrollPosition", JSON.stringify(scrollPosition));
 }
@@ -231,8 +234,8 @@ function saveScrollPosition() {
 function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
 
-  if (savedPosition.fromPage == pageName) {
-    sort.selectedIndex = savedPosition.sortOption;
+  if (savedPosition.fromPage == APP_DATA.pageName) {
+    DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
     window.scrollTo(0, savedPosition.scrollPosition);
     sortResults();
   }
