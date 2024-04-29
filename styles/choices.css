@@ -35,7 +35,7 @@ header {
 }
 
 .choices img {
-    background-color: brown;
+    background-color: #DADADA;
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 30px;
