@@ -11,7 +11,8 @@
   <link rel="stylesheet" href="styles/result.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="js/result.js"></script>
+  <script src="loader.js"></script>
+  <script src="js/result.js" defer></script>
   <script src="js/nav-bar.js"></script>
 </head>
 
@@ -46,6 +47,10 @@
   <main id="information">
     <h1>Sidan finns inte</h1>
   </main>
+
+  <div class="loader">
+    <img src="img/loader.gif" alt="loader">
+  </div>
 </body>
 
 </html>
