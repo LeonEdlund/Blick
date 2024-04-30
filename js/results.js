@@ -96,6 +96,8 @@ async function getData() {
   const baseURL = `https://smapi.lnu.se/api/?api_key=${key}`;
   const URLParams = `&controller=${controller}&${method}&${types}&${location}&${description}&${sortBy}`;
   const URL = baseURL + URLParams;
+
+  showLoader(DOM_ELEMENTS.list);
   const response = await fetch(URL);
 
   if (!response.ok) {
@@ -239,6 +241,11 @@ function scrollToLastPosition() {
     window.scrollTo(0, savedPosition.scrollPosition);
     sortResults();
   }
+}
+
+// Leon - adds a loader to the given element
+function showLoader(element) {
+  element.innerHTML = `<div class="loader"></div>`;
 }
 
 // Leon - Show error incase of smapi failure
