@@ -78,7 +78,7 @@ button {
   border-radius: 10px;
 }
 
-.loader {
+.loader-wrapper {
   position: fixed;
   top: 0;
   z-index: 10000;
@@ -87,6 +87,37 @@ button {
   background-color: white;
 }
 
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  margin: 5rem auto;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .loader-hidden {
   display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

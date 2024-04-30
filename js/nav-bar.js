@@ -23,11 +23,11 @@ function changeExploreBtn() {
   let storedLocationId = localStorage.getItem("lastLocationId");
 
   if (storedLocation) {
-    document.querySelector("#exploreBtn").href = storedLocation;
+    document.querySelector(".explore-btn").href = storedLocation;
   };
 
   if(storedLocationId) {
-    document.querySelector("#exploreBtn").href += storedLocationId;
+    document.querySelector(".explore-btn").href += storedLocationId;
   }
   
 }

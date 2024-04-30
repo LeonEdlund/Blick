@@ -13,35 +13,30 @@
 
 <body>
 	<nav class="back-div">
-		<button onclick="window.location = `categories.html`"><-</button>
+		<button onclick="window.location = `categories.html`">&lt-</button>
 	</nav>
-	<!-- <div id="price-range">
-		<button>$</button>
-		<button>$ $</button>
-		<button>$ $ $</button>
-	</div> -->
+
 	<nav class="menu-bar">
 		<a href="index.html">
-			<img src="img/icons/explore-active.svg" alt="utforska ikon">
-			</svg>
+			<img src="img/icons/explore-active.svg" alt="Gå till Utforska-sidan">
 			<p>Utforska</p>
 		</a>
 		<a href="budget.html">
-			<img src="img/icons/budget.svg" alt="budget ikon">
+			<img src="img/icons/budget.svg" alt="Gå till Budget-sidan">
 			<p>Budget</p>
 		</a>
 		<a href="wishlist.html">
-			<img src="img/icons/heart.svg" alt="hjärta ikon">
-			<p>sparade</p>
+			<img src="img/icons/heart.svg" alt="Gå till Sparade upplevelser">
+			<p>Sparade</p>
 		</a>
 	</nav>
+
 	<main>
-		<h1 id="page-title">Mat & Dryck</h1>
+		<h1 id="page-title"></h1>
 		<div id="sort">
 			<p>Antal resultat:</p>
 			<div class="custom-select">
-				<!-- <img src="img/sort.svg" alt="sorterings ikon" id="sort-icon"> -->
-				<select name="sort">
+				<select name="sort" aria-label="sortera resultat">
 					<option disabled selected>Sortera</option>
 					<option value="priceASC">Pris</option>
 					<option value="ratingDESC">Betyg</option>
@@ -52,23 +47,7 @@
 		</div>
 
 		<ul id="list-of-results">
-			<li>
-				<a href="#" class="list-item">
-					<img src="temporary-img/Artboard 1.svg" alt="">
-					<div class="result-info">
-						<h2>Alfons Pizzeria</h2>
-						<p>Typ av mat: Pizza</p>
-						<p>Avstånd: 0.3 Km</p>
-					</div>
-					<div class="result-extra-info">
-						<!-- <img src="" alt=""> -->
-						<div class="rating">
-							<p>3/5</p>
-						</div>
-						<p>Pris från: 100 Kr</p>
-					</div>
-				</a>
-			</li>
+			<div class="loader"></div>
 		</ul>
 	</main>
 

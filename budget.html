@@ -1,86 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/budget.css">
-    <script src="js/aBudgetScript.js" defer></script>
-    <script src="js/nav-bar.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Budget</title>
+	<link rel="stylesheet" href="styles/style.css">
+	<link rel="stylesheet" href="styles/budget.css">
+	<script src="js/aBudgetScript.js" defer></script>
+	<script src="js/nav-bar.js"></script>
 </head>
 
 <body id="budget">
+	<header>
+		<h1 class="sr-only">Budget</h1>
+		<p id="kvar">Kvar:</p>
+		<p id="av">Av:</p>
+		<button id="remove-trip">TA BORT</button>
+		<button id="change-budget">SÄTT BUDGET</button>
+	</header>
 
-    <header>
-        <h3 id="kvar">Kvar:</h3>
-        <h3 id="av">Av:</h3>
-        <button id="remove-trip">TA BORT</button>
-        <button id="change-budget">SÄTT BUDGET</button>
-    </header>
-    <hr>
-<nav class="menu-bar">
-    <a href="index.html">
-        <img src="img/icons/explore.svg" alt="utforska ikon">
-        </svg>
-        <p>Utforska</p>
-    </a>
-    <a href="budget.html">
-        <img src="img/icons/budget-active.svg" alt="budget ikon">
-        <p>Budget</p>
-    </a>
-    <a href="wishlist.html">
-        <img src="img/icons/heart.svg" alt="hjärta ikon">
-        <p>sparade</p>
-    </a>
-</nav>
-    <div class="cate">
-        <h2>UTGIFTER</h2>
-        <ul id="general">
-        </ul>
-    </div>
-    <hr>
-    <div class="add">
-        <button id="new-spend-btn">+</button>
-    </div>
-    <div class="expenditure">
-        <ul id="ul">
-            
-        </ul>
-    </div>
+	<nav class="menu-bar">
+		<a href="index.html" class="explore-btn">
+			<img src="img/icons/explore.svg" alt="Gå till Utforska-sidan">
+			<p>Utforska</p>
+		</a>
+		<a href="budget.html">
+			<img src="img/icons/budget-active.svg" alt="Gå till Budget-sidan">
+			<p>Budget</p>
+		</a>
+		<a href="wishlist.html">
+			<img src="img/icons/heart.svg" alt="Gå till Sparade upplevelser">
+			<p>Sparade</p>
+		</a>
+	</nav>
 
-    <div class="dialog">
-        <dialog id="new-trip-dialog">
-            <label for="belopp">Skriv in din budget för resan
-                <input type="text" id="money-to-spend">
-                <button id="save">spara</button>
-            </label>
-        </dialog>
-        <dialog id="new-spend-dialog">
-            <button id="exit">Stäng</button>
-            <label for="name">
-                Namn
-                <input type="text" id="name">
-            </label>
-            <label for="amount">
-                Pris
-                <input type="text" id="amount">
-            </label>
-            <label for="accommodation">boende
-                <input type="radio" id="accommodation" name="option" class="option">
-            </label><label for="trip">resa
-                <input type="radio" id="trip" name="option" class="option">
-            </label><label for="food-drink">Mat och Dryck
-                <input type="radio" id="food-drink" name="option" class="option">
-            </label><label for="activity">Aktiviteter
-                <input type="radio" id="activity" name="option" class="option">
-            </label><label for="other">övrigt
-                <input type="radio" id="other" name="option" class="option">
-            </label>
-            <button id="close">Lägg till</button>
-        </dialog>
-    </div>
+
+	<main>
+		<section class="cate">
+			<h2>UTGIFTER</h2>
+			<ul id="general">
+			</ul>
+		</section>
+		<hr>
+		<div class="add">
+			<button id="new-spend-btn">+</button>
+		</div>
+
+		<section class="expenditure">
+			<ul id="ul"></ul>
+		</section>
+	</main>
+
+	<dialog id="new-trip-dialog">
+		<label for="belopp">
+			Skriv in din budget för resan
+			<input type="text" id="money-to-spend">
+			<button id="save">spara</button>
+		</label>
+	</dialog>
+
+	<dialog id="new-spend-dialog">
+		<button id="exit">Stäng</button>
+		<label for="name">
+			Namn
+			<input type="text" id="name">
+		</label>
+		<label for="amount">
+			Pris
+			<input type="text" id="amount">
+		</label>
+		<label for="accommodation">
+			Boende
+			<input type="radio" id="accommodation" name="option" class="option">
+		</label>
+		<label for="trip">
+			Resa
+			<input type="radio" id="trip" name="option" class="option">
+		</label>
+		<label for="food-drink">
+			Mat och Dryck
+			<input type="radio" id="food-drink" name="option" class="option">
+		</label>
+		<label for="activity">
+			Aktiviteter
+			<input type="radio" id="activity" name="option" class="option">
+		</label>
+		<label for="other">
+			övrigt
+			<input type="radio" id="other" name="option" class="option">
+		</label>
+		<button id="close">Lägg till</button>
+	</dialog>
+
 </body>
 
 </html>

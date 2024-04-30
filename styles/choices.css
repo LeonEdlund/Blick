@@ -4,7 +4,6 @@ header {
     background-size: cover;
     height: 31vh;
     position: relative;
-
     font-size: 1rem;
 }
 
@@ -27,11 +26,6 @@ header {
 .choices a {
     text-align: center;
     color: var(--main-text-color);
-}
-
-.choices h2 {
-    font-weight: 400;
-    font-size: 1rem;
 }
 
 .choices img {
