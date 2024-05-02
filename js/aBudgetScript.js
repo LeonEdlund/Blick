@@ -3,19 +3,19 @@ let amountSpent = 0;//ALEX -  hur mycket användaren spenderat
 let minBudget = 0;//ALEX - Användarens budget
 let fromResultOne;
 let fromResultTwo;
+let names = []
 //ALEX-initiering av programmet
 function init() {
     getStorage();
+    getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
-    if(!fromResult == null){
-        fromResultFunc()
-    }
+    fromResultFunc()
 
     let newTripBtn = document.querySelector("#change-budget")
     newTripBtn.addEventListener("click", newTripFunc)
 
     let newSpendBtn = document.querySelector("#new-spend-btn")
-    newSpendBtn.addEventListener("click", newSpendFunc)
+    newSpendBtn.addEventListener("click", function(){ newSpendFunc(false)})
 
     let removeTrip = document.querySelector("#remove-trip")
     removeTrip.addEventListener("click", function(){location.reload()})
@@ -42,7 +42,7 @@ function newTripFunc(wrong) {
 //ALEX - Kontrollerar ifall användaren skrivit in siffror i dialogen och kallar därefter på adekvat funktion 
 function checkIfNumber(close, input, newBudget) {
     close.close()
-
+    
     let number = parseInt(input.value)
 
     if (isNaN(number)) {
@@ -91,25 +91,29 @@ function setBudget() {
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
-    name.value = ""
+    name.addEventListener("keydown", function(){searchFunc(name.value)})
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function(){newSpendDialog.close()})
     let input = document.querySelector("#amount")
+    input.value = ""
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
-
+    if(wrong==false){
+        name.value = ""
+        input.style.backgroundColor = "";
+        }
     if (wrong == true) {
         input.style.backgroundColor = "red";
     }
     if (wrong = fromResult){
-        let name = document.querySelector("#name")
+       let name = document.querySelector("#name")
         let radio = document.querySelector(fromResultTwo)
         radio.checked = true;
-        name.value = fromResultOne
+         name.value = fromResultOne
 
     }
 }
@@ -189,11 +193,13 @@ function removeBtnFunc(remove, e){
 }
 //hämmtar sessionStorage som sparas i result.html och startar sedan inläggningen av denna i budgeten
 function fromResultFunc(){
+    if(fromResult == "null"){
+        return;
+    }
     let storageArray = fromResult.split("&")
     fromResultOne = storageArray[0]
     fromResultTwo = "#"+storageArray[1]
-    console.log(fromResultTwo)
-    sessionStorage.setItem("fromResult", "")
+    sessionStorage.setItem("fromResult", null)
     newSpendFunc(fromResult)
 
 }
@@ -223,5 +229,32 @@ function getStorage(){
         console.log(spendings)
         listSpednings()
         }
+    }
+}
+
+async function getSearchData() {
+    let response = await fetch("https://smapi.lnu.se/api/?api_key=KZmupnUS&controller=establishment&method=getAll")
+    let responseTwo = await response.json()
+    let data = responseTwo.payload
+
+    for(let u = 0; u < data.length; u++){
+        names.push(data[u].name)
+    }
+  }
+
+function searchFunc(input){
+    let search = document.querySelector("#search-results")
+    search.innerHTML = "";
+    for(let p = 0; p<names.length; p++){
+        if(names[p].includes(input) == true){
+            search.innerHTML += "<li>" + names[p] + "</li>";
+        }
+    }
+    let searchResults = document.querySelectorAll("#search-results li")
+    for (let b = 0; b < searchResults.length; b++){
+        searchResults[b].addEventListener("click", function(){
+            document.querySelector("#name").value = searchResults[b].innerHTML
+            search.innerHTML = ""
+        })
     }
 }
