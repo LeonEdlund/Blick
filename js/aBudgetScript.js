@@ -7,7 +7,7 @@ let fromResultTwo;
 function init() {
     getStorage();
     fromResult = sessionStorage.getItem("fromResult")
-    if(fromResult.length > 0){
+    if(!fromResult == null){
         fromResultFunc()
     }
 
