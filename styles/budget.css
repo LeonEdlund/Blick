@@ -33,11 +33,6 @@ header {
     font-size: 1rem;
 }
 
-.cate {
-    text-align: center;
-    margin: 20px;
-}
-
 dialog {
     position: fixed;
     top: 50%;
@@ -65,23 +60,15 @@ dialog button {
     margin-top: 20px;
 }
 
-.expenditure {
-    margin: 20px;
-}
-
-#general,
-#ul {
-    list-style: none;
-}
-
 #ul li {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1.5fr;
-    background-color: rgb(195, 195, 195);
-    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: rgb(231, 231, 231);
     padding: 20px;
-    margin-bottom: 1em;
-    border-radius: 15px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 #new-spend-btn {
@@ -100,26 +87,28 @@ dialog button {
 
 
 
-#categories-wrapper {
+.categories-wrapper {
     margin-top: 1rem;
     padding: 0 30px;
+    padding-bottom: 1rem;
     border-bottom: 1px solid rgb(198, 198, 198);
+    text-align: center;
 }
 
-.categories li {
+.cate li {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 20px 0px;
 }
 
-.categories li div {
+.cate li div {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-grow: 2;
 }
 
-.categories li img {
+.cate li img {
     height: 50px;
     background-color: #FC8D08;
     border-radius: 50%;
@@ -135,20 +124,4 @@ dialog button {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 1rem;
-}
-
-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70vw;
-    height: 50vh;
-    padding: 20px;
-    flex-direction: column;
-}
-
-fieldset {
-    border: none;
-    margin-bottom: 1em;
 }

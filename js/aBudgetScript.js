@@ -162,17 +162,52 @@ function calculatePerCategory() {
                 break;
         }
     }
+    
     let general = document.querySelector("#general");
     general.innerHTML = 
-    "<li> Boende <p>" + catOne + "</p></li><li> Resa <p>" + catTwo + "</p></li><li> Mat och Dryck <p>" + catThree + "</p></li><li> Aktiviteter <p>" + catFour + "</p></li><li> Övrigt <p>" + catFive + "</p></li>"
+    `<li>
+        <div>
+            <img src="img/culture.svg" alt=""></img>
+            <p>Boende</p>
+        </div>
+        <p class="spent">${catOne} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/culture.svg" alt=""></img>
+            <p>Resa</p>
+        </div>
+        <p class="spent">${catTwo} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/food.svg" alt=""></img>
+            <p>Mat & Dryck</p>
+        </div>
+        <p class="spent">${catThree} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/activities.svg" alt=""></img>
+            <p>Aktiviteter</p>
+        </div>
+        <p class="spent">${catFour} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/icons/budget.svg" alt=""></img>
+            <p>Övrigt</p>
+        </div>
+        <p class="spent">${catFive} Kr</p>
+    </li>`
 
-    let generalCat = document.querySelectorAll("#general li p")
-    // for (let e = 0; e < generalCat.length; e++) {
-    //     if (generalCat[e].innerHTML == 0) {
-    //         generalCat[e].parentElement.style.display = "none";
-    //     }
-    // }
-
+    let generalCat = document.querySelectorAll(".spent");
+    
+    for (let e = 0; e < generalCat.length; e++) {
+        if (generalCat[e].innerHTML == "0 Kr") {
+            generalCat[e].parentElement.style.display = "none";
+        };
+    };
 }
 
 function removeBtnFunc(remove, e){
