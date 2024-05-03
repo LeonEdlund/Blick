@@ -136,14 +136,14 @@ function printResults(data) {
 
 // Leon - Generate html for results from SMAPI
 function generateHTML(result) {
-  let score = Math.round(result.rating);
-  let priceFrom = getPrice(result.price_range);
-
+  const score = Math.round(result.rating);
+  const priceFrom = getPrice(result.price_range);
+  const img = chooseImg(result.type);
   // create all elements
   const li = document.createElement("li");
   li.innerHTML = `
   <a href="result.html?id=${result.id}" class="list-item">
-    <img src="temporary-img/Artboard 1.svg" alt="">
+    <img src="${img}" alt="">
     <div class="result-info">
       <h2>${result.name}</h2>
       <p>${result.description}</p>
@@ -188,6 +188,16 @@ function checkSortOptions() {
   }
 }
 
+function chooseImg() {
+  let types = {
+    food: "img/food.svg",
+    nature: "img/nature.svg",
+    activity: "img/activities.svg",
+    culture: "img/culture.svg"
+  }
+
+  return types[USER_CHOICES.category];
+}
 
 // Leon - adds a loader to the given element
 function showLoader(element) {
@@ -217,7 +227,8 @@ function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
   
   if (savedPosition.fromPage == APP_DATA.pageName) {
-    DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    //DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    //sortResults();
     window.scrollTo(0, savedPosition.scrollPosition);
   }
 }
