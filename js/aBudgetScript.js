@@ -193,13 +193,13 @@ function removeBtnFunc(remove, e){
 }
 //hämmtar sessionStorage som sparas i result.html och startar sedan inläggningen av denna i budgeten
 function fromResultFunc(){
-    if(fromResult == "null"){
+    if(fromResult == null){
         return;
     }
     let storageArray = fromResult.split("&")
     fromResultOne = storageArray[0]
     fromResultTwo = "#"+storageArray[1]
-    sessionStorage.setItem("fromResult", null)
+    sessionStorage.setItem("fromResult", "")
     newSpendFunc(fromResult)
 
 }
