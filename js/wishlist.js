@@ -6,7 +6,7 @@ function init() {
 }
 window.addEventListener("load", init);
 
-// Shows the wishlist
+// Jesper - Shows the wishlist
 function showWishList() {
     wList.innerHTML = "";
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
@@ -17,7 +17,7 @@ function showWishList() {
     });
 }
 
-// Seraches and removes element
+// Jesper - Seraches and removes element
 function remove(itemId) {
     index = -1;
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));

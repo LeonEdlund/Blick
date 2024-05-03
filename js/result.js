@@ -89,7 +89,7 @@ function resultToBudget(data) {
   window.location.href = "budget.html"
 }
 
-// Jesper
+// Jesper - Saves data in localStorage
 function favorit(data) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   let found = false;

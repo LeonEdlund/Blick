@@ -1,5 +1,6 @@
 const key = "KZmupnUS";
 let dataArray = [];
+let types = "types=attraction,activity,food"
 
 function init() {
     document.getElementById("searchbar").addEventListener("input", searchFunc);
@@ -7,19 +8,20 @@ function init() {
 }
 window.addEventListener("load", init);
 
+// Jesper - Saves data from SMAPI in an array
 async function getData() {
-    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getall`);
+    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getall&${types}`);
 
-    if (!response.ok){
+    if (!response.ok) {
         console.log("Fel!");
         return;
     }
 
     const apiData = await response.json();
     dataArray = apiData.payload;
-
 }
 
+// Jesper - Compare users input with names in the array
 async function searchFunc() {
     const searchTerm = document.getElementById("searchbar").value.toLowerCase();
 
@@ -32,14 +34,13 @@ async function searchFunc() {
         const item = dataArray[i];
 
         if (item.name && item.name.toLowerCase().includes(searchTerm)) {
-            listItems += `<li>${item.name}</li>`;
+            listItems += `<li><a href="result.html?id=${item.id}">${item.name}</a></li>`;
         }
-        if (searchTerm == ""){
+        if (searchTerm == "") {
             listItems = "";
         }
     }
     resultsDiv.innerHTML = listItems || "<li>Inget hittades</li>";
-    
 
 }
 
