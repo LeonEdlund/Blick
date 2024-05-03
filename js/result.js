@@ -1,22 +1,10 @@
 const key = "KZmupnUS"; // API-Key
 
-// variables for map
-let lat;
-let lng;
-const zoom = 13;
-
-// HTML-elements
-let headerElem;
-let mainElem;
-
 // Initialize
 window.addEventListener("load", init);
 
 function init() {
-  let id = Number(getId("id"));
-  headerElem = document.querySelector("header");
-  mainElem = document.querySelector("#information");
-
+  let id = parseInt(getId("id"));
   getData(id);
 }
 
@@ -38,10 +26,8 @@ async function getData(id) {
   let data = await response.json();
   if (data.header.status === `OK`) {
     data = data.payload[0];
-    lat = data.lat;
-    lng = data.lng;
     generateHTML(data);
-    showMap();
+    showMap(data.lat, data.lng);
   } else {
     console.log(data.header);
   }
@@ -69,8 +55,8 @@ function generateHTML(data) {
     <p>${data.text}</p>
     `;
 
-    headerElem.innerHTML = headerHtml;
-    mainElem.innerHTML = mainHtml;
+    document.querySelector("header").innerHTML = headerHtml;
+    document.querySelector("#information").innerHTML = mainHtml;
 
     document.querySelector("#favorit").addEventListener("click", () => {
       favorit(data);
@@ -82,7 +68,8 @@ function generateHTML(data) {
 }
 
 // Leon - Show leaflet map
-function showMap() {
+function showMap(lat, lng) {
+  const zoom = 13;
   var map = L.map('map').setView([lat, lng], zoom);
   var marker = L.marker([lat, lng]).addTo(map);
 
@@ -94,7 +81,7 @@ function showMap() {
 
 //Alexander - användaren kan lägga in en utgift driekt via result
 function resultToBudget(data) {
-  let category = localStorage.getItem("type")
+  let category = localStorage.getItem("type");
   if (category == "food") {
     category = "food-drink"
   } else { category = "activity" }
@@ -102,7 +89,7 @@ function resultToBudget(data) {
   window.location.href = "budget.html"
 }
 
-// Jesper
+// Jesper - Saves data in localStorage
 function favorit(data) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   let found = false;

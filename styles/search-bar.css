@@ -1,0 +1,17 @@
+#searchbar {
+    margin-top: 20px;
+    width: 100%;
+}
+
+#results {
+    width: 100%;
+    list-style-type: none;
+    max-height: 150px;
+    overflow-y: scroll;
+    padding-top: 5px;
+}
+
+#results li {
+    padding: 2px;
+    background-color: antiquewhite;
+}

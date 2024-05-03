@@ -7,8 +7,10 @@
   <title>Homepage</title>
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/choices.css">
+  <link rel="stylesheet" href="styles/search-bar.css">
   <script src="js/save-data.js"></script>
   <script src="js/nav-bar.js"></script>
+  <script src="js/search-bar.js"></script>
 </head>
 
 <body id="cities">
@@ -32,6 +34,10 @@
   </nav>
 
   <main>
+    <div class="serch-box">
+      <input type="text" name="search" id="searchbar">
+      <ul id="results"></ul>
+    </div>
     <ul class="cities choices">
       <li>
         <a href="categories.html" id="my-position">
