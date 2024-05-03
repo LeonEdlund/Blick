@@ -128,7 +128,7 @@ function listSpednings() {
         let c = spendings[b];
         console.log(b)
         console.log(c)
-        ul.innerHTML += "<li class='" + c.category + "'><h3>" + c.name + "</h3>" + " För: " + c.price + "<button class='remove'>Ta bort</button></li>"
+        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr"+ "</div>" +  "<button class='remove'>Ta bort</button></li>"
         amountSpent += c.price
     }
     removeBtnFunc()
