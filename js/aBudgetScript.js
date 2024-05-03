@@ -86,7 +86,7 @@ function setBudget() {
     let budgetElemLeft = document.querySelector("#av")
     budgetElemLeft.innerHTML = "Av: " + minBudget;
     let budgetElem = document.querySelector("#kvar")
-    budgetElem.innerHTML = "Kvar: " + (minBudget - amountSpent)
+    budgetElem.innerHTML = (minBudget - amountSpent) + " Kr";
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
@@ -163,16 +163,15 @@ function calculatePerCategory() {
         }
     }
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> Boende <p>" + catOne + "</p></li><li> Resa <p>" + catTwo + "</p></li><li> Mat och Dryck <p>" + catThree + "</p></li><li> Aktiviteter <p>" + catFour + "</p></li><li> Övrigt <p>" + catFive + "</p></li>"
+    general.innerHTML = 
+    "<li> Boende <p>" + catOne + "</p></li><li> Resa <p>" + catTwo + "</p></li><li> Mat och Dryck <p>" + catThree + "</p></li><li> Aktiviteter <p>" + catFour + "</p></li><li> Övrigt <p>" + catFive + "</p></li>"
 
     let generalCat = document.querySelectorAll("#general li p")
-    console.log(generalCat)
-    for (let e = 0; e < generalCat.length; e++) {
-        console.log(generalCat[e].innerHTML)
-        if (generalCat[e].innerHTML == 0) {
-            generalCat[e].parentElement.style.display = "none";
-        }
-    }
+    // for (let e = 0; e < generalCat.length; e++) {
+    //     if (generalCat[e].innerHTML == 0) {
+    //         generalCat[e].parentElement.style.display = "none";
+    //     }
+    // }
 
 }
 

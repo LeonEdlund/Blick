@@ -1,18 +1,36 @@
-body, html {
-    width: 100%;
-    height: 100%;
-}
-
 header {
-    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
     background-color: #495f37;
-    text-align: center;
-    font-size: 1.5rem;
     color: white;
+    padding: 6rem 0;
 }
 
 #kvar {
-    padding-top: 50px;
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+#av {
+    font-weight: 400;
+}
+
+#change-budget {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+
+    border: 3px solid white;
+    border-radius: 10px;
+    width: min-content;
+
+    text-transform: capitalize;
+    font-size: 1rem;
 }
 
 .cate {
@@ -56,7 +74,7 @@ dialog button {
     list-style: none;
 }
 
- #ul li {
+#ul li {
     display: grid;
     grid-template-columns: 1fr 2fr 1.5fr;
     background-color: rgb(195, 195, 195);
@@ -67,16 +85,70 @@ dialog button {
 }
 
 #new-spend-btn {
+    margin-top: 2rem;
+    font-size: 5rem;
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 1rem;
     background-color: #789373;
     color: white;
-    width: 41vh;
-    height: 9vh;
-    font-size: 2rem;
-    border-radius: 15px;
-
 }
 
-.add {
-    text-align: center;
-    padding-top: 2vh;
+
+
+
+
+
+
+#categories-wrapper {
+    margin-top: 1rem;
+    padding: 0 30px;
+    border-bottom: 1px solid rgb(198, 198, 198);
+}
+
+.categories li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.categories li div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 2;
+}
+
+.categories li img {
+    height: 50px;
+    background-color: #FC8D08;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+#expenses-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: rgb(231, 231, 231);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70vw;
+    height: 50vh;
+    padding: 20px;
+    flex-direction: column;
+}
+
+fieldset {
+    border: none;
+    margin-bottom: 1em;
 }
