@@ -131,7 +131,6 @@ function printResults(data) {
     results.push(newLi); // Save results in array
     fragment.appendChild(newLi);
   });
-  console.log(results);
   list.appendChild(fragment);
 }
 
@@ -180,6 +179,30 @@ function getPrice(priceRange) {
   }
 }
 
+function checkSortOptions() {
+  if (API_PARAMS.method == `method=getFromLatLng`) {
+    const option = document.createElement("option");
+    option.value = "distanceASC";
+    option.textContent = "Avstånd"
+    DOM_ELEMENTS.sort.appendChild(option);
+  }
+}
+
+
+// Leon - adds a loader to the given element
+function showLoader(element) {
+  element.innerHTML = `<div class="loader"></div>`;
+}
+
+// Leon - Show error incase of smapi failure
+function errorMessage() {
+  const main = document.querySelector("main");
+  main.innerHTML = `
+  <h1>Något Gick Fel</h1>
+  <a href="index.html">Gå tillbaka till startsidan</a>
+  `;
+}
+
 function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,
@@ -192,33 +215,9 @@ function saveScrollPosition() {
 // Leon - scroll to last position and save sorting
 function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
-
+  
   if (savedPosition.fromPage == APP_DATA.pageName) {
     DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
     window.scrollTo(0, savedPosition.scrollPosition);
-    sortResults();
-  }
-}
-
-// Leon - adds a loader to the given element
-function showLoader(element) {
-  element.innerHTML = `<div class="loader"></div>`;
-}
-
-// Leon - Show error incase of smapi failure
-function errorMessage() {
-  const main = document.querySelector("main");
-  main.innerHTML = `
-    <h1>Något Gick Fel</h1>
-    <a href="index.html">Gå tillbaka till startsidan</a>
-  `;
-}
-
-function checkSortOptions() {
-  if (API_PARAMS.method == `method=getFromLatLng`) {
-    const option = document.createElement("option");
-    option.value = "distanceASC";
-    option.textContent = "Avstånd"
-    DOM_ELEMENTS.sort.appendChild(option);
   }
 }
