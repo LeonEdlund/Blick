@@ -86,7 +86,7 @@ function setBudget() {
     let budgetElemLeft = document.querySelector("#av")
     budgetElemLeft.innerHTML = "Av: " + minBudget;
     let budgetElem = document.querySelector("#kvar")
-    budgetElem.innerHTML = "Kvar: " + (minBudget - amountSpent)
+    budgetElem.innerHTML = (minBudget - amountSpent) + " Kr";
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
@@ -132,7 +132,7 @@ function listSpednings() {
         let c = spendings[b];
         console.log(b)
         console.log(c)
-        ul.innerHTML += "<li class='" + c.category + "'><h3>" + c.name + "</h3>" + " För: " + c.price + "<button class='remove'>Ta bort</button></li>"
+        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr"+ "</div>" +  "<button class='remove'>Ta bort</button></li>"
         amountSpent += c.price
     }
     removeBtnFunc()
@@ -166,18 +166,52 @@ function calculatePerCategory() {
                 break;
         }
     }
+    
     let general = document.querySelector("#general");
-    general.innerHTML = "<li> Boende <p>" + catOne + "</p></li><li> Resa <p>" + catTwo + "</p></li><li> Mat och Dryck <p>" + catThree + "</p></li><li> Aktiviteter <p>" + catFour + "</p></li><li> Övrigt <p>" + catFive + "</p></li>"
+    general.innerHTML = 
+    `<li>
+        <div>
+            <img src="img/culture.svg" alt=""></img>
+            <p>Boende</p>
+        </div>
+        <p class="spent">${catOne} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/culture.svg" alt=""></img>
+            <p>Resa</p>
+        </div>
+        <p class="spent">${catTwo} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/food.svg" alt=""></img>
+            <p>Mat & Dryck</p>
+        </div>
+        <p class="spent">${catThree} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/activities.svg" alt=""></img>
+            <p>Aktiviteter</p>
+        </div>
+        <p class="spent">${catFour} Kr</p>
+    </li>
+    <li>
+        <div>
+            <img src="img/icons/budget.svg" alt=""></img>
+            <p>Övrigt</p>
+        </div>
+        <p class="spent">${catFive} Kr</p>
+    </li>`
 
-    let generalCat = document.querySelectorAll("#general li p")
-    console.log(generalCat)
+    let generalCat = document.querySelectorAll(".spent");
+    
     for (let e = 0; e < generalCat.length; e++) {
-        console.log(generalCat[e].innerHTML)
-        if (generalCat[e].innerHTML == 0) {
+        if (generalCat[e].innerHTML == "0 Kr") {
             generalCat[e].parentElement.style.display = "none";
-        }
-    }
-
+        };
+    };
 }
 
 function removeBtnFunc(remove, e){
