@@ -97,6 +97,7 @@ function favorit(data) {
 
   if (!isSaved) {
     changeIcon("#favorit", true);
+    showFeedback()
     wishlist.push(data);
   } else {
     changeIcon("#favorit", false);
