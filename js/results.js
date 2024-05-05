@@ -64,7 +64,7 @@ function setURLParams() {
   switch (location) {
     case "my-position":
       API_PARAMS.method = "method=getFromLatLng"
-      API_PARAMS.location = `lat=${lat}&lng=${lng}`;
+      API_PARAMS.location = `&lat=${lat}&lng=${lng}`;
       break;
     case "öland":
       API_PARAMS.location = `provinces=${location}`;
@@ -143,7 +143,7 @@ function printResults(data) {
 function generateHTML(result) {
   const score = Math.round(result.rating);
   const priceFrom = getPrice(result.price_range);
-  const img = chooseImg(result.type);
+  const img = chooseImg(result.description);
   // create all elements
   const li = document.createElement("li");
   li.innerHTML = `
@@ -193,17 +193,6 @@ function checkSortOptions() {
   }
 }
 
-function chooseImg() {
-  let types = {
-    food: "img/food.svg",
-    nature: "img/nature.svg",
-    activity: "img/activities.svg",
-    culture: "img/culture.svg"
-  }
-
-  return types[USER_CHOICES.category];
-}
-
 // Leon - adds a loader to the given element
 function showLoader(element) {
   element.innerHTML = `<div class="loader"></div>`;
@@ -230,7 +219,7 @@ function saveScrollPosition() {
 // Leon - scroll to last position and save sorting
 function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
-  
+
   if (savedPosition.fromPage == APP_DATA.pageName) {
     //DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
     //sortResults();
