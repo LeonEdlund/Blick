@@ -111,6 +111,7 @@ async function getData() {
 
   const data = await response.json();
   if (data.header.status === `OK`) {
+    DOM_ELEMENTS.list.classList.add("fade-in");
     printResults(data.payload);
   } else {
     console.log(data.header);
