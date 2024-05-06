@@ -37,11 +37,17 @@ async function getData(id) {
 // Leon - Generate HTML
 function generateHTML(data) {
   if (data) {
+
+
     headerHtml =
       `<div id="header-left-side">
       <h1>${data.name}</h1>
       <h2>${data.description}</h2>
       <p>Prisklass: ${data.price_range} Kr</p>
+      <div id="contact">
+      ${data.website ? `<a href="${data.website}" target="_blank">Hemsida</a>` : ""}
+      ${data.phone_number ? `<a href="tel:${data.phone_number}">Ring</a>` : ""}
+    </div>
     </div>
     <div id="header-right-side">
       <button id="favorit"><img src="img/icons/heart.svg"></button>
@@ -50,10 +56,12 @@ function generateHTML(data) {
       </div>
     </div>`;
 
+    const information = data.text ? `<h2>Information</h2><p>${data.text}</p>` : "";
     mainHtml =
-      `<button id=toBudget>Lägg till i din budget</button>
-    <h2>Information</h2>
-    <p>${data.text}</p>
+    `
+    <button id=toBudget>Lägg till i din budget</button>
+    ${information}
+
     `;
 
     document.querySelector("header").innerHTML = headerHtml;
@@ -115,5 +123,5 @@ function checkIfSaved(id) {
 
 function changeIcon(icon, isSaved) {
   heartIcon = document.querySelector(`${icon} img`);
-  heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg"; 
+  heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
 }
