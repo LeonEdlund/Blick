@@ -1,6 +1,6 @@
 const key = "KZmupnUS";
 let dataArray = [];
-let types = "types=attraction,activity,food"
+let cityArray = [];
 
 function init() {
     document.getElementById("searchbar").addEventListener("input", searchFunc);
@@ -10,7 +10,7 @@ window.addEventListener("load", init);
 
 // Jesper - Saves data from SMAPI in an array
 async function getData() {
-    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getall&${types}`);
+    const response = await fetch(`https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getall`);
 
     if (!response.ok) {
         console.log("Fel!");
@@ -19,22 +19,24 @@ async function getData() {
 
     const apiData = await response.json();
     dataArray = apiData.payload;
+
+    for (let i = 0; i < dataArray.length; i++) {
+        if (!cityArray.includes(dataArray[i].municipality)) {
+            cityArray.push(dataArray[i].municipality);
+        }
+    }
 }
 
 // Jesper - Compare users input with names in the array
 async function searchFunc() {
     const searchTerm = document.getElementById("searchbar").value.toLowerCase();
 
-    console.log(dataArray);
-
     const resultsDiv = document.getElementById("results");
     let listItems = "";
 
-    for (let i = 0; i < dataArray.length; i++) {
-        const item = dataArray[i];
-
-        if (item.name && item.name.toLowerCase().includes(searchTerm)) {
-            listItems += `<li><a href="result.html?id=${item.id}">${item.name}</a></li>`;
+    for (let i = 0; i < cityArray.length; i++) {
+        if (cityArray[i] && cityArray[i].toLowerCase().includes(searchTerm)) {
+            listItems += `<li><a href="categories.html" onclick='saveData("${cityArray[i]}")'>${cityArray[i]}</a></li>`;
         }
         if (searchTerm == "") {
             listItems = "";
@@ -42,5 +44,9 @@ async function searchFunc() {
     }
     resultsDiv.innerHTML = listItems || "<li>Inget hittades</li>";
 
+}
+
+function saveData(city) {
+    localStorage.setItem("location", `cities=${city}`)
 }
 
