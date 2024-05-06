@@ -21,8 +21,8 @@ async function getData() {
     dataArray = apiData.payload;
 
     for (let i = 0; i < dataArray.length; i++) {
-        if (!cityArray.includes(dataArray[i].municipality)) {
-            cityArray.push(dataArray[i].municipality);
+        if (!cityArray.includes(dataArray[i].city)) {
+            cityArray.push(dataArray[i].city);
         }
     }
 }
@@ -47,6 +47,10 @@ async function searchFunc() {
 }
 
 function saveData(city) {
-    localStorage.setItem("location", `cities=${city}`)
+    const cityToSave = {
+        type: "search",
+        param: `cities=${city}`
+    }
+    localStorage.setItem("location", JSON.stringify(cityToSave));
 }
 

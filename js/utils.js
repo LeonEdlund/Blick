@@ -17,8 +17,7 @@ function showFeedback() {
 
 function chooseImg(description) {
   description = description.toLowerCase()
-  console.log(description)
-
+  
   let descriptions = {
     // Food
     pizzeria: "img/icons/temp-icons/pizza.svg",

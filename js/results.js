@@ -1,5 +1,5 @@
 const USER_CHOICES = {
-  location: localStorage.getItem("location"),
+  location: JSON.parse(localStorage.getItem("location")),
   category: localStorage.getItem("type"),
   lat: localStorage.getItem("latitude"),
   lng: localStorage.getItem("longitude")
@@ -21,7 +21,6 @@ let API_PARAMS = {
 }
 
 let APP_DATA = {
-  results: [],
   pageName: ""
 }
 
@@ -61,21 +60,26 @@ function changeTitle() {
 
 function setURLParams() {
   const { location, category, lat, lng, } = USER_CHOICES;
-  switch (location) {
-    case "my-position":
-      API_PARAMS.method = "method=getFromLatLng"
-      API_PARAMS.location = `&lat=${lat}&lng=${lng}`;
-      break;
-    case "öland":
-      API_PARAMS.location = `provinces=${location}`;
-      break;
-    case "gränna":
-    case "visingsö":
-      API_PARAMS.location = `cities=${location}`;
-      break;
-    default:
-      API_PARAMS.location = `municipalities=${location} kommun`;
-      break;
+
+  if(location.type == "search"){
+    API_PARAMS.location = location.param;
+  } else {
+    switch (location.param) {
+      case "my-position":
+        API_PARAMS.method = "method=getFromLatLng"
+        API_PARAMS.location = `&lat=${lat}&lng=${lng}`;
+        break;
+      case "öland":
+        API_PARAMS.location = `provinces=${location.param}`;
+        break;
+      case "gränna":
+      case "visingsö":
+        API_PARAMS.location = `cities=${location.param}`;
+        break;
+      default:
+        API_PARAMS.location = `municipalities=${location.param} kommun`;
+        break;
+    }
   }
 
   switch (category) {
@@ -122,7 +126,6 @@ async function getData() {
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
   const { list } = DOM_ELEMENTS;
-  let { results } = APP_DATA;
 
   list.innerHTML = "";
   const amountElem = document.querySelector("#sort p");
@@ -130,10 +133,8 @@ function printResults(data) {
 
   const fragment = document.createDocumentFragment();
 
-  results.length = 0;
   data.forEach((result) => {
     let newLi = generateHTML(result);
-    results.push(newLi); // Save results in array
     fragment.appendChild(newLi);
   });
   list.appendChild(fragment);

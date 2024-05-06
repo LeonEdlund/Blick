@@ -1,6 +1,4 @@
 function init() {
-  const storageLocationName = "location";
-  const storageTypeName = "type";
   const pageId = document.querySelector("body").id 
   const choices = document.querySelectorAll(".choices a");
   
@@ -14,14 +12,15 @@ function init() {
     element.addEventListener("click", () => {
       switch (pageId) {
         case "cities":
-          let location = element.id;
-          localStorage.removeItem(storageLocationName);
-          localStorage.setItem(storageLocationName, location);
+          let location = {
+            type: "button",
+            param: element.id
+          } 
+          localStorage.setItem("location", JSON.stringify(location));
           break;
         case "category":
           let category = element.id;
-          localStorage.removeItem(storageTypeName);
-          localStorage.setItem(storageTypeName, category);
+          localStorage.setItem("type", category);
           break;
       }
     })
@@ -39,9 +38,7 @@ function userLocation() {
   function success(position) {
     let lat = position.coords.latitude;
     let long = position.coords.longitude;
-    localStorage.removeItem("latitude");
     localStorage.setItem("latitude", lat);
-    localStorage.removeItem("longitude");
     localStorage.setItem("longitude", long);
   }
 
