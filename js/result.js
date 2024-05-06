@@ -1,11 +1,11 @@
-const key = "KZmupnUS"; // API-Key
-
 // Initialize
 window.addEventListener("load", init);
 
-function init() {
-  let id = parseInt(getId("id"));
-  getData(id);
+async function init() {
+  const id = parseInt(getId("id"));
+  await getData(id);
+  const isSaved = checkIfSaved(id);
+  if (isSaved) changeIcon("#favorit", true);
 }
 
 // Leon - get ID
@@ -16,6 +16,7 @@ function getId(param) {
 
 // Leon - get data from SMAPI
 async function getData(id) {
+  const key = "KZmupnUS";
   const URL = `https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getAll&ids=${id}`;
   const response = await fetch(URL);
 
@@ -43,7 +44,7 @@ function generateHTML(data) {
       <p>Prisklass: ${data.price_range} Kr</p>
     </div>
     <div id="header-right-side">
-      <button id="favorit"><img src="img/heart.svg"></button>
+      <button id="favorit"><img src="img/icons/heart.svg"></button>
       <div class="rating">
         <p>3/5</p>
       </div>
@@ -92,17 +93,27 @@ function resultToBudget(data) {
 // Jesper - Saves data in localStorage
 function favorit(data) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-  let found = false;
+  const isSaved = checkIfSaved(data.id);
 
-  for (let i = 0; i < wishlist.length; i++) {
-    if (wishlist[i].id == data.id) {
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
+  if (!isSaved) {
+    changeIcon("#favorit", true);
+    showFeedback()
     wishlist.push(data);
-    localStorage.setItem(("wishlist"), JSON.stringify(wishlist));
+  } else {
+    changeIcon("#favorit", false);
+    const index = wishlist.findIndex(item => parseInt(item.id) === parseInt(data.id));
+    if (index != -1) wishlist.splice(index, 1);
   }
+
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+function checkIfSaved(id) {
+  const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+  return wishlist.some(item => parseInt(item.id) === parseInt(id));
+}
+
+function changeIcon(icon, isSaved) {
+  heartIcon = document.querySelector(`${icon} img`);
+  heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg"; 
 }

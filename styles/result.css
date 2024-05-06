@@ -5,13 +5,14 @@
 header {
   display: flex;
   justify-content: space-between;
-  margin: var(--margin) 20px;
+  margin: 1rem 15px;
   margin-top: 20px;
   gap: 2em;
 }
 
-#information {
-  margin-top: 1em;
+main {
+  margin: 15px;
+  margin-bottom: 8rem;
 }
 
 main::before {
@@ -23,6 +24,10 @@ main::before {
   margin-bottom: 20px;
 }
 
+h1 {
+  font-size: 1.5rem;
+}
+
 #header-right-side {
   display: flex;
   flex-direction: column;
@@ -32,6 +37,17 @@ main::before {
 
 #header-right-side img {
   height: 30px;
+}
+
+#header-left-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#header-left-side h2 {
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .rating {
@@ -52,4 +68,23 @@ main::before {
   margin-bottom: 1em;
   background-color: #789373;
   color: white;
+}
+
+.feedback {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  opacity: 0;
+  padding: 1rem 1.5rem;
+  z-index: 1000;
+  
+  background-color: rgb(95, 95, 95);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 15px;
+
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }

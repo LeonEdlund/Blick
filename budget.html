@@ -12,14 +12,6 @@
 </head>
 
 <body id="budget">
-	<header>
-		<h1 class="sr-only">Budget</h1>
-		<p id="kvar">Kvar:</p>
-		<p id="av">Av:</p>
-		<button id="remove-trip">TA BORT</button>
-		<button id="change-budget">SÄTT BUDGET</button>
-	</header>
-
 	<nav class="menu-bar">
 		<a href="index.html" class="explore-btn">
 			<img src="img/icons/explore.svg" alt="Gå till Utforska-sidan">
@@ -35,14 +27,20 @@
 		</a>
 	</nav>
 
+	<header>
+		<h1 class="sr-only">Budget</h1>
+		<p id="kvar">0 Kr</p>
+		<p id="av">Kvar av:</p>
+		<button id="remove-trip">TA BORT</button>
+		<button id="change-budget">NY RESA</button>
+	</header>
+
+	<section class="cate categories-wrapper">
+		<h2>UTGIFTER</h2>
+		<ul id="general"></ul>
+	</section>
 
 	<main>
-		<section class="cate">
-			<h2>UTGIFTER</h2>
-			<ul id="general">
-			</ul>
-		</section>
-		<hr>
 		<div class="add">
 			<button id="new-spend-btn">+</button>
 		</div>

@@ -33,11 +33,12 @@ async function init() {
   if (!USER_CHOICES.category || !USER_CHOICES.location) {
     window.location.href = "index.html";
   }
-  
+
   DOM_ELEMENTS.sort.addEventListener("change", sortResults);
 
   changeTitle();
   setURLParams();
+  checkSortOptions();
   await getData();
   scrollToLastPosition();
 }
@@ -63,10 +64,14 @@ function setURLParams() {
   switch (location) {
     case "my-position":
       API_PARAMS.method = "method=getFromLatLng"
-      API_PARAMS.location = `lat=${lat}&lng=${lng}`;
+      API_PARAMS.location = `&lat=${lat}&lng=${lng}`;
       break;
     case "öland":
       API_PARAMS.location = `provinces=${location}`;
+      break;
+    case "gränna":
+    case "visingsö":
+      API_PARAMS.location = `cities=${location}`;
       break;
     default:
       API_PARAMS.location = `municipalities=${location} kommun`;
@@ -106,6 +111,7 @@ async function getData() {
 
   const data = await response.json();
   if (data.header.status === `OK`) {
+    DOM_ELEMENTS.list.classList.add("fade-in");
     printResults(data.payload);
   } else {
     console.log(data.header);
@@ -123,45 +129,30 @@ function printResults(data) {
   amountElem.innerText = `Antal resultat: ${data.length} st`;
 
   const fragment = document.createDocumentFragment();
-  
+
   results.length = 0;
   data.forEach((result) => {
     let newLi = generateHTML(result);
     results.push(newLi); // Save results in array
     fragment.appendChild(newLi);
   });
-  console.log(results);
-  list.appendChild(fragment);
-}
-
-// Print out the results from sorted array 
-function printSortedResults() {
-  const { list } = DOM_ELEMENTS;
-  list.innerHTML = "";
-  let fragment = document.createDocumentFragment();
-  APP_DATA.results.forEach((result) => {
-    fragment.appendChild(result);
-  });
   list.appendChild(fragment);
 }
 
 // Leon - Generate html for results from SMAPI
 function generateHTML(result) {
-  let score = Math.round(result.rating);
-  let priceFrom = getPrice(result.price_range);
-  let lat = result.lat;
-  let lng = result.lng;
-  let distance = calculateDistance(USER_CHOICES.lat, USER_CHOICES.lng, lat, lng);
-
+  const score = Math.round(result.rating);
+  const priceFrom = getPrice(result.price_range);
+  const img = chooseImg(result.description);
   // create all elements
   const li = document.createElement("li");
   li.innerHTML = `
   <a href="result.html?id=${result.id}" class="list-item">
-    <img src="temporary-img/Artboard 1.svg" alt="">
+    <img src="${img}" alt="">
     <div class="result-info">
       <h2>${result.name}</h2>
       <p>${result.description}</p>
-      ${USER_CHOICES.lat && USER_CHOICES.lng ? `<p>Avstånd: ${distance} Km</p>` : ""}
+      ${API_PARAMS.method === "method=getFromLatLng" ? `<p>Avstånd: ${Math.round(result.distance_in_km * 10) / 10} Km</p>` : ""}
     </div>
     <div class="result-extra-info">
       <div class="rating"><p>${score}/5</p></div>
@@ -169,28 +160,19 @@ function generateHTML(result) {
       </div>
   </a>`;
 
-  li.setAttribute("data-distance", distance);
   return li;
 }
 
 // Leon - Sort results
 function sortResults() {
-  console.log(APP_DATA.results)
-  switch (DOM_ELEMENTS.sort.value) {
-    case "priceASC":
-      API_PARAMS.sortBy = "sort_in=ASC&order_by=price_range";
-      getData();
-      break;
-    case "ratingDESC":
-      API_PARAMS.sortBy = "sort_in=DESC&order_by=rating";
-      getData();
-      break;
-    case "distanceASC":
-      APP_DATA.results.sort((a, b) => a.dataset.distance - b.dataset.distance);
-      console.log(APP_DATA.results)
-      printSortedResults();
-      break;
+  const sortOptions = {
+    priceASC: "sort_in=ASC&order_by=price_range",
+    ratingDESC: "sort_in=DESC&order_by=rating",
+    distanceASC: "sort_in=ASC&order_by=distance_in_km"
   }
+
+  API_PARAMS.sortBy = sortOptions[DOM_ELEMENTS.sort.value]
+  getData();
 }
 
 // Leon - get first number of price_range
@@ -202,25 +184,27 @@ function getPrice(priceRange) {
   }
 }
 
-// Leon - calculate distance from user *CHAT-GPT HJÄLP*
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  // Radius of the Earth in kilometers
-  let R = 6371;
+function checkSortOptions() {
+  if (API_PARAMS.method == `method=getFromLatLng`) {
+    const option = document.createElement("option");
+    option.value = "distanceASC";
+    option.textContent = "Avstånd"
+    DOM_ELEMENTS.sort.appendChild(option);
+  }
+}
 
-  // Convert degrees to radians
-  let dLat = (lat2 - lat1) * Math.PI / 180;
-  let dLon = (lon2 - lon1) * Math.PI / 180;
-  // Convert latitudes to radians
-  lat1 = lat1 * Math.PI / 180;
-  lat2 = lat2 * Math.PI / 180;
+// Leon - adds a loader to the given element
+function showLoader(element) {
+  element.innerHTML = `<div class="loader"></div>`;
+}
 
-  // Haversine formula
-  let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  let distance = R * c; // Distance in kilometers
-  let distanceRounded = Math.round(distance * 10) / 10
-  return distanceRounded;
+// Leon - Show error incase of smapi failure
+function errorMessage() {
+  const main = document.querySelector("main");
+  main.innerHTML = `
+  <h1>Något Gick Fel</h1>
+  <a href="index.html">Gå tillbaka till startsidan</a>
+  `;
 }
 
 function saveScrollPosition() {
@@ -237,22 +221,8 @@ function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
 
   if (savedPosition.fromPage == APP_DATA.pageName) {
-    DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    //DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    //sortResults();
     window.scrollTo(0, savedPosition.scrollPosition);
-    sortResults();
   }
-}
-
-// Leon - adds a loader to the given element
-function showLoader(element) {
-  element.innerHTML = `<div class="loader"></div>`;
-}
-
-// Leon - Show error incase of smapi failure
-function errorMessage() {
-  const main = document.querySelector("main");
-  main.innerHTML = `
-    <h1>Något Gick Fel</h1>
-    <a href="index.html">Gå tillbaka till startsidan</a>
-  `;
 }
