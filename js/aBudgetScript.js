@@ -60,7 +60,6 @@ function checkIfNumber(close, input, newBudget) {
         if (newBudget == false) {
             let nameElem = document.querySelector("#name")
             let name = nameElem.value
-
             let category;
             let options = document.querySelectorAll(".option");
             for (let a = 0; a < options.length; a++) {
@@ -70,6 +69,7 @@ function checkIfNumber(close, input, newBudget) {
             }
             spendings.push(new Spending(name, number, category))
             listSpednings()
+            nameElem.value = ""
         }
 
 
@@ -91,7 +91,6 @@ function setBudget() {
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
-    name.value = "";
     name.addEventListener("keyup", function(){searchFunc(name.value)})
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
@@ -104,7 +103,7 @@ function newSpendFunc(wrong) {
     save.parentElement.replaceChild(cloneSave, save)
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     if(wrong==false){
-        name.value = ""
+        name.value == ""
         input.style.backgroundColor = "";
         }
     if (wrong == true) {
