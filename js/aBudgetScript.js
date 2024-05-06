@@ -91,7 +91,7 @@ function setBudget() {
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
-    name.addEventListener("keydown", function(){searchFunc(name.value)})
+    name.addEventListener("keyup", function(){searchFunc(name.value)})
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
@@ -227,7 +227,7 @@ function removeBtnFunc(remove, e){
 }
 //hämmtar sessionStorage som sparas i result.html och startar sedan inläggningen av denna i budgeten
 function fromResultFunc(){
-    if(fromResult == null){
+    if(fromResult == null||fromResult==""){
         return;
     }
     let storageArray = fromResult.split("&")
@@ -246,7 +246,6 @@ let price = spendings[j].price
 let category = spendings[j].category
 dataToSave+=name+"&"+price+"&"+category+"/"
 }
-console.log(dataToSave)
 localStorage.setItem("storedData", dataToSave) 
 }
 //hämtar tidigare val 
@@ -277,14 +276,25 @@ async function getSearchData() {
   }
 
 function searchFunc(input){
-    let search = document.querySelector("#search-results")
+    let search = document.querySelector("#results")
+    console.log(input)
+    if(input == ""){
+        search.innerHTML = "";
+        return;
+    }
+    let spaces = 0;
     search.innerHTML = "";
     for(let p = 0; p<names.length; p++){
+        
         if(names[p].includes(input) == true){
             search.innerHTML += "<li>" + names[p] + "</li>";
+            spaces++
+            if(spaces == 5){
+                break;
         }
     }
-    let searchResults = document.querySelectorAll("#search-results li")
+    }
+    let searchResults = document.querySelectorAll("#results li")
     for (let b = 0; b < searchResults.length; b++){
         searchResults[b].addEventListener("click", function(){
             document.querySelector("#name").value = searchResults[b].innerHTML
@@ -292,3 +302,4 @@ function searchFunc(input){
         })
     }
 }
+
