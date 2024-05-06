@@ -91,6 +91,7 @@ function setBudget() {
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
+    name.value = "";
     name.addEventListener("keyup", function(){searchFunc(name.value)})
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
