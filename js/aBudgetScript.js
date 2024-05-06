@@ -109,7 +109,7 @@ function newSpendFunc(wrong) {
     if (wrong == true) {
         input.style.backgroundColor = "red";
     }
-    if (wrong = fromResult){
+    if (wrong == fromResult){
        let name = document.querySelector("#name")
         let radio = document.querySelector(fromResultTwo)
         radio.checked = true;
