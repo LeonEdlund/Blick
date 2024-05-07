@@ -173,7 +173,7 @@ function printRecommendedResults(data) {
   const filteredArray = data.filter(item => item.id !== idToSkip);
 
   if (filteredArray.length == 0) {
-    document.querySelector(".swiper").style.display = "none";
+    document.querySelector("#recommendations").style.display = "none";
     return;
   }
   console.log(filteredArray)
