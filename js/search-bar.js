@@ -3,10 +3,12 @@ let dataArray = [];
 let cityArray = [];
 
 function init() {
-    document.getElementById("search").addEventListener("click", openSearch);
+    document.getElementById("search").addEventListener("click", () => {
+        getData();
+        openSearch()  
+    });
     document.getElementById("searchbar").addEventListener("input", searchFunc);
     document.querySelector("#close-btn").addEventListener("click", closeSearch);
-    getData();
 }
 window.addEventListener("load", init);
 
@@ -61,9 +63,11 @@ function saveData(city) {
 
 function closeSearch() {
     document.querySelector("#search-box-active").style.display = "none";
+    document.querySelector("body").style.overflow = "scroll";
 }
 
 function openSearch() {
+    document.querySelector("body").style.overflow = "hidden";
     document.querySelector("#search-box-active").style.display = "block";
     document.querySelector("#searchbar").focus();
 }
