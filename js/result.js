@@ -145,10 +145,11 @@ async function getRecommended(lat, lng) {
       type = "&types=food"
       break;
     case "nature":
-      description = "&descriptions=älgpark,camping,naturreservat"
+      description = "&descriptions=älgpark,camping,naturreservat, fornlämning"
       break;
     case "culture":
       type = "&types=attraction"
+      description = "descriptions=museum,konsthall,konstgalleri,kyrka,sevärdhet,slott";
       break;
     case "activity":
       type = "&types=activity";
@@ -156,7 +157,7 @@ async function getRecommended(lat, lng) {
       break;
   }
 
-  const URL = `https://smapi.lnu.se/api/?api_key=${key}&controller=establishment&method=getfromLatLng&lat=${lat}&lng=${lng}${type}${description}&sort_in=DESC&order_by=rating&per_page=6`;
+  const URL = `https://smapi.lnu.se/api/?api_key=${key}&controller=establishment&method=getfromLatLng&lat=${lat}&lng=${lng}${type}${description}&radius=30&sort_in=DESC&order_by=rating&per_page=6`;
   const response = await fetch(URL);
 
   if (!response.ok) {

@@ -87,10 +87,11 @@ function setURLParams() {
       API_PARAMS.types = "types=food"
       break;
     case "nature":
-      API_PARAMS.description = "descriptions=älgpark,camping,naturreservat"
+      API_PARAMS.description = "descriptions=älgpark,camping,naturreservat,fornlämning"
       break;
     case "culture":
       API_PARAMS.types = "types=attraction"
+      API_PARAMS.description = "descriptions=museum,konsthall,konstgalleri,kyrka,sevärdhet,slott";
       break;
     case "activity":
       API_PARAMS.types = "types=activity";
@@ -108,7 +109,6 @@ async function getData() {
 
   showLoader(DOM_ELEMENTS.list);
   const response = await fetch(URL);
-
   if (!response.ok) {
     console.log(`Error status: ${response.status}`);
   }
