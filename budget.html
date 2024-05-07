@@ -53,46 +53,49 @@
 
 	<dialog id="new-trip-dialog">
 		<label for="belopp">
-			Skriv in din budget för resan
+			<h3>Skriv in din budget för resan</h3>
 			<input type="text" id="money-to-spend">
-			<button id="save">spara</button>
+			<button id="save">+</button>
 		</label>
 	</dialog>
 
 	<dialog id="new-spend-dialog">
 		<button id="exit"><img src="img/icons/close.svg" alt="stäng"></button>
-		<h2>Ny utgift</h2>
+		<h3>Ny utgift</h3>
+		<div id="div-for-name">
 		<label for="name">
-			Namn
 			<input type="search" id="name">
 		</label>
 
 		<ul id="results-budget"></ul>
-
+		</div>
+		<div id="div-for-amount">
 		<label for="amount">
-			Pris
 			<input type="text" id="amount">
 		</label>
-		<label for="accommodation">
+		</div>
+		<div id="div-for-cat">
+		<label for="accommodation" class="option-label">
 			Boende
 			<input type="radio" id="accommodation" name="option" class="option">
 		</label>
-		<label for="trip">
+		<label for="trip"class="option-label">
 			Resa
 			<input type="radio" id="trip" name="option" class="option">
 		</label>
-		<label for="food-drink">
+		<label for="food-drink"class="option-label">
 			Mat och Dryck
 			<input type="radio" id="food-drink" name="option" class="option">
 		</label>
-		<label for="activity">
+		<label for="activity"class="option-label">
 			Aktiviteter
 			<input type="radio" id="activity" name="option" class="option">
 		</label>
-		<label for="other">
+		<label for="other"class="option-label">
 			övrigt
 			<input type="radio" id="other" name="option" class="option">
 		</label>
+	</div>
 		<button id="close">+</button>
 	</dialog>
 
