@@ -18,8 +18,16 @@ header {
 #av {
     font-weight: 400;
 }
+#change-budget{
+    margin-top: 10px;
+    font-size: 1rem;
+    border: 3px solid white;
+    height: fit-content;
+    width: 5rem;
+    border-radius: 10px;
 
-#change-budget {
+}
+#remove-trip {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -86,10 +94,12 @@ dialog {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70vw;
-    height: 45vh;
+    width: 80vw;
+    height: 47vh;
     box-sizing: border-box;
     padding: 20px;
+    border-radius: 10px;
+    border-color:white;
 }
 
 dialog label {
@@ -104,6 +114,38 @@ dialog option {
 dialog button {
     display: block;
     width: 100%;
-    padding: 10px 0;
-    margin-top: 20px;
+}
+dialog input{
+    width:fit-content;
+}
+#exit{
+    width: fit-content;
+    height: fit-content;
+    padding: 0%;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+#exit img{
+    height: 1.5rem;
+}
+#close{
+    margin-top:2rem;
+    background-color: #495f37;
+    font-size: 3rem;
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #789373;
+    color: white;
+}
+#results-budget{
+    list-style: none;
+    padding-bottom:0.5rem;
+    padding-left: 0rem;
+}
+#results-budget li{
+    padding:0.5rem;
+    padding-left: 0rem;
+    padding-top: 0.25rem;
+    border-bottom: solid 1px rgb(214, 211, 204);
 }
