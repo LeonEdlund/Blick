@@ -118,7 +118,7 @@ async function getData() {
     printResults(data.payload);
   } else {
     console.log(data.header);
-    errorMessage();
+    errorMessage("main");
   }
 }
 
@@ -198,14 +198,7 @@ function showLoader(element) {
   element.innerHTML = `<div class="loader"></div>`;
 }
 
-// Leon - Show error incase of smapi failure
-function errorMessage() {
-  const main = document.querySelector("main");
-  main.innerHTML = `
-  <h1>Något Gick Fel</h1>
-  <a href="index.html">Gå tillbaka till startsidan</a>
-  `;
-}
+
 
 function saveScrollPosition() {
   const scrollPosition = {

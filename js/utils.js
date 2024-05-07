@@ -17,7 +17,7 @@ function showFeedback() {
 
 function chooseImg(description) {
   description = description.toLowerCase()
-  
+  console.log(description)
   let descriptions = {
     // Food
     pizzeria: "img/icons/temp-icons/pizza.svg",
@@ -53,4 +53,12 @@ function chooseImg(description) {
   }
 
   return types[localStorage.getItem("type")];
+}
+
+// Leon - Show error incase of smapi failure
+function errorMessage(element) {
+  document.querySelector(element).innerHTML = `
+  <h1>Något Gick Fel</h1>
+  <a href="index.html">Gå tillbaka till startsidan</a>
+  `;
 }

@@ -1,8 +1,11 @@
+const key = "KZmupnUS";
 // Initialize
 window.addEventListener("load", init);
 
 async function init() {
   const id = parseInt(getId("id"));
+  if(!id) window.location = "index.html"
+
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
@@ -16,8 +19,7 @@ function getId(param) {
 
 // Leon - get data from SMAPI
 async function getData(id) {
-  const key = "KZmupnUS";
-  const URL = `https://smapi.lnu.se/api/?api_key=${key}&debug=true&controller=establishment&method=getAll&ids=${id}`;
+  const URL = `https://smapi.lnu.se/api/?api_key=${key}&controller=establishment&method=getAll&ids=${id}`;
   const response = await fetch(URL);
 
   if (!response.ok) {
@@ -29,7 +31,10 @@ async function getData(id) {
     data = data.payload[0];
     generateHTML(data);
     showMap(data.lat, data.lng);
+    getRecommended(data.lat, data.lng);
   } else {
+    console.log("hej")
+    errorMessage(".slide-from-side");
     console.log(data.header);
   }
 }
@@ -37,8 +42,6 @@ async function getData(id) {
 // Leon - Generate HTML
 function generateHTML(data) {
   if (data) {
-
-
     headerHtml =
       `<div id="header-left-side">
       <h1>${data.name}</h1>
@@ -58,7 +61,7 @@ function generateHTML(data) {
 
     const information = data.text ? `<h2>Information</h2><p>${data.text}</p>` : "";
     mainHtml =
-    `
+      `
     <button id=toBudget>Lägg till i din budget</button>
     ${information}
 
@@ -124,4 +127,95 @@ function checkIfSaved(id) {
 function changeIcon(icon, isSaved) {
   heartIcon = document.querySelector(`${icon} img`);
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
+}
+
+/*CODE FOR RECOMMENDATIONS*/
+var swiper = new Swiper(".mySwiper", {
+  slidesPerView: 1.5,
+  spaceBetween: 30,
+  freeMode: true
+});
+
+async function getRecommended(lat, lng) {
+  const category = localStorage.getItem("type");
+  let type = "";
+  let description = "";
+  switch (category) {
+    case "food":
+      type = "&types=food"
+      break;
+    case "nature":
+      description = "&descriptions=älgpark,camping,naturreservat"
+      break;
+    case "culture":
+      type = "&types=attraction"
+      break;
+    case "activity":
+      type = "&types=activity";
+      description = "&descriptions=nöjespark,temapark,älgpark,djurpark,simhall,gokart,zipline,nöjescenter,paintballcenter,hälsocenter,golfbana,bowlinghall,klippklättring,skateboardpark"
+      break;
+  }
+
+  const URL = `https://smapi.lnu.se/api/?api_key=${key}&controller=establishment&method=getfromLatLng&lat=${lat}&lng=${lng}${type}${description}&sort_in=DESC&order_by=rating&per_page=6`;
+  const response = await fetch(URL);
+
+  if (!response.ok) {
+    console.log(`Error status: ${response.status}`);
+  }
+  const data = await response.json();
+
+  printRecommendedResults(data.payload);
+}
+
+// Leon - Prints results from SMAPI in list
+function printRecommendedResults(data) {
+  const idToSkip = getId("id");
+  const filteredArray = data.filter(item => item.id !== idToSkip);
+
+  if (filteredArray.length == 0) {
+    document.querySelector(".swiper").style.display = "none";
+    return;
+  }
+  console.log(filteredArray)
+
+  const swiperSlides = document.querySelectorAll(".swiper-slide");
+
+  for (let i = 0; i < swiperSlides.length && i < filteredArray.length; i++) {
+    swiperSlides[i].appendChild(generateRecommendedHTML(data[i]));
+  }
+
+  // removes slides not used
+  for (let i = data.length; i < swiperSlides.length; i++) {
+    swiperSlides[i].style.display = 'none';
+  }
+}
+
+// Leon - Generate html for results from SMAPI
+function generateRecommendedHTML(result) {
+  const score = Math.round(result.rating);
+  const ratingImg = getRatingImg(score);
+  const img = chooseImg(result.description);
+
+  const link = document.createElement("a");
+  link.href = `result.html?id=${result.id}`
+  link.classList.add("recommended");
+  link.innerHTML = `
+    <div>
+      <img src= "${img}" alt=""></img>
+      <h2>${result.name}</h2>
+      <p>${result.description}</p>
+      <img src= "${ratingImg.src}" alt="${ratingImg.alt}" id="star-rating"></img>
+    </div>`;
+  return link;
+}
+
+function getRatingImg(score) {
+  imgLinks = {
+    2: { src: "img/icons/two-stars.svg", alt: "två stjärnor" },
+    3: { src: "img/icons/three-stars.svg", alt: "tre stjärnor" },
+    4: { src: "img/icons/four-stars.svg", alt: "fyra stjärnor" },
+    5: { src: "img/icons/five-stars.svg", alt: "fem stjärnor" }
+  }
+
+  return imgLinks[score];
 }

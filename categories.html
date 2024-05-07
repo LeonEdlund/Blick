@@ -7,11 +7,9 @@
 	<title>Kategorier</title>
 	<link rel="stylesheet" href="styles/style.css">
 	<link rel="stylesheet" href="styles/choices.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 	<script src="js/save-data.js" defer></script>
 	<script src="js/nav-bar.js"></script>
-	<script src="js/slideshow.js" defer></script>
+	<script src="js/utils.js"></script>
 </head>
 
 <body id="category">
@@ -37,8 +35,8 @@
 		</a>
 	</nav>
 
-	<main>
-		<ul class="categories choices fade-in">
+	<main class="fade-in">
+		<ul class="categories choices">
 			<li>
 				<a href="results.html" id="food">
 					<img src="img/food.svg" alt="Se mat och dryck i området">
@@ -64,21 +62,6 @@
 				</a>
 			</li>
 		</ul>
-		<div class="swiper mySwiper">
-			<h3 class="rec-title">Rekommenderade</h3>
-			<div class="swiper-wrapper">
-			  <div class="swiper-slide">Slide 1</div>
-			  <div class="swiper-slide">Slide 2</div>
-			  <div class="swiper-slide">Slide 3</div>
-			  <div class="swiper-slide">Slide 4</div>
-			  <div class="swiper-slide">Slide 5</div>
-			  <div class="swiper-slide">Slide 6</div>
-			  <div class="swiper-slide">Slide 7</div>
-			  <div class="swiper-slide">Slide 8</div>
-			  <div class="swiper-slide">Slide 9</div>
-			</div>
-			<div class="swiper-pagination"></div>
-		  </div>
 	</main>
 </body>
 
