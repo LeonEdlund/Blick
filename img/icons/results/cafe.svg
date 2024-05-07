@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 161 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-173,0)">
+        <g transform="matrix(1,0,0,1,173.898,0)">
+            <rect id="pizza" x="0" y="0" width="160" height="160" style="fill:none;"/>
+            <g id="pizza1" serif:id="pizza">
+                <g transform="matrix(1.56034,0,0,1.56034,-48.7281,-55.3961)">
+                    <g>
+                        <g transform="matrix(1,0,0,0.699148,-173.898,29.0937)">
+                            <path d="M273.898,55L228.898,55L228.898,83.837C228.898,90.775 230.826,97.43 234.256,102.337C237.687,107.243 242.339,110 247.191,110C250.082,110 253.069,110 255.953,110C265.864,110 273.898,98.508 273.898,84.332L273.898,55Z" style="fill:none;stroke:rgb(55,55,55);stroke-width:2.97px;"/>
+                        </g>
+                        <g transform="matrix(1,0,0,1,-173.898,6.77343)">
+                            <ellipse cx="278.898" cy="76.17" rx="5" ry="10.788" style="fill:none;stroke:rgb(55,55,55);stroke-width:2.56px;"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
