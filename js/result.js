@@ -181,7 +181,7 @@ function printRecommendedResults(data) {
   const swiperSlides = document.querySelectorAll(".swiper-slide");
 
   for (let i = 0; i < swiperSlides.length && i < filteredArray.length; i++) {
-    swiperSlides[i].appendChild(generateRecommendedHTML(data[i]));
+    swiperSlides[i].appendChild(generateRecommendedHTML(filteredArray[i]));
   }
 
   // removes slides not used
