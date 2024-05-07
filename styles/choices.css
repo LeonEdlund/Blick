@@ -18,7 +18,6 @@ header {
 .choices {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-    margin-top: 50px;
     gap: 3rem;
     list-style: none;
 }
