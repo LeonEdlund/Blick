@@ -131,7 +131,7 @@ button {
 
 .fade-in {
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateY(5%);
   animation: inAndUp 0.5s ease-in-out forwards;
 }
 
@@ -144,7 +144,7 @@ button {
 @keyframes inAndUp {
   from {
     opacity: 0;
-    transform: translateY(20%);
+    transform: translateY(5%);
   }
 
   to {

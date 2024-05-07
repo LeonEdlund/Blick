@@ -10,9 +10,20 @@ window.addEventListener("load", init);
 function showWishList() {
     wList.innerHTML = "";
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
+
+    if(wishlist.length == 0) {
+        wList.innerHTML = "<p>Du har inget sparat.</p>"
+        return;
+    }
+
     wishlist.forEach(item => {
-        const itemElem = document.createElement("div");
-        itemElem.innerHTML = `<a href="result.html?id=${item.id}"><h3>${item.name}</h3><p>${item.description}</p><p>${item.price_range} Kr</p></a><button onclick='remove("${item.id}")'><img src="temporary-img/trash.svg" alt="trash"></button>`;
+        const itemElem = document.createElement("li");
+        itemElem.innerHTML = `
+        <a href="result.html?id=${item.id}">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+        </a>
+        <button onclick='remove("${item.id}")'><img src="temporary-img/trash.svg" alt="trash"></button>`;
         wList.appendChild(itemElem);
     });
 }

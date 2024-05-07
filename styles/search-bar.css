@@ -35,10 +35,11 @@
 }
 
 #searchbar:focus {
-    outline: none; 
+    outline: none;
 }
 
-button {
+#search,
+#close-btn {
     font-size: 1rem;
     color: gray;
 }
