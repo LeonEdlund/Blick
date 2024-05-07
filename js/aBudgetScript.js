@@ -9,7 +9,7 @@ function init() {
     let getBudget = localStorage.getItem("minBudget")
     minBudget = parseInt(getBudget)
     console.log(minBudget)
-    if (minBudget == null || minBudget == "") {
+    if (minBudget == null || minBudget == ""||minBudget== NaN) {
         newTripFunc()
     } else (setBudget())
     getStorage();
