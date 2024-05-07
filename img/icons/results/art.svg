@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 161 161" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-347,-171)">
+        <g transform="matrix(1,0,0,1,347.797,171.647)">
+            <rect id="museum" x="0" y="0" width="160" height="160" style="fill:none;"/>
+            <g id="museum1" serif:id="museum">
+                <g transform="matrix(20.0972,0,0,1.92,-1575.78,-64)">
+                    <rect x="80" y="50" width="4.777" height="50" style="fill:none;stroke:black;stroke-width:0.03px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-347.797,-171.647)">
+                    <rect x="379.797" y="203.647" width="96" height="94.5" style="fill:none;stroke:rgb(55,55,55);stroke-width:4px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-347.797,-171.647)">
+                    <path d="M380.422,297.316C386.42,288.183 388.378,275.236 399.453,270.624C410.521,266.016 422.153,273.509 432.782,265.557C442.485,258.298 446.499,245.91 454.796,237.278C460.084,231.775 467.146,229.262 474.217,227.036" style="fill:none;stroke:rgb(55,55,55);stroke-width:4px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-347.797,-171.647)">
+                    <ellipse cx="412.797" cy="235.522" rx="15" ry="15.375" style="fill:none;stroke:rgb(55,55,55);stroke-width:4px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
