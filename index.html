@@ -34,89 +34,99 @@
   </header>
 
   <main>
-    <div class="serch-box">
-      <input type="text" name="search" id="searchbar">
-      <ul id="results"></ul>
+    <div class="fade-in">
+      <button id="search">
+        Sök efter stad...
+      </button>
+  
+      <ul class="cities choices fade-in">
+        <li>
+          <a href="categories.html" id="my-position">
+            <img src="img/my-location.svg" alt="använd din position">
+            <p>MIN POSITION</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="öland">
+            <img src="" alt="">
+            <p>ÖLAND</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="kalmar">
+            <img src="" alt="">
+            <p>KALMAR</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="västerviks">
+            <img src="" alt="">
+            <p>VÄSTERVIK</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="jönköpings">
+            <img src="" alt="">
+            <p>JÖNKÖPING</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="växjö">
+            <img src="" alt="">
+            <p>VÄXJÖ</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="vimmerby">
+            <img src="" alt="">
+            <p>VIMMERBY</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="eksjö">
+            <img src="" alt="">
+            <p>EKSJÖ</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="gränna">
+            <img src="" alt="">
+            <p>GRÄNNA</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="visingsö">
+            <img src="" alt="">
+            <p>VISINGSÖ</p>
+          </a>
+        </li>
+  
+        <li>
+          <a href="categories.html" id="värnamo">
+            <img src="" alt="">
+            <p>VÄRNAMO</p>
+          </a>
+        </li>
+      </ul>
     </div>
-    <ul class="cities choices fade-in">
-      <li>
-        <a href="categories.html" id="my-position">
-          <img src="img/my-location.svg" alt="använd din position">
-          <p>MIN POSITION</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="öland">
-          <img src="" alt="">
-          <p>ÖLAND</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="kalmar">
-          <img src="" alt="">
-          <p>KALMAR</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="västerviks">
-          <img src="" alt="">
-          <p>VÄSTERVIK</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="jönköpings">
-          <img src="" alt="">
-          <p>JÖNKÖPING</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="växjö">
-          <img src="" alt="">
-          <p>VÄXJÖ</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="vimmerby">
-          <img src="" alt="">
-          <p>VIMMERBY</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="eksjö">
-          <img src="" alt="">
-          <p>EKSJÖ</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="gränna">
-          <img src="" alt="">
-          <p>GRÄNNA</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="visingsö">
-          <img src="" alt="">
-          <p>VISINGSÖ</p>
-        </a>
-      </li>
-
-      <li>
-        <a href="categories.html" id="värnamo">
-          <img src="" alt="">
-          <p>VÄRNAMO</p>
-        </a>
-      </li>
-    </ul>
   </main>
+
+  <div id="search-box-active">
+    <div id="search-bar-wrapper">
+      <input type="text" name="search" id="searchbar" placeholder="Sök efter stad">
+      <button id="close-btn">Cancel</button>
+    </div>
+    <ul id="results"></ul>
+  </div>
 
 </body>
 

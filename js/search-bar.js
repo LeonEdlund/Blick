@@ -3,7 +3,9 @@ let dataArray = [];
 let cityArray = [];
 
 function init() {
+    document.getElementById("search").addEventListener("click", openSearch);
     document.getElementById("searchbar").addEventListener("input", searchFunc);
+    document.querySelector("#close-btn").addEventListener("click", closeSearch);
     getData();
 }
 window.addEventListener("load", init);
@@ -30,20 +32,23 @@ async function getData() {
 // Jesper - Compare users input with names in the array
 async function searchFunc() {
     const searchTerm = document.getElementById("searchbar").value.toLowerCase();
-
     const resultsDiv = document.getElementById("results");
-    let listItems = "";
 
+    if (!searchTerm) {
+        resultsDiv.innerHTML = "";
+        return;
+    }
+
+    let listItems = "";
     for (let i = 0; i < cityArray.length; i++) {
         if (cityArray[i] && cityArray[i].toLowerCase().includes(searchTerm)) {
-            listItems += `<li><a href="categories.html" onclick='saveData("${cityArray[i]}")'>${cityArray[i]}</a></li>`;
-        }
-        if (searchTerm == "") {
-            listItems = "";
+            listItems += `
+            <li>
+                <a href="categories.html" onclick='saveData("${cityArray[i]}")'>${cityArray[i]}</a>
+            </li>`;
         }
     }
     resultsDiv.innerHTML = listItems || "<li>Inget hittades</li>";
-
 }
 
 function saveData(city) {
@@ -52,5 +57,14 @@ function saveData(city) {
         param: `cities=${city}`
     }
     localStorage.setItem("location", JSON.stringify(cityToSave));
+}
+
+function closeSearch() {
+    document.querySelector("#search-box-active").style.display = "none";
+}
+
+function openSearch() {
+    document.querySelector("#search-box-active").style.display = "block";
+    document.querySelector("#searchbar").focus();
 }
 
