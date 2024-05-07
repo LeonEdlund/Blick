@@ -7,6 +7,9 @@
   <title>result</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/result.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -14,12 +17,13 @@
   <script src="loader.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/nav-bar.js"></script>
-  <script src="js/result.js"></script>
+  <script src="js/result.js" defer></script>
+  <!-- <script src="js/slideshow.js" defer></script> -->
 </head>
 
 <body>
   <nav class="back-div">
-    <button onclick="window.location = `results.html`">&lt-</button>
+    <button onclick="history.back()">&lt-</button>
   </nav>
   <nav class="menu-bar">
     <a href="index.html">
@@ -44,8 +48,20 @@
     </header>
 
     <main id="information">
-      <h1>Sidan finns inte</h1>
     </main>
+
+    <section id="recommendations">
+      <h2>Liknande resultat</h2>
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+        </div>
+      </div>
+    </section>
 
   </div>
 

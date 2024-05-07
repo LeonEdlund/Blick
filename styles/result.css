@@ -13,7 +13,7 @@ header {
 
 main {
   margin: 15px;
-  margin-bottom: 8rem;
+  margin-bottom: 5rem;
 }
 
 h1 {
@@ -96,4 +96,44 @@ h1 {
   border-radius: 15px;
 
   transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+/* Recommendations */
+#recommendations {
+  margin: 1rem 15px;
+}
+
+.swiper {
+  width: 100%;
+  margin-bottom: 10rem;
+}
+
+.swiper-slide {
+  margin-top: 1rem;
+
+}
+
+.swiper-slide a {
+  display: block;
+  height: fit-content;
+  padding: 20px;
+  width: 100%;
+  color: black;
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px;
+}
+
+.swiper-slide h2 {
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swiper-slide img {
+  height: 50px;
+}
+
+#star-rating {
+  width: 70%;
 }

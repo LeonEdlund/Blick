@@ -56,7 +56,7 @@ async function searchFunc() {
 function saveData(city) {
     const cityToSave = {
         type: "search",
-        param: `cities=${city}`
+        param: `&cities=${city}`
     }
     localStorage.setItem("location", JSON.stringify(cityToSave));
 }
