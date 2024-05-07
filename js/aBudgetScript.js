@@ -49,12 +49,25 @@ function newTripFunc(wrong) {
     newTripDialog.showModal()
 
     let input = document.querySelector("#money-to-spend")
+    input.setAttribute("class", "exempel")
+    input.value = "ex. 5000kr"
+    input.blur()
+    input.addEventListener("focus", function(){
+        input.value = "";
+        input.setAttribute("class", "")
+    })
+    input.addEventListener("blur", function(){
+        if(input.value == ""){
+            input.setAttribute("class", "exempel")
+            input.value = "ex. 5000kr" 
+        }
+    })
     let save = document.querySelector("#save")
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
 
 
     if (wrong == true) {
-        input.style.backgroundColor = "red";
+        input.style.borderColor = "#972A2A";
     }
 
 }
@@ -70,6 +83,7 @@ function checkIfNumber(close, input, newBudget) {
         }
         if (newBudget == false) {
             newSpendFunc(true)
+            
         }
 
     }
@@ -106,14 +120,30 @@ function checkIfNumber(close, input, newBudget) {
 function setBudget() {
     localStorage.setItem("minBudget", minBudget)
     let budgetElemLeft = document.querySelector("#av")
-    budgetElemLeft.innerHTML = "Av: " + minBudget;
+    budgetElemLeft.innerHTML = "Av: " + minBudget+ ".00";
     let budgetElem = document.querySelector("#kvar")
-    budgetElem.innerHTML = (minBudget - amountSpent) + " Kr";
+    budgetElem.innerHTML = (minBudget - amountSpent) + ".00";
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
-    name.addEventListener("input", function () { searchFunc(name.value) })
+    
+    if(name.value == ""){name.value = "NAMN"
+    name.setAttribute("class", "exempel")
+    }
+    name.addEventListener("focus", function(){
+        name.value = ""
+        name.setAttribute("class", "")
+    })
+    name.addEventListener("blur", function(){
+        console.log("hej")
+        if(name.value == ""){
+            name.setAttribute("class", "exempel")
+            name.value = "NAMN" 
+        }
+    })
+    name.addEventListener("input", function () {
+    searchFunc(name.value) })
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
@@ -123,17 +153,29 @@ function newSpendFunc(wrong) {
     })
     let input = document.querySelector("#amount")
     input.value = ""
+    input.setAttribute("class", "exempel")
+    input.value = "PRIS"
+    input.addEventListener("focus", function(){
+        input.value = ""
+        input.setAttribute("class", "")
+    })
+    input.addEventListener("blur", function(){
+        console.log("hej")
+        if(input.value == ""){
+            input.setAttribute("class", "exempel")
+            input.value = "PRIS" 
+        }
+    })
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     if (wrong == false) {
-        name.value == ""
         input.style.backgroundColor = "";
         return;
     }
     if (wrong == true) {
-        input.style.backgroundColor = "red";
+        input.style.borderColor = "#972A2A";
         return;
     }
     if (wrong == fromResult) {
