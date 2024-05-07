@@ -6,6 +6,13 @@ let fromResultTwo;
 let names = []
 //ALEX-initiering av programmet
 function init() {
+    let radioLabels = document.querySelectorAll(".option-label")
+    for(let a= 0; a <radioLabels.length; a++){
+        radioLabels[a].addEventListener("click", function(){
+            radioLabelsFunc(this)
+        })
+    }
+    console.log(radioLabels)
     let getBudget = localStorage.getItem("minBudget")
     minBudget = parseInt(getBudget)
     console.log(minBudget)
@@ -137,6 +144,7 @@ function newSpendFunc(wrong) {
         return;
 
     }
+
 }
 //ALEX - Constructor för objekt för utgift
 function Spending(name, price, category) {
@@ -324,4 +332,17 @@ function searchFunc(input) {
         })
     }
 }
-
+function radioLabelsFunc(radioLabel){
+    let radioLabels = document.querySelectorAll(".option-label")
+    for(let h=0; h < radioLabels.length; h++){
+        radioLabels[h].style.backgroundColor=""
+        radioLabels[h].firstChild.checked = false;
+    }
+    console.log(radioLabel)
+    radioLabel.firstChild.checked = true;
+    for(let h=0; h < radioLabels.length; h++){
+        if(radioLabels[h].firstChild.checked == true){
+            radioLabels[h].style.backgroundColor="rgb(190, 183, 183)"
+        }
+    }
+}
