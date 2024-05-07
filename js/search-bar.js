@@ -63,11 +63,11 @@ function saveData(city) {
 
 function closeSearch() {
     document.querySelector("#search-box-active").style.display = "none";
-    document.querySelector("body").style.overflow = "scroll";
+    document.body.style.position = "static";
 }
 
 function openSearch() {
-    document.querySelector("body").style.overflow = "hidden";
+    document.body.style.position = "fixed";
     document.querySelector("#search-box-active").style.display = "block";
     document.querySelector("#searchbar").focus();
 }

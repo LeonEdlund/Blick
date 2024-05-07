@@ -18,6 +18,10 @@ html {
   font-family: inter;
 }
 
+body {
+  width: 100%;
+}
+
 main {
   margin: var(--margin);
   margin-bottom: 6rem;
