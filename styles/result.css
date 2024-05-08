@@ -62,10 +62,9 @@ h1 {
   width: 6em;
   text-align: center;
   padding: 0.6em;
-  border-radius: 10px;
-  background-color: #9c9c9c;
+  border-radius: 20px;
+  background-color: #FC8D08;
   color: white;
-
 }
 
 #toBudget {
@@ -89,7 +88,7 @@ h1 {
   padding: 1rem 1.5rem;
   z-index: 1000;
   
-  background-color: rgb(95, 95, 95);
+  background-color: rgb(140, 140, 140);
   color: white;
   font-size: 0.8rem;
   font-weight: 500;

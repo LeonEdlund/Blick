@@ -3,16 +3,14 @@ function showFeedback() {
   feedbackDiv.style.display = "block";
   setTimeout(() => {
     feedbackDiv.style.opacity = "1";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(50%)"
+    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
 
   }, 10);
 
   setTimeout(() => {
     feedbackDiv.style.opacity = "0";
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
-
   }, 2000);
-
 }
 
 function chooseImg(description) {
