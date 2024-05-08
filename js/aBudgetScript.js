@@ -12,11 +12,9 @@ function init() {
             radioLabelsFunc(this)
         })
     }
-    console.log(radioLabels)
-    let getBudget = localStorage.getItem("minBudget")
-    minBudget = parseInt(getBudget)
-    console.log(minBudget)
-    if (minBudget == null || minBudget == ""||minBudget== NaN) {
+    if (!localStorage.getItem("minBudget")) {
+        let getBudget = localStorage.getItem("minBudget")
+        minBudget = parseInt(getBudget)
         newTripFunc()
     } else (setBudget())
     getStorage();
@@ -137,6 +135,8 @@ function newSpendFunc(wrong) {
     })
     name.addEventListener("blur", function(){
         console.log("hej")
+        let clear = null
+        searchFunc(clear)
         if(name.value == ""){
             name.setAttribute("class", "exempel")
             name.value = "NAMN" 
@@ -347,8 +347,8 @@ async function getSearchData() {
 }
 
 function searchFunc(input) {
-    let searchWord = input.toLowerCase()
     let search = document.querySelector("#results-budget")
+    let searchWord = input.toLowerCase()
     console.log(searchWord)
     if (input == "") {
         search.innerHTML = "";
@@ -372,6 +372,9 @@ function searchFunc(input) {
             document.querySelector("#name").value = searchResults[b].innerHTML
             search.innerHTML = ""
         })
+    }
+    if(input == null){
+        search.innerHTML = "";
     }
 }
 function radioLabelsFunc(radioLabel){
