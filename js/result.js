@@ -149,7 +149,7 @@ async function getRecommended(lat, lng) {
       break;
     case "culture":
       type = "&types=attraction"
-      description = "descriptions=museum,konsthall,konstgalleri,kyrka,sevärdhet,slott";
+      description = "&descriptions=museum,konsthall,konstgalleri,kyrka,sevärdhet,slott";
       break;
     case "activity":
       type = "&types=activity";
