@@ -33,12 +33,13 @@ function chooseImg(description) {
     konsthall: "img/icons/results/art.svg",
     konstgalleri: "img/icons/results/art.svg",
     kyrka: "img/icons/results/church.svg",
-    slott: "img/icons/temp-icons/camping.svg",
+    slott: "img/icons/results/castle.svg",
 
     // Activities
-    golfbana: "img/icons/temp-icons/golf.svg",
-    simhall: "img/icons/temp-icons/swimming.svg",
-    bowlinghall: "img/icons/temp-icons/bowling.svg",
+    golfbana: "img/icons/results/golf.svg",
+    simhall: "img/icons/results/swimming.svg",
+    bowlinghall: "img/icons/results/bowling.svg",
+    skateboardpark: "img/icons/results/skate.svg"
   }
 
   if (descriptions[description]) {
