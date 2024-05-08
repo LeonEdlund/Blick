@@ -3,16 +3,14 @@ function showFeedback() {
   feedbackDiv.style.display = "block";
   setTimeout(() => {
     feedbackDiv.style.opacity = "1";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(50%)"
+    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
 
   }, 10);
 
   setTimeout(() => {
     feedbackDiv.style.opacity = "0";
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
-
   }, 2000);
-
 }
 
 function chooseImg(description) {
@@ -20,25 +18,26 @@ function chooseImg(description) {
   console.log(description)
   let descriptions = {
     // Food
-    pizzeria: "img/icons/temp-icons/pizza.svg",
-    cafe: "img/icons/temp-icons/cafe.svg",
-    hamburgerkedja: "img/icons/temp-icons/hamburger.svg",
-    gatukök: "img/icons/temp-icons/hamburger.svg",
+    pizzeria: "img/icons/results/pizza.svg",
+    cafe: "img/icons/results/cafe.svg",
+    hamburgerkedja: "img/icons/results/hamburger.svg",
+    gatukök: "img/icons/results/hamburger.svg",
 
     // Nature
-    camping: "img/icons/temp-icons/camping.svg",
+    camping: "img/icons/results/camping.svg",
 
     // culture
-    museum: "img/icons/temp-icons/museum.svg",
-    konsthall: "img/icons/temp-icons/art.svg",
-    konstgalleri: "img/icons/temp-icons/art.svg",
-    kyrka: "img/icons/temp-icons/church.svg",
-    slott: "img/icons/temp-icons/camping.svg",
+    museum: "img/icons/results/museum.svg",
+    konsthall: "img/icons/results/art.svg",
+    konstgalleri: "img/icons/results/art.svg",
+    kyrka: "img/icons/results/church.svg",
+    slott: "img/icons/results/castle.svg",
 
     // Activities
-    golfbana: "img/icons/temp-icons/golf.svg",
-    simhall: "img/icons/temp-icons/swimming.svg",
-    bowlinghall: "img/icons/temp-icons/bowling.svg",
+    golfbana: "img/icons/results/golf.svg",
+    simhall: "img/icons/results/swimming.svg",
+    bowlinghall: "img/icons/results/bowling.svg",
+    skateboardpark: "img/icons/results/skate.svg"
   }
 
   if (descriptions[description]) {
