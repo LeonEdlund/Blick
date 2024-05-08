@@ -32,7 +32,7 @@ function chooseImg(description) {
     museum: "img/icons/results/museum.svg",
     konsthall: "img/icons/results/art.svg",
     konstgalleri: "img/icons/results/art.svg",
-    kyrka: "img/icons/temp-icons/church.svg",
+    kyrka: "img/icons/results/church.svg",
     slott: "img/icons/temp-icons/camping.svg",
 
     // Activities
