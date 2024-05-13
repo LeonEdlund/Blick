@@ -15,8 +15,15 @@ function init() {
     if (!localStorage.getItem("minBudget")) {
         let getBudget = localStorage.getItem("minBudget")
         minBudget = parseInt(getBudget)
-        newTripFunc()
-    } else (setBudget())
+        newTripFunc(false)
+        
+    }
+    if(localStorage.getItem("minBudget")){
+        let value = localStorage.getItem("minBudget")
+        minBudget = parseInt(value)
+        console.log(minBudget)
+        setBudget()
+    }
     getStorage();
     getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
@@ -134,7 +141,6 @@ function newSpendFunc(wrong) {
         name.setAttribute("class", "")
     })
     name.addEventListener("blur", function(){
-        console.log("hej")
         let clear = null
         searchFunc(clear)
         if(name.value == ""){
@@ -160,7 +166,6 @@ function newSpendFunc(wrong) {
         input.setAttribute("class", "")
     })
     input.addEventListener("blur", function(){
-        console.log("hej")
         if(input.value == ""){
             input.setAttribute("class", "exempel")
             input.value = "PRIS" 
@@ -201,8 +206,6 @@ function listSpednings() {
     amountSpent = 0;
     for (b = 0; b < spendings.length; b++) {
         let c = spendings[b];
-        console.log(b)
-        console.log(c)
         ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + "<button class='remove'>Ta bort</button></li>"
         amountSpent += c.price
     }
@@ -292,7 +295,6 @@ function removeBtnFunc(remove, e) {
     }
     if (remove == true) {
         spendings.splice(e, 1)
-        console.log(spendings);
         listSpednings();
     }
 }
@@ -330,7 +332,6 @@ function getStorage() {
         if (dataArray[l].length > 0) {
             let dataArrayArray = dataArray[l].split("&")
             spendings.unshift(new Spending(dataArrayArray[0], parseInt(dataArrayArray[1]), dataArrayArray[2]))
-            console.log(spendings)
             listSpednings()
         }
     }
@@ -349,7 +350,6 @@ async function getSearchData() {
 function searchFunc(input) {
     let search = document.querySelector("#results-budget")
     let searchWord = input.toLowerCase()
-    console.log(searchWord)
     if (input == "") {
         search.innerHTML = "";
         return;
