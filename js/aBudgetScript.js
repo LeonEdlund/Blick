@@ -52,7 +52,11 @@ window.addEventListener("load", init)
 function newTripFunc(wrong) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
-
+    let exit = document.querySelector("#exit")
+    exit.addEventListener("click", function () {
+        newTripDialog.close();
+        
+    })
     let input = document.querySelector("#money-to-spend")
     input.setAttribute("class", "exempel")
     input.value = "ex. 5000kr"
@@ -70,7 +74,8 @@ function newTripFunc(wrong) {
     let save = document.querySelector("#save")
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
 
-
+    window.addEventListener("ontouchstart",function(){closeDialogIfTouchedOutside(newTripDialog)})
+    
     if (wrong == true) {
         input.style.borderColor = "#972A2A";
     }
@@ -389,5 +394,11 @@ function radioLabelsFunc(radioLabel){
         if(radioLabels[h].firstChild.checked == true){
             radioLabels[h].style.backgroundColor="rgb(190, 183, 183)"
         }
+    }
+}
+function closeDialogIfTouchedOutside(close){
+    let goodSpace = document.querySelectorAll("dialog")
+    if(!this == goodSpace){
+        close.close()
     }
 }
