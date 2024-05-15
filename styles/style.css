@@ -4,6 +4,10 @@
 :root {
   --margin: 0 30px;
   --main-text-color: hsl(0, 0, 15);
+  --dark-green: #789373;
+  --light-green: #789373;
+  --orange: #FC8D08;
+  --blue: #64B3DF; 
 }
 
 *,
@@ -74,7 +78,7 @@ button {
 .rating {
   display: flex;
   align-items: center;
-  background-color: #64B3DF;
+  background-color: var(--blue);
   color: white;
   width: min-content;
   padding: 0.5rem;
@@ -93,7 +97,7 @@ button {
 
 .loader {
   border: 16px solid #f3f3f3;
-  border-top: 16px solid #3498db;
+  border-top: 16px solid var(--blue);
   border-radius: 50%;
   width: 5rem;
   height: 5rem;
