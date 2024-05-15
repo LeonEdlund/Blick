@@ -97,7 +97,11 @@ function resultToBudget(data) {
   if (category == "food") {
     category = "food-drink"
   } else { category = "activity" }
-  sessionStorage.setItem("fromResult", data.name + "&" + category)
+  let stringData = {
+    dataName: data.name,
+    cat:category
+  }
+  sessionStorage.setItem("fromResult", JSON.stringify(stringData))
   window.location.href = "budget.html"
 }
 

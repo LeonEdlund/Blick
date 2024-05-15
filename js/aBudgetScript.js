@@ -52,10 +52,15 @@ window.addEventListener("load", init)
 function newTripFunc(wrong) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
-    let exit = document.querySelector("#exit")
+    window.addEventListener("click", function(e){
+        if(e.target == newTripDialog ){
+            console.log("hej")
+            newTripDialog.close()
+        }
+    })
+    let exit = document.querySelector("#close-modal")
     exit.addEventListener("click", function () {
         newTripDialog.close();
-        
     })
     let input = document.querySelector("#money-to-spend")
     input.setAttribute("class", "exempel")
@@ -73,8 +78,6 @@ function newTripFunc(wrong) {
     })
     let save = document.querySelector("#save")
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
-
-    window.addEventListener("ontouchstart",function(){closeDialogIfTouchedOutside(newTripDialog)})
     
     if (wrong == true) {
         input.style.borderColor = "#972A2A";
@@ -97,12 +100,17 @@ function checkIfNumber(close, input, newBudget) {
         }
 
     }
-
+    if (newBudget == false) {
+    let nameElem = document.querySelector("#name")
+            let name = nameElem.value
+            if(name == ""||name == "NAMN"){
+            newSpendFunc("needs name")
+            return;
+            }else{nameElem.style.borderColor = ""}
+        }
     if (!isNaN(number)) {
 
         if (newBudget == false) {
-            let nameElem = document.querySelector("#name")
-            let name = nameElem.value
             let category;
             let options = document.querySelectorAll(".option");
             for (let a = 0; a < options.length; a++) {
@@ -138,7 +146,7 @@ function setBudget() {
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
     
-    if(name.value == ""){name.value = "NAMN"
+    if(name.value == ""||name.value == "NAMN"){name.value = "NAMN"
     name.setAttribute("class", "exempel")
     }
     name.addEventListener("focus", function(){
@@ -148,7 +156,7 @@ function newSpendFunc(wrong) {
     name.addEventListener("blur", function(){
         let clear = null
         searchFunc(clear)
-        if(name.value == ""){
+        if(name.value == ""||name.value == "NAMN"){
             name.setAttribute("class", "exempel")
             name.value = "NAMN" 
         }
@@ -157,45 +165,64 @@ function newSpendFunc(wrong) {
     searchFunc(name.value) })
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
+    window.addEventListener("click", function(e){
+        if(e.target == newSpendDialog ){
+            newSpendDialog.close()
+        }})
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function () {
         newSpendDialog.close();
         fromResult = "";
     })
     let input = document.querySelector("#amount")
-    input.value = ""
-    input.setAttribute("class", "exempel")
-    input.value = "PRIS"
+    if (input.value == "PRIS"||input.value == "" ){
+        input.setAttribute("class", "exempel")
+        input.value = "PRIS"
+    }
+    
     input.addEventListener("focus", function(){
         input.value = ""
         input.setAttribute("class", "")
     })
     input.addEventListener("blur", function(){
-        if(input.value == ""){
-            input.setAttribute("class", "exempel")
-            input.value = "PRIS" 
-        }
+    if(input.value == ""){
+        input.setAttribute("class", "exempel")
+        input.value = "PRIS" 
+    }
     })
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     if (wrong == false) {
-        input.style.backgroundColor = "";
+        input.setAttribute("class", "exempel")
+        input.value = "PRIS"
+        input.style.borderColor = "";
+        name.style.borderColor = "";
         return;
     }
     if (wrong == true) {
         input.style.borderColor = "#972A2A";
         return;
-    }
+        }
+    
     if (wrong == fromResult) {
         let name = document.querySelector("#name")
-        let radio = document.querySelector(fromResultTwo)
+        let radio = document.querySelector("#"+fromResultTwo)
+        console.log(radio.parentElement)
         radio.checked = true;
+        let radioParent = radio.parentElement
+        console.log(radioParent)
+        radioLabelsFunc(radioParent)
         name.value = fromResultOne
         return;
 
     }
+
+    if(wrong == "needs name"){
+        name.style.borderColor = "#972A2A";
+    }
+    
 
 }
 //ALEX - Constructor för objekt för utgift
@@ -308,9 +335,10 @@ function fromResultFunc() {
     if (fromResult == null || fromResult == "") {
         return;
     }
-    let storageArray = fromResult.split("&")
-    fromResultOne = storageArray[0]
-    fromResultTwo = "#" + storageArray[1]
+    fromResult = JSON.parse(fromResult)
+    console.log(fromResult.cat)
+    fromResultOne = fromResult.dataName
+    fromResultTwo = fromResult.cat
     sessionStorage.setItem("fromResult", "")
     newSpendFunc(fromResult)
 
@@ -353,6 +381,9 @@ async function getSearchData() {
 }
 
 function searchFunc(input) {
+    if(input == null){
+        return;
+    }
     let search = document.querySelector("#results-budget")
     let searchWord = input.toLowerCase()
     if (input == "") {
@@ -383,22 +414,16 @@ function searchFunc(input) {
     }
 }
 function radioLabelsFunc(radioLabel){
+    console.log(radioLabel)
     let radioLabels = document.querySelectorAll(".option-label")
     for(let h=0; h < radioLabels.length; h++){
         radioLabels[h].style.backgroundColor=""
         radioLabels[h].firstChild.checked = false;
     }
-    console.log(radioLabel)
     radioLabel.firstChild.checked = true;
     for(let h=0; h < radioLabels.length; h++){
         if(radioLabels[h].firstChild.checked == true){
             radioLabels[h].style.backgroundColor="rgb(190, 183, 183)"
         }
-    }
-}
-function closeDialogIfTouchedOutside(close){
-    let goodSpace = document.querySelectorAll("dialog")
-    if(!this == goodSpace){
-        close.close()
     }
 }

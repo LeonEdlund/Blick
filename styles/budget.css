@@ -149,6 +149,16 @@ dialog input{
 #exit img{
     height: 1.5rem;
 }
+#close-modal{
+    width: fit-content;
+    height: fit-content;
+    padding: 0%;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+#close-modal img{
+    height: 1.5rem;
+}
 #close{
     margin-top:2rem;
     background-color: #495f37;

@@ -53,16 +53,19 @@
 	</main>
 
 	<dialog id="new-trip-dialog">
-		<button id="exit"><img src="img/icons/close.svg"alt="stäng"></button>
+		<div class="holder">
+		<button id="close-modal"><img src="img/icons/close.svg"alt="stäng"></button>
 
 		<label for="belopp">
 			<h3>Skriv in din budget för resan</h3>
 			<input type="text" id="money-to-spend">
 			<button id="save">+</button>
 		</label>
+	</div>
 	</dialog>
 
 	<dialog id="new-spend-dialog">
+		<div class="holder">
 		<button id="exit"><img src="img/icons/close.svg" alt="stäng"></button>
 		<h3>Ny utgift</h3>
 		<div id="div-for-name">
@@ -100,6 +103,7 @@
 		</label>
 	</div>
 		<button id="close">+</button>
+	</div>
 	</dialog>
 
 </body>
