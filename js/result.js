@@ -1,3 +1,5 @@
+import { chooseImg, errorMessage } from "/js/utils.js";
+
 const key = "KZmupnUS";
 // Initialize
 window.addEventListener("load", init);
@@ -5,7 +7,7 @@ window.addEventListener("load", init);
 async function init() {
   const id = parseInt(getId("id"));
   if(!id) window.location = "index.html"
-
+  hideFullScreenLoader()
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
@@ -15,6 +17,11 @@ async function init() {
 function getId(param) {
   const urlParam = new URLSearchParams(window.location.search);
   return urlParam.get(param);
+}
+
+function hideFullScreenLoader() {
+  const loader = document.querySelector(".loader-wrapper");
+  loader.classList.add("loader-hidden");
 }
 
 // Leon - get data from SMAPI
@@ -42,7 +49,7 @@ async function getData(id) {
 // Leon - Generate HTML
 function generateHTML(data) {
   if (data) {
-    headerHtml =
+    let headerHtml =
       `<div id="header-left-side">
       <h1>${data.name}</h1>
       <h2>${data.description}</h2>
@@ -60,12 +67,7 @@ function generateHTML(data) {
     </div>`;
 
     const information = data.text ? `<h2>Information</h2><p>${data.text}</p>` : "";
-    mainHtml =
-      `
-    <button id=toBudget>Lägg till i din budget</button>
-    ${information}
-
-    `;
+    let mainHtml =`<button id=toBudget>Lägg till i din budget</button>${information}`;
 
     document.querySelector("header").innerHTML = headerHtml;
     document.querySelector("#information").innerHTML = mainHtml;
@@ -125,8 +127,22 @@ function checkIfSaved(id) {
 }
 
 function changeIcon(icon, isSaved) {
-  heartIcon = document.querySelector(`${icon} img`);
+  let heartIcon = document.querySelector(`${icon} img`);
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
+}
+
+function showFeedback() {
+  const feedbackDiv = document.querySelector(".feedback");
+  feedbackDiv.style.display = "block";
+  setTimeout(() => {
+    feedbackDiv.style.opacity = "1";
+    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
+  }, 10);
+
+  setTimeout(() => {
+    feedbackDiv.style.opacity = "0";
+    feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
+  }, 2000);
 }
 
 /*CODE FOR RECOMMENDATIONS*/
@@ -172,14 +188,12 @@ async function getRecommended(lat, lng) {
 function printRecommendedResults(data) {
   const idToSkip = getId("id");
   const filteredArray = data.filter(item => item.id !== idToSkip);
+  const swiperSlides = document.querySelectorAll(".swiper-slide");
 
   if (filteredArray.length == 0) {
     document.querySelector("#recommendations").style.display = "none";
     return;
   }
-  console.log(filteredArray)
-
-  const swiperSlides = document.querySelectorAll(".swiper-slide");
 
   for (let i = 0; i < swiperSlides.length && i < filteredArray.length; i++) {
     swiperSlides[i].appendChild(generateRecommendedHTML(filteredArray[i]));
@@ -211,7 +225,7 @@ function generateRecommendedHTML(result) {
 }
 
 function getRatingImg(score) {
-  imgLinks = {
+  const imgLinks = {
     2: { src: "img/icons/two-stars.svg", alt: "två stjärnor" },
     3: { src: "img/icons/three-stars.svg", alt: "tre stjärnor" },
     4: { src: "img/icons/four-stars.svg", alt: "fyra stjärnor" },

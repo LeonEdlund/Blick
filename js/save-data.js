@@ -49,7 +49,3 @@ function userLocation() {
     console.log(error);
   }
 }
-
-
-
-
