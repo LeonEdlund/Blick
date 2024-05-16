@@ -1,5 +1,6 @@
 header {
-    background-image: url(../temporary-img/header.jpg);
+    background-image: url(/img/places/header.webp);
+    background-position:center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 31vh;
@@ -38,12 +39,12 @@ header {
     border-radius: 30px;
 }
 
-.back-div button {
+#back-btn {
     background-color: white;
     border-radius: 50%;
-    aspect-ratio: 1/1;
-    padding: 0.6rem;
-    display: flex;
-    align-items: center;
+    width: 1.8em;
+    height: 1.8em;
+    text-align: center;
+    margin: 20px;
 }
 
