@@ -1,13 +1,12 @@
-import { chooseImg, errorMessage } from "/js/utils.js";
-
+import { chooseImg, errorMessage, getElement } from "/js/utils.js";
 const key = "KZmupnUS";
+
 // Initialize
 window.addEventListener("load", init);
 
 async function init() {
   const id = parseInt(getId("id"));
-  if(!id) window.location = "index.html"
-  hideFullScreenLoader()
+  if (!id) window.location = "index.html"
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
@@ -17,11 +16,6 @@ async function init() {
 function getId(param) {
   const urlParam = new URLSearchParams(window.location.search);
   return urlParam.get(param);
-}
-
-function hideFullScreenLoader() {
-  const loader = document.querySelector(".loader-wrapper");
-  loader.classList.add("loader-hidden");
 }
 
 // Leon - get data from SMAPI
@@ -34,62 +28,59 @@ async function getData(id) {
   }
 
   let data = await response.json();
-  if (data.header.status === `OK`) {
+  if (data.header.status === `OK` && data.payload.length > 0) {
+    hideFullScreenLoader()
     data = data.payload[0];
-    generateHTML(data);
+    showContent(data);
     showMap(data.lat, data.lng);
     getRecommended(data.lat, data.lng);
   } else {
-    console.log("hej")
+    hideFullScreenLoader()
     errorMessage(".slide-from-side");
     console.log(data.header);
   }
 }
 
 // Leon - Generate HTML
-function generateHTML(data) {
-  if (data) {
-    let headerHtml =
-      `<div id="header-left-side">
-      <h1>${data.name}</h1>
-      <h2>${data.description}</h2>
-      <p>Prisklass: ${data.price_range} Kr</p>
-      <div id="contact">
-      ${data.website ? `<a href="${data.website}" target="_blank">Hemsida</a>` : ""}
-      ${data.phone_number ? `<a href="tel:${data.phone_number}">Ring</a>` : ""}
-    </div>
-    </div>
-    <div id="header-right-side">
-      <button id="favorit"><img src="img/icons/heart.svg"></button>
-      <div class="rating">
-        <p>3/5</p>
-      </div>
-    </div>`;
+function showContent(data) {
+  getElement("header h1").textContent = data.name;
+  getElement("#header-left-side h2").textContent = data.description;
+  getElement("#header-left-side p").textContent += `${data.price_range} Kr`;
+  getElement(".rating").textContent = `${Math.round(data.rating)}/5`;
 
-    let mainHtml = "<button id=to-budget>Lägg till i din budget</button>";
+  if (data.website) {
+    const link = document.createElement("a");
+    link.textContent = "Hemsida";
+    link.href = data.website;
+    link.setAttribute("target", "_blank");
+    getElement("#contact").appendChild(link)
+  }
 
-    if(!data.abstract === "" || !data.text === "") {
-      mainHtml +=`
-      <h2>Information</h2>
+  if (data.phone_number) {
+    const link = document.createElement("a")
+    link.textContent = "Ring"
+    link.href = `tel:${data.phone_number}`
+    getElement("#contact").appendChild(link)
+  }
+
+  if (data.abstract !== " " || data.text !== " ") {
+    getElement("#info-text-section").style.display = "block";
+    getElement("#info-text").innerHTML = `
       ${data.abstract ? `<p>${data.abstract}</p>` : ""}
-      ${data.text ? `<p>${formatText(data.text)}</p>` : "" }`;
-    }
-
-    document.querySelector("header").innerHTML = headerHtml;
-    document.querySelector("#information").innerHTML = mainHtml;
-
-    document.querySelector("#favorit").addEventListener("click", () => {
-      favorit(data);
-    });
-
-    let toBudget = document.querySelector("#to-budget")
-    toBudget.addEventListener("click", function () { resultToBudget(data) })
+      ${data.text ? `<p>${formatText(data.text)}</p>` : ""}`;
   }
 
-  function formatText(text) {
-    const paragraphs = text.split('\n');
-    return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
-  }
+  document.querySelector("#favorit").addEventListener("click", () => {
+    favorit(data);
+  });
+
+  let toBudget = document.querySelector("#to-budget")
+  toBudget.addEventListener("click", function () { resultToBudget(data) })
+}
+
+function formatText(text) {
+  const paragraphs = text.split('\n');
+  return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
 }
 
 // Leon - Show leaflet map
@@ -112,7 +103,7 @@ function resultToBudget(data) {
   } else { category = "activity" }
   let stringData = {
     dataName: data.name,
-    cat:category
+    cat: category
   }
   sessionStorage.setItem("fromResult", JSON.stringify(stringData))
   window.location.href = "budget.html"
@@ -158,6 +149,11 @@ function showFeedback() {
     feedbackDiv.style.opacity = "0";
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
   }, 2000);
+}
+
+function hideFullScreenLoader() {
+  const loader = document.querySelector(".loader-wrapper");
+  loader.classList.add("loader-hidden");
 }
 
 /*CODE FOR RECOMMENDATIONS*/
@@ -231,7 +227,7 @@ function generateRecommendedHTML(result) {
   link.classList.add("recommended");
   link.innerHTML = `
     <div>
-      <img src= "${img}" alt=""></img>
+      <img src= "${img}" alt="ikon"></img>
       <h2>${result.name}</h2>
       <p>${result.description}</p>
       <img src= "${ratingImg.src}" alt="${ratingImg.alt}" id="star-rating"></img>
