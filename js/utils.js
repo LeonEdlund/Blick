@@ -41,7 +41,13 @@ export function chooseImg(description) {
 
 export function errorMessage(element) {
   document.querySelector(element).innerHTML = `
-  <h1>Något Gick Fel</h1>
-  <a href="index.html">Gå tillbaka till startsidan</a>
+  <div id="error">
+    <h1>Något Gick Fel</h1>
+    <a href="index.html">Gå tillbaka till startsidan</a>
+  </div>
   `;
+}
+
+export function getElement(elem) {
+  return document.querySelector(elem);
 }
