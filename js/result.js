@@ -80,7 +80,6 @@ function showContent(data) {
   }
 }
 
-
 // Leon - Show leaflet map
 function showMap(lat, lng) {
   const zoom = 13;
@@ -147,6 +146,7 @@ function showFeedback() {
     feedbackDiv.style.opacity = "0";
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
   }, 2000);
+  setTimeout(() => { feedbackDiv.style.display= "none" }, 3000);
 }
 
 function hideFullScreenLoader() {
