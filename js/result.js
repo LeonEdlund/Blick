@@ -66,8 +66,14 @@ function generateHTML(data) {
       </div>
     </div>`;
 
-    const information = data.text ? `<h2>Information</h2><p>${data.text}</p>` : "";
-    let mainHtml =`<button id=toBudget>Lägg till i din budget</button>${information}`;
+    let mainHtml = "<button id=to-budget>Lägg till i din budget</button>";
+
+    if(!data.abstract === "" || !data.text === "") {
+      mainHtml +=`
+      <h2>Information</h2>
+      ${data.abstract ? `<p>${data.abstract}</p>` : ""}
+      ${data.text ? `<p>${formatText(data.text)}</p>` : "" }`;
+    }
 
     document.querySelector("header").innerHTML = headerHtml;
     document.querySelector("#information").innerHTML = mainHtml;
@@ -76,8 +82,13 @@ function generateHTML(data) {
       favorit(data);
     });
 
-    let toBudget = document.querySelector("#toBudget")
+    let toBudget = document.querySelector("#to-budget")
     toBudget.addEventListener("click", function () { resultToBudget(data) })
+  }
+
+  function formatText(text) {
+    const paragraphs = text.split('\n');
+    return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
   }
 }
 
@@ -93,7 +104,7 @@ function showMap(lat, lng) {
   }).addTo(map);
 }
 
-//Alexander - användaren kan lägga in en utgift driekt via result
+//Alexander - användaren kan lägga in en utgift direkt via result
 function resultToBudget(data) {
   let category = localStorage.getItem("type");
   if (category == "food") {
