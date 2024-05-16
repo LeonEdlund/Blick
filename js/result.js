@@ -49,18 +49,15 @@ function showContent(data) {
   getElement(".rating").textContent = `${Math.round(data.rating)}/5`;
 
   if (data.website) {
-    const link = document.createElement("a");
-    link.textContent = "Hemsida";
-    link.href = data.website;
-    link.setAttribute("target", "_blank");
-    getElement("#contact").appendChild(link)
+    const websiteBtn = getElement("#website-btn");
+    websiteBtn.href = data.website;
+    websiteBtn.style.display = "block";
   }
 
   if (data.phone_number) {
-    const link = document.createElement("a")
-    link.textContent = "Ring"
-    link.href = `tel:${data.phone_number}`
-    getElement("#contact").appendChild(link)
+    const callBtn = getElement("#call-btn");
+    callBtn.href = `tel:${data.phone_number}`;
+    callBtn.style.display = "block";
   }
 
   if (data.abstract !== " " || data.text !== " ") {
@@ -76,12 +73,13 @@ function showContent(data) {
 
   let toBudget = document.querySelector("#to-budget")
   toBudget.addEventListener("click", function () { resultToBudget(data) })
+  
+  function formatText(text) {
+    const paragraphs = text.split('\n');
+    return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
+  }
 }
 
-function formatText(text) {
-  const paragraphs = text.split('\n');
-  return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
-}
 
 // Leon - Show leaflet map
 function showMap(lat, lng) {

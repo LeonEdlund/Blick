@@ -3,11 +3,13 @@
 
 :root {
   --margin: 0 30px;
-  --main-text-color: hsl(0, 0, 15);
+  --main-text-color: #0c0e15;
+  --second-text-color: #424347;
   --dark-green: #789373;
   --light-green: #789373;
   --orange: #FC8D08;
-  --blue: #64B3DF; 
+  --blue: #64B3DF;
+  --gray: #f1f5f8;
 }
 
 *,

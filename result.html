@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="styles/result.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <!-- <script src="loader.js"></script> -->
   <script src="js/nav-bar.js"></script>
   <script type="module" src="js/result.js" defer></script>
 </head>
@@ -36,29 +35,34 @@
       <p>Sparade</p>
     </a>
   </nav>
-
-
+  
   <div class="slide-from-side">
     <div id="map"></div>
-
+    
     <header>
-      <div id="header-left-side">
-        <h1></h1>
-        <h2>${data.description}</h2>
-        <p>Prisklass: </p>
-        <div id="contact">
+      <div id="header-wrapper">
+        <div id="header-left-side">
+          <div>
+            <h1></h1>
+            <h2>${data.description}</h2>
+          </div>
+          <p>Prisklass: </p>
+        </div>
+        <div id="header-right-side">
+          <button id="favorit"><img src="img/icons/heart.svg"></button>
+          <div class="rating">
+            <p></p>
+          </div>
         </div>
       </div>
-      <div id="header-right-side">
-        <button id="favorit"><img src="img/icons/heart.svg"></button>
-        <div class="rating">
-          <p>3/5</p>
-        </div>
+      <div id="contact">
+        <a href="#" id="call-btn">Ring</a>
+        <a href="#" id="website-btn">Hemsida</a>
+        <button id=to-budget>Lägg till i din budget</button>
       </div>
     </header>
-
+    
     <main id="information">
-      <button id=to-budget>Lägg till i din budget</button>
       <section id="info-text-section">
         <h2>Information</h2>
         <div id="info-text"></div>
