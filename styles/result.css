@@ -11,15 +11,6 @@ header {
   border-bottom: 1px solid rgb(198, 198, 198);
 }
 
-main {
-  margin: 15px;
-  margin-bottom: 5rem;
-}
-
-main p,
-main h2 {
-  margin-bottom: 0.5rem;
-}
 
 
 h1 {
@@ -87,6 +78,20 @@ h2 {
   color: white;
 }
 
+main {
+  margin: 15px;
+  margin-bottom: 5rem;
+}
+
+#info-text-section {
+  display: none;
+}
+
+main p,
+main h2 {
+  margin-bottom: 0.5rem;
+}
+
 .feedback {
   display: none;
   position: fixed;
@@ -96,13 +101,13 @@ h2 {
   opacity: 0;
   padding: 1rem 1.5rem;
   z-index: 1000;
-
+  
   background-color: rgb(140, 140, 140);
   color: white;
   font-size: 0.8rem;
   font-weight: 500;
   border-radius: 15px;
-
+  
   transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
