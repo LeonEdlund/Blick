@@ -8,12 +8,10 @@
 	<link rel="stylesheet" href="styles/style.css">
 	<link rel="stylesheet" href="styles/results.css">
 	<script src="js/nav-bar.js"></script>
-	<script src="js/utils.js"></script>
-	<script src="js/results.js" defer></script>
+	<script type="module" src="js/results.js" defer></script>
 </head>
 
 <body>
-	<h2><a href="https://docs.google.com/forms/d/e/1FAIpQLSd07Cy_dVgWFF1yDRvDZMx6TWYaYsrMNSpARLt9xBmS0ajctw/viewform?usp=sf_link">Klicka här för att  komma till utvärderingen</a></h2>
 	<nav class="back-div">
 		<button onclick="window.location = `categories.html`">&lt-</button>
 	</nav>
@@ -40,10 +38,11 @@
 			<div class="custom-select">
 				<select name="sort" aria-label="sortera resultat">
 					<option disabled selected>Sortera</option>
-					<option value="priceASC">Pris</option>
-					<option value="ratingDESC">Betyg</option>
+					<option value="priceASC">Billigast</option>
+					<option value="priceDESC">Dyrast</option>
+					<option value="ratingDESC">Högsta Betyg</option>
 				</select>
-				<img src="img/sort.svg" alt="sorterings ikon" id="sort-icon">
+				<!-- <img src="img/sort.svg" alt="sorterings ikon" id="sort-icon"> -->
 			</div>
 		</div>
 

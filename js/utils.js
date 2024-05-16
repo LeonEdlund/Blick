@@ -1,21 +1,6 @@
-function showFeedback() {
-  const feedbackDiv = document.querySelector(".feedback");
-  feedbackDiv.style.display = "block";
-  setTimeout(() => {
-    feedbackDiv.style.opacity = "1";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
-
-  }, 10);
-
-  setTimeout(() => {
-    feedbackDiv.style.opacity = "0";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
-  }, 2000);
-}
-
-function chooseImg(description) {
+export function chooseImg(description) {
   description = description.toLowerCase()
-  console.log(description)
+
   let descriptions = {
     // Food
     pizzeria: "img/icons/results/pizza.svg",
@@ -54,8 +39,7 @@ function chooseImg(description) {
   return types[localStorage.getItem("type")];
 }
 
-// Leon - Show error incase of smapi failure
-function errorMessage(element) {
+export function errorMessage(element) {
   document.querySelector(element).innerHTML = `
   <h1>Något Gick Fel</h1>
   <a href="index.html">Gå tillbaka till startsidan</a>

@@ -32,23 +32,18 @@
   font-size: 0.8rem;
 }
 
-.custom-select {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid rgb(0, 0, 0);
-  padding: 0.3rem;
-  border-radius: 5px;
-}
-
 .custom-select select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: none;
-  border: none;
-  font-size: 0.9rem;
-  max-width: 100px;
+  
+  background: url("../img/sort.svg") no-repeat right 8px center / 15px;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 8px 30px 8px 8px;
+  width: 90px;
+  border-radius: 5px;
+  color: var(--main-text-color);
+  text-overflow: ellipsis;
 }
 
 #sort-icon{

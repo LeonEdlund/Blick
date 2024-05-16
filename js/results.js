@@ -1,3 +1,5 @@
+import { chooseImg, errorMessage } from "/js/utils.js"
+
 const USER_CHOICES = {
   location: JSON.parse(localStorage.getItem("location")),
   category: localStorage.getItem("type"),
@@ -20,9 +22,7 @@ let API_PARAMS = {
   sortBy: ""
 }
 
-let APP_DATA = {
-  pageName: ""
-}
+let pageName = "";
 
 // initializing 
 window.addEventListener("load", init);
@@ -54,14 +54,14 @@ function changeTitle() {
   };
 
   const title = categoryTitles[USER_CHOICES.category];
-  APP_DATA.pageName = title;
+  pageName = title;
   titleElem.textContent = title;
 }
 
 function setURLParams() {
   const { location, category, lat, lng, } = USER_CHOICES;
 
-  if(location.type == "search"){
+  if (location.type == "search") {
     API_PARAMS.location = location.param;
   } else {
     switch (location.param) {
@@ -108,6 +108,7 @@ async function getData() {
   const URL = baseURL + URLParams;
 
   showLoader(DOM_ELEMENTS.list);
+
   const response = await fetch(URL);
   if (!response.ok) {
     console.log(`Error status: ${response.status}`);
@@ -125,9 +126,9 @@ async function getData() {
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
   const { list } = DOM_ELEMENTS;
+  const amountElem = document.querySelector("#sort p");
 
   list.innerHTML = "";
-  const amountElem = document.querySelector("#sort p");
   amountElem.innerText = `Antal resultat: ${data.length} st`;
 
   const fragment = document.createDocumentFragment();
@@ -136,6 +137,7 @@ function printResults(data) {
     let newLi = generateHTML(result);
     fragment.appendChild(newLi);
   });
+
   list.appendChild(fragment);
 }
 
@@ -144,6 +146,8 @@ function generateHTML(result) {
   const score = Math.round(result.rating);
   const priceFrom = getPrice(result.price_range);
   const img = chooseImg(result.description);
+  const isDistanceAvailable = API_PARAMS.method === 'method=getFromLatLng';
+
   // create all elements
   const li = document.createElement("li");
   li.innerHTML = `
@@ -152,7 +156,7 @@ function generateHTML(result) {
     <div class="result-info">
       <h2>${result.name}</h2>
       <p>${result.description}</p>
-      ${API_PARAMS.method === "method=getFromLatLng" ? `<p>Avstånd: ${Math.round(result.distance_in_km * 10) / 10} Km</p>` : ""}
+      ${isDistanceAvailable ? `<p>Avstånd: ${Math.round(result.distance_in_km * 10) / 10} Km</p>` : ""}
     </div>
     <div class="result-extra-info">
       <div class="rating"><p>${score}/5</p></div>
@@ -167,6 +171,7 @@ function generateHTML(result) {
 function sortResults() {
   const sortOptions = {
     priceASC: "sort_in=ASC&order_by=price_range",
+    priceDESC: "sort_in=DESC&order_by=price_range",
     ratingDESC: "sort_in=DESC&order_by=rating",
     distanceASC: "sort_in=ASC&order_by=distance_in_km"
   }
@@ -184,11 +189,12 @@ function getPrice(priceRange) {
   }
 }
 
+// Leon - Cut of second word in sorting option and sort by distance option if user location is chosen
 function checkSortOptions() {
   if (API_PARAMS.method == `method=getFromLatLng`) {
     const option = document.createElement("option");
     option.value = "distanceASC";
-    option.textContent = "Avstånd"
+    option.textContent = "Närmast"
     DOM_ELEMENTS.sort.appendChild(option);
   }
 }
@@ -198,12 +204,10 @@ function showLoader(element) {
   element.innerHTML = `<div class="loader"></div>`;
 }
 
-
-
 function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,
-    fromPage: APP_DATA.pageName,
+    fromPage: pageName,
     sortOption: DOM_ELEMENTS.sort.selectedIndex
   };
   sessionStorage.setItem("scrollPosition", JSON.stringify(scrollPosition));
@@ -213,9 +217,9 @@ function saveScrollPosition() {
 function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
 
-  if (savedPosition.fromPage == APP_DATA.pageName) {
-    //DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
-    //sortResults();
+  if (savedPosition && savedPosition.fromPage == pageName) {
+    // DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    // sortResults();
     window.scrollTo(0, savedPosition.scrollPosition);
   }
 }

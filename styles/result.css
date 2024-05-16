@@ -16,8 +16,18 @@ main {
   margin-bottom: 5rem;
 }
 
+main p,
+main h2 {
+  margin-bottom: 0.5rem;
+}
+
+
 h1 {
   font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.3rem;
 }
 
 #header-right-side {
@@ -67,9 +77,8 @@ h1 {
   color: white;
 }
 
-#toBudget {
-  border: 2px solid rgb(154, 154, 154);
-  border-radius: 10px;
+#to-budget {
+  border-radius: 50px;
   padding: 1rem;
   width: 100%;
   font-size: 1rem;
@@ -87,7 +96,7 @@ h1 {
   opacity: 0;
   padding: 1rem 1.5rem;
   z-index: 1000;
-  
+
   background-color: rgb(140, 140, 140);
   color: white;
   font-size: 0.8rem;
