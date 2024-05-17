@@ -67,7 +67,7 @@ function showContent(data) {
     callBtn.style.display = "flex";
   }
 
-  if (data.abstract || data.text) {
+  if (data.abstract.trim() || data.text.trim()) {
     getElement("#info-text-section").style.display = "block";
     getElement("#info-text").innerHTML = `
       ${data.abstract ? `<p>${data.abstract}</p>` : ""}
