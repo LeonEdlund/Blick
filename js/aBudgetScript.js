@@ -181,11 +181,11 @@ function newSpendFunc(wrong) {
     }
     
     input.addEventListener("focus", function(){
-        searchFunc(null)
         input.value = ""
         input.setAttribute("class", "")
     })
     input.addEventListener("blur", function(){
+    searchFunc(null)
     if(input.value == ""){
         input.setAttribute("class", "exempel")
         input.value = "PRIS" 
@@ -382,10 +382,13 @@ async function getSearchData() {
 }
 
 function searchFunc(input) {
+    
+    let search = document.querySelector("#results-budget")
     if(input == null){
+        search.innerHTML = "";
         return;
     }
-    let search = document.querySelector("#results-budget")
+    
     let searchWord = input.toLowerCase()
     if (input == "") {
         search.innerHTML = "";
