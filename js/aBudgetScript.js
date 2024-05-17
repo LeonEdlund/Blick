@@ -321,35 +321,35 @@ function calculatePerCategory() {
     general.innerHTML =
         `<li>
         <div>
-            <img src="img/culture.svg" alt=""></img>
+            <img src="img/icons/categories/accommodation.svg" alt="Boende"></img>
             <p>Boende</p>
         </div>
         <p class="spent">${catOne} Kr</p>
     </li>
     <li>
         <div>
-            <img src="img/culture.svg" alt=""></img>
+            <img src="img/icons/categories/travel.svg" alt="Resa"></img>
             <p>Resa</p>
         </div>
         <p class="spent">${catTwo} Kr</p>
     </li>
     <li>
         <div>
-            <img src="img/food.svg" alt=""></img>
+            <img src="img/icons/categories/food.svg" alt="Mat och dryck"></img>
             <p>Mat & Dryck</p>
         </div>
         <p class="spent">${catThree} Kr</p>
     </li>
     <li>
         <div>
-            <img src="img/activities.svg" alt=""></img>
+            <img src="img/icons/categories/activities.svg" alt="Aktiviteter"></img>
             <p>Aktiviteter</p>
         </div>
         <p class="spent">${catFour} Kr</p>
     </li>
     <li>
         <div>
-            <img src="img/icons/budget.svg" alt=""></img>
+            <img src="img/icons/categories/else.svg" alt="Övrigt"></img>
             <p>Övrigt</p>
         </div>
         <p class="spent">${catFive} Kr</p>
