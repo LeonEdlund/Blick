@@ -1,3 +1,5 @@
+import { chooseImg } from "/js/utils.js"
+
 let wList;
 
 function init() {
@@ -11,26 +13,46 @@ function showWishList() {
     wList.innerHTML = "";
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
 
-    if(wishlist.length == 0) {
+    console.log(wishlist)
+
+    if (wishlist.length == 0) {
         wList.innerHTML = "<p>Du har inget sparat.</p>"
         return;
     }
 
     wishlist.forEach(item => {
+        const desImg = chooseImg(item.description);
         const itemElem = document.createElement("li");
-        itemElem.innerHTML = `
-        <a href="result.html?id=${item.id}">
+        const link = document.createElement("a");
+        link.href = `result.html?id=${item.id}`;
+        link.innerHTML = `
+            <img class="des-img" src="${desImg}" alt="">
+            <div>
             <h3>${item.name}</h3>
             <p>${item.description}</p>
-        </a>
-        <button onclick='remove("${item.id}")'><img src="temporary-img/trash.svg" alt="trash"></button>`;
+            <p>Pris: ${item.price_range}kr</p>
+            </div>`;
+
+        const removeButton = document.createElement("button");
+        const img = document.createElement("img");
+        img.src = "temporary-img/trash.svg";
+        img.alt = "trash";
+        img.classList.add("trash-icon");
+        removeButton.appendChild(img);
+
+        removeButton.addEventListener("click", function() {
+            remove(item.id);
+        });
+
+        itemElem.appendChild(link);
+        itemElem.appendChild(removeButton);
         wList.appendChild(itemElem);
     });
 }
 
 // Jesper - Seraches and removes element
 function remove(itemId) {
-    index = -1;
+    let index = -1;
     let wishlist = JSON.parse(localStorage.getItem("wishlist"));
 
     for (let i = 0; i < wishlist.length; i++) {

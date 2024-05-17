@@ -15,17 +15,29 @@ header h1 {
 
 #wishlist-items li {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     background-color: white;
     border-radius: 13px;
     padding: 20px;
+    padding-left: 0px;
     filter: drop-shadow(0px 2px 2px hsla(0, 0%, 0%, 0.25));
 }
 
 #wishlist-items a {
     color: black;
+    display: flex;
 }
 
 #wishlist-items img {
-    width: 29px;
+    width: 30px;
 }
+
+#wishlist-items p {
+    font-size: 0.9rem;
+}
+
+#wishlist-items .des-img {
+    width: 80px;
+}
+
