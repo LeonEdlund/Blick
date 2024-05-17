@@ -21,7 +21,6 @@ function init() {
     if (localStorage.getItem("minBudget")) {
         let value = localStorage.getItem("minBudget")
         minBudget = parseInt(value)
-        console.log(minBudget)
         setBudget()
     }
     getStorage();
@@ -282,7 +281,7 @@ function listSpednings() {
     amountSpent = 0;
     for (b = 0; b < spendings.length; b++) {
         let c = spendings[b];
-        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + "<button class='remove'>Ta bort</button></li>"
+        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/categories/trash.svg"></button></li>`
         amountSpent += c.price
     }
     removeBtnFunc()
@@ -290,6 +289,7 @@ function listSpednings() {
     setBudget()
     setStorage()
 }
+
 //ALEX - räkna ut spenderat per kategori
 function calculatePerCategory() {
     let catOne = 0;
