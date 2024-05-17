@@ -47,8 +47,13 @@ async function getData(id) {
 function showContent(data) {
   getElement("header h1").textContent = data.name;
   getElement("#header-left-side h2").textContent = data.description;
-  getElement("#header-left-side p").textContent += `${data.price_range} Kr`;
+  getElement("#price-range").textContent += `${data.price_range} Kr`;
   getElement(".rating").textContent = `${Math.round(data.rating)}/5`;
+
+  if (data.student_discount === "Y") {
+    getElement("#student-discount-wrapper").style.display = "flex";
+    getElement("#student-discount").textContent = "Studentrabatt";
+  }
 
   if (data.website) {
     const websiteBtn = getElement("#website-btn");
@@ -62,7 +67,7 @@ function showContent(data) {
     callBtn.style.display = "flex";
   }
 
-  if (data.abstract !== " " || data.text !== " ") {
+  if (data.abstract || data.text) {
     getElement("#info-text-section").style.display = "block";
     getElement("#info-text").innerHTML = `
       ${data.abstract ? `<p>${data.abstract}</p>` : ""}
@@ -75,7 +80,7 @@ function showContent(data) {
 
   let toBudget = document.querySelector("#to-budget")
   toBudget.addEventListener("click", function () { resultToBudget(data) })
-  
+
   function formatText(text) {
     const paragraphs = text.split("\n");
     return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("");
@@ -149,7 +154,7 @@ function showFeedback() {
     feedbackDiv.style.opacity = "0";
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
   }, 2000);
-  setTimeout(() => { feedbackDiv.style.display= "none" }, 3000);
+  setTimeout(() => { feedbackDiv.style.display = "none" }, 3000);
 }
 
 function hideFullScreenLoader() {

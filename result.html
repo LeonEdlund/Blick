@@ -35,10 +35,10 @@
       <p>Sparade</p>
     </a>
   </nav>
-  
+
   <div class="slide-from-side">
     <div id="map"></div>
-    
+
     <header>
       <div id="header-wrapper">
         <div id="header-left-side">
@@ -46,8 +46,17 @@
             <h1></h1>
             <h2>${data.description}</h2>
           </div>
-          <p>Prisklass: </p>
+
+          <div class="info-icons-wrapper">
+            <img src="img/icons/price-range.svg" alt="studentrabatt" id="student-img">
+            <p id="price-range"></p>
+          </div>
+          <div id="student-discount-wrapper" class="info-icons-wrapper">
+            <img src="img/icons/student.svg" alt="studentrabatt" id="student-img">
+            <p id="student-discount"></p>
+          </div>
         </div>
+
         <div id="header-right-side">
           <button id="favorit"><img src="img/icons/heart.svg"></button>
           <div class="rating">
@@ -55,6 +64,7 @@
           </div>
         </div>
       </div>
+
       <div id="contact">
         <a href="#" id="call-btn">
           <img src="img/icons/call.svg" alt="telefon ikon">
@@ -67,7 +77,7 @@
         <button id=to-budget>Lägg till i din budget</button>
       </div>
     </header>
-    
+
     <main id="information">
       <section id="info-text-section">
         <h2>Information</h2>
