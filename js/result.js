@@ -24,6 +24,8 @@ async function getData(id) {
   const response = await fetch(URL);
 
   if (!response.ok) {
+    hideFullScreenLoader()
+    errorMessage(".slide-from-side");
     console.log(`Error status: ${response.status}`);
   }
 
@@ -32,7 +34,7 @@ async function getData(id) {
     hideFullScreenLoader()
     data = data.payload[0];
     showContent(data);
-    showMap(data.lat, data.lng);
+    showMap(data);
     getRecommended(data.lat, data.lng);
   } else {
     hideFullScreenLoader()
@@ -75,16 +77,17 @@ function showContent(data) {
   toBudget.addEventListener("click", function () { resultToBudget(data) })
   
   function formatText(text) {
-    const paragraphs = text.split('\n');
-    return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
+    const paragraphs = text.split("\n");
+    return paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("");
   }
 }
 
 // Leon - Show leaflet map
-function showMap(lat, lng) {
+function showMap(data) {
   const zoom = 13;
-  var map = L.map('map').setView([lat, lng], zoom);
-  var marker = L.marker([lat, lng]).addTo(map);
+  var map = L.map('map').setView([data.lat, data.lng], zoom);
+  var marker = L.marker([data.lat, data.lng]).addTo(map);
+  marker.bindPopup(`${data.address}<br>${data.zip_code}, ${data.city}`);
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
