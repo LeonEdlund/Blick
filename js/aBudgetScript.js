@@ -7,8 +7,8 @@ let names = []
 //ALEX-initiering av programmet
 function init() {
     let radioLabels = document.querySelectorAll(".option-label")
-    for(let a= 0; a <radioLabels.length; a++){
-        radioLabels[a].addEventListener("click", function(){
+    for (let a = 0; a < radioLabels.length; a++) {
+        radioLabels[a].addEventListener("click", function () {
             radioLabelsFunc(this)
         })
     }
@@ -16,9 +16,9 @@ function init() {
         let getBudget = localStorage.getItem("minBudget")
         minBudget = parseInt(getBudget)
         newTripFunc(false)
-        
+
     }
-    if(localStorage.getItem("minBudget")){
+    if (localStorage.getItem("minBudget")) {
         let value = localStorage.getItem("minBudget")
         minBudget = parseInt(value)
         console.log(minBudget)
@@ -52,12 +52,6 @@ window.addEventListener("load", init)
 function newTripFunc(wrong) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
-    window.addEventListener("click", function(e){
-        if(e.target == newTripDialog ){
-            console.log("hej")
-            newTripDialog.close()
-        }
-    })
     let exit = document.querySelector("#close-modal")
     exit.addEventListener("click", function () {
         newTripDialog.close();
@@ -66,23 +60,29 @@ function newTripFunc(wrong) {
     input.setAttribute("class", "exempel")
     input.value = "ex. 5000kr"
     input.blur()
-    input.addEventListener("focus", function(){
+    input.addEventListener("focus", function () {
         input.value = "";
         input.setAttribute("class", "")
     })
-    input.addEventListener("blur", function(){
-        if(input.value == ""){
+    input.addEventListener("blur", function () {
+        if (input.value == "") {
             input.setAttribute("class", "exempel")
-            input.value = "ex. 5000kr" 
+            input.value = "ex. 5000kr"
         }
     })
     let save = document.querySelector("#save")
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
-    
+
     if (wrong == true) {
         input.style.borderColor = "#972A2A";
     }
 
+    window.addEventListener("click", function (e) {
+        if (e.target == newTripDialog) {
+            input.value = ""
+            newTripDialog.close()
+        }
+    })
 }
 //ALEX - Kontrollerar ifall användaren skrivit in siffror i dialogen och kallar därefter på adekvat funktion 
 function checkIfNumber(close, input, newBudget) {
@@ -96,18 +96,18 @@ function checkIfNumber(close, input, newBudget) {
         }
         if (newBudget == false) {
             newSpendFunc(true)
-            
+
         }
 
     }
     if (newBudget == false) {
-    let nameElem = document.querySelector("#name")
-            let name = nameElem.value
-            if(name == ""||name == "NAMN"){
+        let nameElem = document.querySelector("#name")
+        let name = nameElem.value
+        if (name == "" || name == "NAMN") {
             newSpendFunc("needs name")
             return;
-            }else{nameElem.style.borderColor = ""}
-        }
+        } else { nameElem.style.borderColor = "" }
+    }
     if (!isNaN(number)) {
 
         if (newBudget == false) {
@@ -119,6 +119,8 @@ function checkIfNumber(close, input, newBudget) {
                     options[a].checked = false;
                 }
             }
+            let nameElem = document.querySelector("#name")
+            let name = nameElem.value
             spendings.unshift(new Spending(name, number, category))
             listSpednings()
             nameElem.value = ""
@@ -138,78 +140,120 @@ function checkIfNumber(close, input, newBudget) {
 function setBudget() {
     localStorage.setItem("minBudget", minBudget)
     let budgetElemLeft = document.querySelector("#av")
-    budgetElemLeft.innerHTML = "Av: " + minBudget+ ".00";
+    budgetElemLeft.innerHTML = "Av: " + minBudget + ".00";
     let budgetElem = document.querySelector("#kvar")
     budgetElem.innerHTML = (minBudget - amountSpent) + ".00";
 }
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
-    
-    if(name.value == ""||name.value == "NAMN"){name.value = "NAMN"
-    name.setAttribute("class", "exempel")
+    if (name.value == "" || name.value == "NAMN") {
+        name.value = "NAMN"
+        name.setAttribute("class", "exempel")
     }
-    name.addEventListener("focus", function(){
+    name.addEventListener("focus", function () {
         name.value = ""
         name.setAttribute("class", "")
     })
-    name.addEventListener("blur", function(){
-        let clear = null
-        searchFunc(clear)
-        if(name.value == ""||name.value == "NAMN"){
+    name.addEventListener("blur", function () {
+        if (name.value == "" || name.value == "NAMN") {
             name.setAttribute("class", "exempel")
-            name.value = "NAMN" 
+            name.value = "NAMN"
         }
     })
     name.addEventListener("input", function () {
-    searchFunc(name.value) })
+        searchFunc(name.value)
+    })
     let newSpendDialog = document.querySelector("#new-spend-dialog")
     newSpendDialog.showModal()
-    window.addEventListener("click", function(e){
-        if(e.target == newSpendDialog ){
-            newSpendDialog.close()
-        }})
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function () {
+        let options = document.querySelectorAll(".option");
+        for (let a = 0; a < options.length; a++) {
+            if (options[a].checked) {
+                options[a].checked = false;
+                radioLabelsFunc(null)
+            }
+        }
+        name.value = "NAMN"
+        name.setAttribute("class", "exempel")
+        input.setAttribute("class", "exempel")
+        input.value = "PRIS"
+        input.style.borderColor = "";
+        name.style.borderColor = "";
+        let search = document.querySelector("#results-budget")
+        search.innerHTML = ""
         newSpendDialog.close();
         fromResult = "";
     })
     let input = document.querySelector("#amount")
-    if (input.value == "PRIS"||input.value == "" ){
+    if (input.value == "PRIS" || input.value == "") {
         input.setAttribute("class", "exempel")
         input.value = "PRIS"
     }
-    
-    input.addEventListener("focus", function(){
+
+    input.addEventListener("focus", function () {
+        let search = document.querySelector("#results-budget")
+        search.innerHTML = ""
         input.value = ""
         input.setAttribute("class", "")
     })
-    input.addEventListener("blur", function(){
-    searchFunc(null)
-    if(input.value == ""){
-        input.setAttribute("class", "exempel")
-        input.value = "PRIS" 
-    }
+    input.addEventListener("blur", function () {
+        if (input.value == "") {
+            input.setAttribute("class", "exempel")
+            input.value = "PRIS"
+        }
     })
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
+    window.addEventListener("click", function (e) {
+        if (e.target == newSpendDialog) {
+            let options = document.querySelectorAll(".option");
+            for (let a = 0; a < options.length; a++) {
+                if (options[a].checked) {
+                    options[a].checked = false;
+                    radioLabelsFunc(null)
+                }
+            }
+            name.value = "NAMN"
+            name.setAttribute("class", "exempel")
+            input.setAttribute("class", "exempel")
+            input.value = "PRIS"
+            input.style.borderColor = "";
+            name.style.borderColor = "";
+            let search = document.querySelector("#results-budget")
+            search.innerHTML = ""
+            newSpendDialog.close()
+        }
+    })
     if (wrong == false) {
+        let options = document.querySelectorAll(".option");
+        for (let a = 0; a < options.length; a++) {
+            if (options[a].checked) {
+                options[a].checked = false;
+                radioLabelsFunc(null)
+            }
+        }
+        name.value = "NAMN"
+        name.setAttribute("class", "exempel")
         input.setAttribute("class", "exempel")
         input.value = "PRIS"
         input.style.borderColor = "";
         name.style.borderColor = "";
+        let search = document.querySelector("#results-budget")
+        search.innerHTML = ""
         return;
     }
     if (wrong == true) {
         input.style.borderColor = "#972A2A";
         return;
-        }
-    
+    }
+
     if (wrong == fromResult) {
         let name = document.querySelector("#name")
-        let radio = document.querySelector("#"+fromResultTwo)
+        let radio = document.querySelector("#" + fromResultTwo)
         console.log(radio.parentElement)
         radio.checked = true;
         let radioParent = radio.parentElement
@@ -220,10 +264,9 @@ function newSpendFunc(wrong) {
 
     }
 
-    if(wrong == "needs name"){
+    if (wrong == "needs name") {
         name.style.borderColor = "#972A2A";
     }
-    
 
 }
 //ALEX - Constructor för objekt för utgift
@@ -382,17 +425,15 @@ async function getSearchData() {
 }
 
 function searchFunc(input) {
-    
-    let search = document.querySelector("#results-budget")
-    if(input == null){
-        search.innerHTML = "";
-        return;
+    console.log(input)
+    if (input == null) {
+
     }
-    
+    let search = document.querySelector("#results-budget")
     let searchWord = input.toLowerCase()
     if (input == "") {
         search.innerHTML = "";
-        return;
+
     }
     let spaces = 0;
     search.innerHTML = "";
@@ -413,21 +454,21 @@ function searchFunc(input) {
             search.innerHTML = ""
         })
     }
-    if(input == null){
+    if (input == null) {
         search.innerHTML = "";
     }
 }
-function radioLabelsFunc(radioLabel){
+function radioLabelsFunc(radioLabel) {
     console.log(radioLabel)
     let radioLabels = document.querySelectorAll(".option-label")
-    for(let h=0; h < radioLabels.length; h++){
-        radioLabels[h].style.backgroundColor=""
+    for (let h = 0; h < radioLabels.length; h++) {
+        radioLabels[h].style.backgroundColor = ""
         radioLabels[h].firstChild.checked = false;
     }
     radioLabel.firstChild.checked = true;
-    for(let h=0; h < radioLabels.length; h++){
-        if(radioLabels[h].firstChild.checked == true){
-            radioLabels[h].style.backgroundColor="rgb(190, 183, 183)"
+    for (let h = 0; h < radioLabels.length; h++) {
+        if (radioLabels[h].firstChild.checked == true) {
+            radioLabels[h].style.backgroundColor = "rgb(190, 183, 183)"
         }
     }
 }
