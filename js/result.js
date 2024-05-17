@@ -53,13 +53,13 @@ function showContent(data) {
   if (data.website) {
     const websiteBtn = getElement("#website-btn");
     websiteBtn.href = data.website;
-    websiteBtn.style.display = "block";
+    websiteBtn.style.display = "flex";
   }
 
   if (data.phone_number) {
     const callBtn = getElement("#call-btn");
     callBtn.href = `tel:${data.phone_number}`;
-    callBtn.style.display = "block";
+    callBtn.style.display = "flex";
   }
 
   if (data.abstract !== " " || data.text !== " ") {
@@ -139,7 +139,7 @@ function changeIcon(icon, isSaved) {
 
 function showFeedback() {
   const feedbackDiv = document.querySelector(".feedback");
-  feedbackDiv.style.display = "block";
+  feedbackDiv.style.display = "flex";
   setTimeout(() => {
     feedbackDiv.style.opacity = "1";
     feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
