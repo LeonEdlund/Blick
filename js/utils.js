@@ -51,3 +51,18 @@ export function errorMessage(element) {
 export function getElement(elem) {
   return document.querySelector(elem);
 }
+
+export function showFeedback() {
+  const feedbackDiv = document.querySelector(".feedback");
+  feedbackDiv.style.display = "flex";
+  setTimeout(() => {
+    feedbackDiv.style.opacity = "1";
+    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
+  }, 10);
+
+  setTimeout(() => {
+    feedbackDiv.style.opacity = "0";
+    feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
+  }, 2000);
+  setTimeout(() => { feedbackDiv.style.display = "none" }, 3000);
+}

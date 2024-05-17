@@ -1,10 +1,11 @@
+import { showFeedback } from "/js/utils.js";
+
 function init() {
   const pageId = document.querySelector("body").id 
   const choices = document.querySelectorAll(".choices a");
   
-  
   if (pageId == "cities") {
-    userLocation(); // get user location
+    document.querySelector("#my-position").addEventListener("click", userLocation);
   } 
   
   // save users choices
@@ -40,12 +41,14 @@ function userLocation() {
     let long = position.coords.longitude;
     localStorage.setItem("latitude", lat);
     localStorage.setItem("longitude", long);
+    window.location = "categories.html";
   }
 
   function error(error) {
     document.querySelector("#my-position").href = "#";
     localStorage.removeItem("latitude");
     localStorage.removeItem("longitude");
+    showFeedback();
     console.log(error);
   }
 }

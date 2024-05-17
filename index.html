@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/choices.css">
   <link rel="stylesheet" href="styles/search-bar.css">
-  <script src="js/save-data.js"></script>
+  <script type="module" src="js/save-data.js"></script>
   <script src="js/nav-bar.js"></script>
   <script src="js/search-bar.js"></script>
 </head>
@@ -41,7 +41,7 @@
   
       <ul class="cities choices fade-in">
         <li>
-          <a href="categories.html" id="my-position">
+          <a href="#" id="my-position" aria-label="din position">
             <img src="img/my-location.svg" alt="använd din position">
             <p>MIN POSITION</p>
           </a>
@@ -87,10 +87,14 @@
 
   <div id="search-box-active">
     <div id="search-bar-wrapper">
-      <input type="text" name="search" id="searchbar" placeholder="Sök efter stad">
+      <input type="text" name="search" id="searchbar" placeholder="Sök efter stad" aria-label="sök stad">
       <button id="close-btn">Avbryt</button>
     </div>
     <ul id="results"></ul>
+  </div>
+
+  <div class="feedback">
+    <p>Kan inte hitta din plats</p>
   </div>
 
 </body>

@@ -1,4 +1,4 @@
-import { chooseImg, errorMessage, getElement } from "/js/utils.js";
+import { chooseImg, errorMessage, getElement, showFeedback } from "/js/utils.js";
 const key = "KZmupnUS";
 
 // Initialize
@@ -140,21 +140,6 @@ function checkIfSaved(id) {
 function changeIcon(icon, isSaved) {
   let heartIcon = document.querySelector(`${icon} img`);
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
-}
-
-function showFeedback() {
-  const feedbackDiv = document.querySelector(".feedback");
-  feedbackDiv.style.display = "flex";
-  setTimeout(() => {
-    feedbackDiv.style.opacity = "1";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(20%)"
-  }, 10);
-
-  setTimeout(() => {
-    feedbackDiv.style.opacity = "0";
-    feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
-  }, 2000);
-  setTimeout(() => { feedbackDiv.style.display = "none" }, 3000);
 }
 
 function hideFullScreenLoader() {

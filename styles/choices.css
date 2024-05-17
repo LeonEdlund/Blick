@@ -48,3 +48,9 @@ header {
     margin: 20px;
 }
 
+#no-location {
+    position: fixed;
+    top: 0;
+    
+}
+
