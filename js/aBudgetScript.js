@@ -181,6 +181,7 @@ function newSpendFunc(wrong) {
     }
     
     input.addEventListener("focus", function(){
+        searchFunc(null)
         input.value = ""
         input.setAttribute("class", "")
     })
