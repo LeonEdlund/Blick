@@ -35,7 +35,7 @@ function showWishList() {
 
         const removeButton = document.createElement("button");
         const img = document.createElement("img");
-        img.src = "temporary-img/trash.svg";
+        img.src = "/img/icons/trash.svg";
         img.alt = "trash";
         img.classList.add("trash-icon");
         removeButton.appendChild(img);
