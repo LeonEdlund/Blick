@@ -142,7 +142,10 @@ function setBudget() {
     budgetElemLeft.innerHTML = "Av: " + minBudget + ".00";
     let budgetElem = document.querySelector("#kvar")
     budgetElem.innerHTML = (minBudget - amountSpent) + ".00";
+    checkHeaderColor(budgetElem);
+
 }
+
 //ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
@@ -470,5 +473,15 @@ function radioLabelsFunc(radioLabel) {
         if (radioLabels[h].firstChild.checked == true) {
             radioLabels[h].style.backgroundColor = "rgb(190, 183, 183)"
         }
+    }
+}
+
+// Leon - change color of header if user overspends
+function checkHeaderColor(budgetElem) {
+    const header = document.querySelector("header")
+    if (parseInt(budgetElem.textContent) < 0) {
+        header.style.backgroundColor = "#8b0000";
+    } else {
+        header.style.backgroundColor = "var(--dark-green)";
     }
 }
