@@ -41,7 +41,7 @@
 #search,
 #close-btn {
     font-size: 1rem;
-    color: gray;
+    color: var(--second-text-color);
 }
 
 #results {
@@ -50,10 +50,12 @@
 }
 
 #results li {
-    padding: 1rem;
     border-bottom: 1px solid rgb(209, 209, 209);
 }
 
-a {
-    color: black;
+#results a {
+    display: block;
+    padding: 1rem;
+    width: 100%;
+    color: var(--main-text-color);
 }
