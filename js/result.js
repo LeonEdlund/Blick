@@ -215,8 +215,8 @@ function generateRecommendedHTML(result) {
   const score = Math.round(result.rating);
   const ratingImg = getRatingImg(score);
   const img = chooseImg(result.description);
-
   const link = document.createElement("a");
+  
   link.href = `result.html?id=${result.id}`
   link.classList.add("recommended");
   link.innerHTML = `
@@ -232,6 +232,7 @@ function generateRecommendedHTML(result) {
 // Leon - Get star rating img based on review score
 function getRatingImg(score) {
   const imgLinks = {
+    1: { src: "img/icons/one-star.svg", alt: "en stjärna" },
     2: { src: "img/icons/two-stars.svg", alt: "två stjärnor" },
     3: { src: "img/icons/three-stars.svg", alt: "tre stjärnor" },
     4: { src: "img/icons/four-stars.svg", alt: "fyra stjärnor" },
