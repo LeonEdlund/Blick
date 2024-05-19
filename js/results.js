@@ -117,6 +117,7 @@ async function getData() {
   const data = await response.json();
   if (data.header.status === `OK`) {
     printResults(data.payload);
+    // scrollToLastPosition()
   } else {
     console.log(data.header);
     errorMessage("main");
@@ -168,7 +169,7 @@ function generateHTML(result) {
 }
 
 // Leon - Sort results
-function sortResults() {
+async function sortResults() {
   const sortOptions = {
     priceASC: "sort_in=ASC&order_by=price_range",
     priceDESC: "sort_in=DESC&order_by=price_range",
@@ -177,7 +178,8 @@ function sortResults() {
   }
 
   API_PARAMS.sortBy = sortOptions[DOM_ELEMENTS.sort.value]
-  getData();
+  await getData();
+  return;
 }
 
 // Leon - get first number of price_range
@@ -204,6 +206,7 @@ function showLoader(element) {
   element.innerHTML = `<div class="loader"></div>`;
 }
 
+// save the scroll position too local storage
 function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,
@@ -213,13 +216,13 @@ function saveScrollPosition() {
   sessionStorage.setItem("scrollPosition", JSON.stringify(scrollPosition));
 }
 
-// Leon - scroll to last position and save sorting
-function scrollToLastPosition() {
+// Leon - scroll to last position and change sorting option
+async function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
 
   if (savedPosition && savedPosition.fromPage == pageName) {
-    // DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
-    // sortResults();
+    DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    await sortResults();
     window.scrollTo(0, savedPosition.scrollPosition);
   }
 }
