@@ -132,16 +132,19 @@ function favorit(data) {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
 }
 
+// Leon - returns True if object is saved in users wishlist
 function checkIfSaved(id) {
   const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
   return wishlist.some(item => parseInt(item.id) === parseInt(id));
 }
 
+// Leon - Change save icon if its saved or removed
 function changeIcon(icon, isSaved) {
   let heartIcon = document.querySelector(`${icon} img`);
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
 }
 
+// Leon - Hides the initial loader
 function hideFullScreenLoader() {
   const loader = document.querySelector(".loader-wrapper");
   loader.classList.add("loader-hidden");
@@ -179,6 +182,7 @@ async function getRecommended(lat, lng) {
   const response = await fetch(URL);
 
   if (!response.ok) {
+    errorMessage("swiper");
     console.log(`Error status: ${response.status}`);
   }
   const data = await response.json();
@@ -201,7 +205,6 @@ function printRecommendedResults(data) {
     swiperSlides[i].appendChild(generateRecommendedHTML(filteredArray[i]));
   }
 
-  // removes slides not used
   for (let i = data.length; i < swiperSlides.length; i++) {
     swiperSlides[i].style.display = 'none';
   }
@@ -226,6 +229,7 @@ function generateRecommendedHTML(result) {
   return link;
 }
 
+// Leon - Get star rating img based on review score
 function getRatingImg(score) {
   const imgLinks = {
     2: { src: "img/icons/two-stars.svg", alt: "två stjärnor" },
