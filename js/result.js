@@ -158,6 +158,7 @@ var swiper = new Swiper(".mySwiper", {
   freeMode: true
 });
 
+// Leon - Get recomendations from smapi based on result
 async function getRecommended(lat, lng) {
   const category = localStorage.getItem("type");
   let type = "";
@@ -198,7 +199,8 @@ function printRecommendedResults(data) {
   const swiperSlides = document.querySelectorAll(".swiper-slide");
 
   if (filteredArray.length == 0) {
-    document.querySelector("#recommendations").style.display = "none";
+    getElement("#recommendations").style.display = "none";
+    getElement("main").style.marginBottom = "6rem";
     return;
   }
 
@@ -206,7 +208,7 @@ function printRecommendedResults(data) {
     swiperSlides[i].appendChild(generateRecommendedHTML(filteredArray[i]));
   }
 
-  for (let i = data.length; i < swiperSlides.length; i++) {
+  for (let i = filteredArray.length; i < swiperSlides.length; i++) {
     swiperSlides[i].style.display = 'none';
   }
 }
