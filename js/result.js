@@ -6,10 +6,18 @@ window.addEventListener("load", init);
 
 async function init() {
   const id = parseInt(getId("id"));
+  const lastLocation = sessionStorage.getItem("wishlistLinkClicked") || "";
+
   if (!id) window.location = "index.html"
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
+
+  if (lastLocation === "true") {
+    getElement(".back-div button").onclick = () => window.location = "wishlist.html";
+    sessionStorage.removeItem("wishlistLinkClicked");
+  }
+
   savePageLink()
 }
 

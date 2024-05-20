@@ -86,7 +86,7 @@ export function savePageLink() {
 export function changeExploreBtn() {
   let storedLocation = localStorage.getItem("lastLocation");
   let storedLocationId = localStorage.getItem("lastLocationId");
-  console.log(storedLocation);
+
   if (storedLocation) {
     document.querySelector(".explore-btn").href = storedLocation;
   };

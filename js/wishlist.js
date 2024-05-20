@@ -46,6 +46,7 @@ function showWishList() {
 
             itemElem.appendChild(link);
             itemElem.appendChild(removeButton);
+            itemElem.addEventListener("click", () => sessionStorage.setItem("wishlistLinkClicked", true));
             wList.appendChild(itemElem);
         });
 
