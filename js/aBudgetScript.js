@@ -284,7 +284,7 @@ function listSpednings() {
     amountSpent = 0;
     for (b = 0; b < spendings.length; b++) {
         let c = spendings[b];
-        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/trash.svg"></button></li>`
+        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/trash.svg" alt="ta bort utgift" aria-label="Ta bort utgift"></button></li>`
         amountSpent += c.price
     }
     removeBtnFunc()

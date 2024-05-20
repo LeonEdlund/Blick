@@ -26,9 +26,9 @@ function showWishList() {
         const link = document.createElement("a");
         link.href = `result.html?id=${item.id}`;
         link.innerHTML = `
-            <img class="des-img" src="${desImg}" alt="">
+            <img class="des-img" src="${desImg}" alt="kategori">
             <div>
-            <h3>${item.name}</h3>
+            <h2>${item.name}</h2>
             <p>${item.description}</p>
             <p>Pris: ${item.price_range}kr</p>
             </div>`;
