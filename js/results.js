@@ -118,7 +118,6 @@ async function getData() {
   const data = await response.json();
   if (data.header.status === `OK`) {
     printResults(data.payload);
-    // scrollToLastPosition()
   } else {
     console.log(data.header);
     errorMessage("main");
