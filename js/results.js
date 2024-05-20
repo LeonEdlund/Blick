@@ -1,15 +1,10 @@
-import { chooseImg, errorMessage } from "/js/utils.js"
+import { chooseImg, errorMessage, savePageLink } from "/js/utils.js"
 
 const USER_CHOICES = {
   location: JSON.parse(localStorage.getItem("location")),
   category: localStorage.getItem("type"),
   lat: localStorage.getItem("latitude"),
   lng: localStorage.getItem("longitude")
-}
-
-const DOM_ELEMENTS = {
-  sort: document.querySelector("select"),
-  list: document.querySelector("#list-of-results")
 }
 
 let API_PARAMS = {
@@ -23,18 +18,24 @@ let API_PARAMS = {
 }
 
 let pageName = "";
+let list;
+let sort;
 
 // initializing 
 window.addEventListener("load", init);
-window.addEventListener("unload", saveScrollPosition);
+window.addEventListener("pagehide", saveScrollPosition);
 
 async function init() {
   if (!USER_CHOICES.category || !USER_CHOICES.location) {
     window.location.href = "index.html";
   }
 
-  DOM_ELEMENTS.sort.addEventListener("change", sortResults);
+  sort = document.querySelector("select");
+  list = document.querySelector("#list-of-results");
 
+  sort.addEventListener("change", sortResults);
+  
+  savePageLink();
   changeTitle();
   setURLParams();
   checkSortOptions();
@@ -107,7 +108,7 @@ async function getData() {
   const URLParams = `&controller=${controller}&${method}&${types}&${location}&${description}&${sortBy}`;
   const URL = baseURL + URLParams;
 
-  showLoader(DOM_ELEMENTS.list);
+  showLoader(list);
 
   const response = await fetch(URL);
   if (!response.ok) {
@@ -126,7 +127,6 @@ async function getData() {
 
 // Leon - Prints results from SMAPI in list
 function printResults(data) {
-  const { list } = DOM_ELEMENTS;
   const amountElem = document.querySelector("#sort p");
 
   list.innerHTML = "";
@@ -177,7 +177,7 @@ async function sortResults() {
     distanceASC: "sort_in=ASC&order_by=distance_in_km"
   }
 
-  API_PARAMS.sortBy = sortOptions[DOM_ELEMENTS.sort.value]
+  API_PARAMS.sortBy = sortOptions[sort.value]
   await getData();
   return;
 }
@@ -197,7 +197,7 @@ function checkSortOptions() {
     const option = document.createElement("option");
     option.value = "distanceASC";
     option.textContent = "Närmast"
-    DOM_ELEMENTS.sort.appendChild(option);
+    sort.appendChild(option);
   }
 }
 
@@ -211,7 +211,7 @@ function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,
     fromPage: pageName,
-    sortOption: DOM_ELEMENTS.sort.selectedIndex
+    sortOption: sort.selectedIndex
   };
   sessionStorage.setItem("scrollPosition", JSON.stringify(scrollPosition));
 }
@@ -221,7 +221,7 @@ async function scrollToLastPosition() {
   const savedPosition = JSON.parse(sessionStorage.getItem("scrollPosition"));
 
   if (savedPosition && savedPosition.fromPage == pageName) {
-    DOM_ELEMENTS.sort.selectedIndex = savedPosition.sortOption;
+    sort.selectedIndex = savedPosition.sortOption;
     await sortResults();
     window.scrollTo(0, savedPosition.scrollPosition);
   }

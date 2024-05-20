@@ -1,4 +1,4 @@
-import { chooseImg, errorMessage, getElement, showFeedback } from "/js/utils.js";
+import { chooseImg, errorMessage, getElement, showFeedback, savePageLink } from "/js/utils.js";
 const key = "KZmupnUS";
 
 // Initialize
@@ -10,6 +10,7 @@ async function init() {
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
+  savePageLink()
 }
 
 // Leon - get ID
