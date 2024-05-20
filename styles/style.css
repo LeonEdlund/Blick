@@ -47,6 +47,10 @@ button {
   outline: inherit;
 }
 
+button:focus-visible {
+  border: 1px solid rgb(47, 47, 255);
+}
+
 .menu-bar {
   display: flex;
   justify-content: space-between;
