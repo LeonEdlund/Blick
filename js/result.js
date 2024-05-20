@@ -123,7 +123,7 @@ function favorit(data) {
   if (!isSaved) {
     changeIcon("#favorit", true);
     showFeedback()
-    wishlist.push(data);
+    wishlist.unshift(data);
   } else {
     changeIcon("#favorit", false);
     const index = wishlist.findIndex(item => parseInt(item.id) === parseInt(data.id));
