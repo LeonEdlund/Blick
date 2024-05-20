@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="styles/style.css">
 	<link rel="stylesheet" href="styles/budget.css">
 	<link rel="stylesheet" href="styles/search-bar.css">
-	<script src="js/aBudgetScript.js" defer></script>
+	<script type="module" src="js/aBudgetScript.js"></script>
 	<script src="js/nav-bar.js"></script>
 </head>
 
@@ -48,62 +48,49 @@
 		</div>
 
 		<section class="expenditure">
+			<h2 class="sr-only">Individuella utgifter</h2>
 			<ul id="ul"></ul>
 		</section>
 	</main>
 
 	<dialog id="new-trip-dialog">
-		<div class="holder">
-		<button id="close-modal"><img src="img/icons/close.svg"alt="stäng"></button>
+		<button id="close-modal" aria-label="Stäng"><img src="img/icons/close.svg" alt="stäng"></button>
 
-		<label for="belopp">
-			<h3>Skriv in din budget för resan</h3>
-			<input type="text" id="money-to-spend">
-			<button id="save">+</button>
-		</label>
-	</div>
+		<h3>Skriv in din budget för resan</h3>
+		<input type="text" id="money-to-spend" aria-label="skriv in budget">
+		<button id="save">+</button>
 	</dialog>
 
 	<dialog id="new-spend-dialog">
-		<div class="holder">
-		<button id="exit"><img src="img/icons/close.svg" alt="stäng"></button>
+		<button id="exit" aria-label="Stäng ner"><img src="img/icons/close.svg" alt="stäng"></button>
 		<h3>Ny utgift</h3>
-		<div id="div-for-name">
-		<label for="name">
-			<input type="search" id="name">
-		</label>
 
-		<ul id="results-budget"></ul>
+		<div id="div-for-name">
+			<input type="search" id="name" aria-label="Namn på utgift">
+			<ul id="results-budget"></ul>
 		</div>
+
 		<div id="div-for-amount">
-		<label for="amount">
-			<input type="text" id="amount">
-		</label>
+			<input type="text" id="amount" aria-label="Pris för utgift">
 		</div>
-		<div id="div-for-cat">
-		<label for="accommodation" class="option-label">
-			Boende
+
+		<form id="div-for-cat">
+			<label for="accommodation" class="option-label">Boende</label>
 			<input type="radio" id="accommodation" name="option" class="option">
-		</label>
-		<label for="trip"class="option-label">
-			Resa
+
+			<label for="trip" class="option-label">Resa</label>
 			<input type="radio" id="trip" name="option" class="option">
-		</label>
-		<label for="food-drink"class="option-label">
-			Mat och Dryck
+
+			<label for="food-drink" class="option-label">Mat och Dryck</label>
 			<input type="radio" id="food-drink" name="option" class="option">
-		</label>
-		<label for="activity"class="option-label">
-			Aktiviteter
+
+			<label for="activity" class="option-label">Aktiviteter</label>
 			<input type="radio" id="activity" name="option" class="option">
-		</label>
-		<label for="other"class="option-label">
-			övrigt
+
+			<label for="other" class="option-label">övrigt</label>
 			<input type="radio" id="other" name="option" class="option">
-		</label>
-	</div>
+		</form>
 		<button id="close">+</button>
-	</div>
 	</dialog>
 
 </body>
