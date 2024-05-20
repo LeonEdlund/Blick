@@ -1,4 +1,4 @@
-import { chooseImg, errorMessage, getElement, showFeedback, savePageLink } from "/js/utils.js";
+import { chooseImg, errorMessage, getElement, showFeedback, savePageLink, hideLoader } from "/js/utils.js";
 const key = "KZmupnUS";
 
 // Initialize
@@ -25,20 +25,20 @@ async function getData(id) {
   const response = await fetch(URL);
 
   if (!response.ok) {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     errorMessage(".slide-from-side");
     console.log(`Error status: ${response.status}`);
   }
 
   let data = await response.json();
   if (data.header.status === `OK` && data.payload.length > 0) {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     data = data.payload[0];
     showContent(data);
     showMap(data);
     getRecommended(data.lat, data.lng);
   } else {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     errorMessage(".slide-from-side");
     console.log(data.header);
   }
@@ -143,12 +143,6 @@ function checkIfSaved(id) {
 function changeIcon(icon, isSaved) {
   let heartIcon = document.querySelector(`${icon} img`);
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
-}
-
-// Leon - Hides the initial loader
-function hideFullScreenLoader() {
-  const loader = document.querySelector(".loader-wrapper");
-  loader.classList.add("loader-hidden");
 }
 
 /*CODE FOR RECOMMENDATIONS*/

@@ -95,3 +95,8 @@ export function changeExploreBtn() {
     document.querySelector(".explore-btn").href += storedLocationId;
   }
 }
+
+// Leon - Hides loader
+export function hideLoader(loader) {
+  document.querySelector(loader).style.display = "none";
+}

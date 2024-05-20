@@ -1,4 +1,4 @@
-import { chooseImg, errorMessage, savePageLink } from "/js/utils.js"
+import { chooseImg, errorMessage, savePageLink, getElement, hideLoader } from "/js/utils.js"
 
 const USER_CHOICES = {
   location: JSON.parse(localStorage.getItem("location")),
@@ -108,19 +108,22 @@ async function getData() {
   const URLParams = `&controller=${controller}&${method}&${types}&${location}&${description}&${sortBy}`;
   const URL = baseURL + URLParams;
 
-  showLoader(list);
-
+  
   const response = await fetch(URL);
   if (!response.ok) {
+    hideLoader(".loader");
+    errorMessage("main");
     console.log(`Error status: ${response.status}`);
   }
-
+  
   const data = await response.json();
   if (data.header.status === `OK`) {
+    hideLoader(".loader");
     printResults(data.payload);
   } else {
-    console.log(data.header);
+    hideLoader(".loader");
     errorMessage("main");
+    console.log(data.header);
   }
 }
 
@@ -148,7 +151,6 @@ function generateHTML(result) {
   const img = chooseImg(result.description);
   const isDistanceAvailable = API_PARAMS.method === 'method=getFromLatLng';
 
-  // create all elements
   const li = document.createElement("li");
   li.innerHTML = `
   <a href="result.html?id=${result.id}" class="list-item">
@@ -198,11 +200,6 @@ function checkSortOptions() {
     option.textContent = "Närmast"
     sort.appendChild(option);
   }
-}
-
-// Leon - adds a loader to the given element
-function showLoader(element) {
-  element.innerHTML = `<div class="loader"></div>`;
 }
 
 // save the scroll position too local storage
