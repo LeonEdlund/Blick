@@ -75,7 +75,6 @@ export function showFeedback() {
 export function savePageLink() {
   let location = window.location.pathname.substring(1);
   localStorage.setItem("lastLocation", location);
-  console.log(window.location.search)
   if (window.location.search) {
     let locationId = window.location.search;
     localStorage.setItem("lastLocationId", locationId);
