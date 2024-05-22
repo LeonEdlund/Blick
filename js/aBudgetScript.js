@@ -419,6 +419,12 @@ function getStorage() {
 //Alex - Gets the suggestions
 async function getSearchData() {
     let response = await fetch("https://smapi.lnu.se/api/?api_key=KZmupnUS&controller=establishment&method=getAll")
+    
+    if(!response.ok){
+        console.log("FEL")
+        return;
+    }
+
     let responseTwo = await response.json()
     let data = responseTwo.payload
 
