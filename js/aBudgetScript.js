@@ -1,10 +1,10 @@
-let spendings = []//ALEX - array för utgifter
-let amountSpent = 0;//ALEX -  hur mycket användaren spenderat
-let minBudget = 0;//ALEX - Användarens budget
+let spendings = []//ALEX - array for expenditures
+let amountSpent = 0;//ALEX -  the amount spent by the user
+let minBudget = 0;//ALEX - the user budget
 let fromResultOne;
 let fromResultTwo;
 let names = []
-//ALEX-initiering av programmet
+//ALEX-initializes the page  
 function init() {
     let radioLabels = document.querySelectorAll(".option-label")
     for (let a = 0; a < radioLabels.length; a++) {
@@ -47,7 +47,7 @@ function init() {
 }
 window.addEventListener("load", init)
 
-//ALEX - öppnar en dialog för att användaren ska kunna skriva in sin budget för resan
+//ALEX - opens a dialog for the user to write their budget
 function newTripFunc(wrong) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
@@ -83,7 +83,7 @@ function newTripFunc(wrong) {
         }
     })
 }
-//ALEX - Kontrollerar ifall användaren skrivit in siffror i dialogen och kallar därefter på adekvat funktion 
+//ALEX - checks if a the correct input is provided by the user
 function checkIfNumber(close, input, newBudget) {
     close.close()
 
@@ -135,7 +135,7 @@ function checkIfNumber(close, input, newBudget) {
 
 
 }
-//ALEX - Sätter budgeten och räknar ut vad som är kvar av den
+//ALEX - Sets the budget
 function setBudget() {
     localStorage.setItem("minBudget", minBudget)
     let budgetElemLeft = document.querySelector("#av")
@@ -146,7 +146,7 @@ function setBudget() {
 
 }
 
-//ALEX - Öppnar dialog för att användaren ska kunna fylla i en ny utgift
+//ALEX - opens dialog for the user to put in an expenditure
 function newSpendFunc(wrong) {
     let name = document.querySelector("#name")
     if (name.value == "" || name.value == "NAMN") {
@@ -256,10 +256,8 @@ function newSpendFunc(wrong) {
     if (wrong == fromResult) {
         let name = document.querySelector("#name")
         let radio = document.querySelector("#" + fromResultTwo)
-        console.log(radio.parentElement)
         radio.checked = true;
         let radioParent = radio.parentElement
-        console.log(radioParent)
         radioLabelsFunc(radioParent)
         name.value = fromResultOne
         return;
@@ -271,7 +269,7 @@ function newSpendFunc(wrong) {
     }
 
 }
-//ALEX - Constructor för objekt för utgift
+//ALEX - Constructor for object Spending
 function Spending(name, price, category) {
     this.name = name;
     this.price = price;
@@ -293,7 +291,7 @@ function listSpednings() {
     setStorage()
 }
 
-//ALEX - räkna ut spenderat per kategori
+//ALEX - calculates per category
 function calculatePerCategory() {
     let catOne = 0;
     let catTwo = 0;
@@ -366,7 +364,7 @@ function calculatePerCategory() {
         };
     };
 }
-
+//Alex - Adds functionality for removing expenditure
 function removeBtnFunc(remove, e) {
     let removeBtns = document.querySelectorAll(".remove")
     for (let f = 0; f < removeBtns.length; f++) {
@@ -377,20 +375,19 @@ function removeBtnFunc(remove, e) {
         listSpednings();
     }
 }
-//hämmtar sessionStorage som sparas i result.html och startar sedan inläggningen av denna i budgeten
+//Alex - Gets the session-storage from result
 function fromResultFunc() {
     if (fromResult == null || fromResult == "") {
         return;
     }
     fromResult = JSON.parse(fromResult)
-    console.log(fromResult.cat)
     fromResultOne = fromResult.dataName
     fromResultTwo = fromResult.cat
     sessionStorage.setItem("fromResult", "")
     newSpendFunc(fromResult)
 
 }
-//sparar användarens val
+//Alex - saves the users choices
 function setStorage() {
     let dataToSave = "/";
     for (let j = 0; j < spendings.length; j++) {
@@ -401,7 +398,7 @@ function setStorage() {
     }
     localStorage.setItem("storedData", dataToSave)
 }
-//hämtar tidigare val 
+//Alex - Gets the users previous choices
 function getStorage() {
     let storedData = localStorage.getItem("storedData")
     if (storedData == null) {
@@ -416,7 +413,7 @@ function getStorage() {
         }
     }
 }
-
+//Alex - Gets the suggestions
 async function getSearchData() {
     let response = await fetch("https://smapi.lnu.se/api/?api_key=KZmupnUS&controller=establishment&method=getAll")
     let responseTwo = await response.json()
@@ -426,9 +423,8 @@ async function getSearchData() {
         names.push(data[u].name)
     }
 }
-
+//Alex- Writes the suggestions
 function searchFunc(input) {
-    console.log(input)
     if (input == null) {
 
     }
@@ -461,8 +457,8 @@ function searchFunc(input) {
         search.innerHTML = "";
     }
 }
+//Alex- Makes the labels replace the radio inputs
 function radioLabelsFunc(radioLabel) {
-    console.log(radioLabel)
     let radioLabels = document.querySelectorAll(".option-label")
     for (let h = 0; h < radioLabels.length; h++) {
         radioLabels[h].style.backgroundColor = ""
