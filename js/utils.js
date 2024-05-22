@@ -1,3 +1,4 @@
+// Leon - choose image based on description from SMAPI 
 export function chooseImg(description) {
   description = description.toLowerCase()
 
@@ -39,6 +40,7 @@ export function chooseImg(description) {
   return types[localStorage.getItem("type")];
 }
 
+// Leon - Show error message
 export function errorMessage(element) {
   document.querySelector(element).innerHTML = `
   <div id="error">
@@ -48,10 +50,12 @@ export function errorMessage(element) {
   `;
 }
 
+// Leon - fat way to get DOMelement 
 export function getElement(elem) {
   return document.querySelector(elem);
 }
 
+// Leon - Show and remove element with class .feedback
 export function showFeedback() {
   const feedbackDiv = document.querySelector(".feedback");
   feedbackDiv.style.display = "flex";
@@ -65,4 +69,34 @@ export function showFeedback() {
     feedbackDiv.style.transform = "translateX(-50%) translateY(-100%)"
   }, 2000);
   setTimeout(() => { feedbackDiv.style.display = "none" }, 3000);
+}
+
+// Leon - save users location
+export function savePageLink() {
+  let location = window.location.pathname.substring(1);
+  localStorage.setItem("lastLocation", location);
+  console.log(window.location.search)
+  if (window.location.search) {
+    let locationId = window.location.search;
+    localStorage.setItem("lastLocationId", locationId);
+  }
+}
+
+// Leon - Change href for "explore btn"
+export function changeExploreBtn() {
+  let storedLocation = localStorage.getItem("lastLocation");
+  let storedLocationId = localStorage.getItem("lastLocationId");
+
+  if (storedLocation) {
+    document.querySelector(".explore-btn").href = storedLocation;
+  };
+
+  if (storedLocationId) {
+    document.querySelector(".explore-btn").href += storedLocationId;
+  }
+}
+
+// Leon - Hides loader
+export function hideLoader(loader) {
+  document.querySelector(loader).style.display = "none";
 }

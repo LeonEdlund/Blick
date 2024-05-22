@@ -1,4 +1,4 @@
-import { chooseImg, errorMessage, getElement, showFeedback } from "/js/utils.js";
+import { chooseImg, errorMessage, getElement, showFeedback, savePageLink, hideLoader } from "/js/utils.js";
 const key = "KZmupnUS";
 
 // Initialize
@@ -6,10 +6,19 @@ window.addEventListener("load", init);
 
 async function init() {
   const id = parseInt(getId("id"));
+  const lastLocation = sessionStorage.getItem("wishlistLinkClicked") || "";
+
   if (!id) window.location = "index.html"
   await getData(id);
   const isSaved = checkIfSaved(id);
   if (isSaved) changeIcon("#favorit", true);
+
+  if (lastLocation === "true") {
+    getElement(".back-div button").onclick = () => window.location = "wishlist.html";
+    sessionStorage.removeItem("wishlistLinkClicked");
+  }
+
+  savePageLink()
 }
 
 // Leon - get ID
@@ -24,20 +33,20 @@ async function getData(id) {
   const response = await fetch(URL);
 
   if (!response.ok) {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     errorMessage(".slide-from-side");
     console.log(`Error status: ${response.status}`);
   }
 
   let data = await response.json();
   if (data.header.status === `OK` && data.payload.length > 0) {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     data = data.payload[0];
     showContent(data);
     showMap(data);
     getRecommended(data.lat, data.lng);
   } else {
-    hideFullScreenLoader()
+    hideLoader(".loader-wrapper");
     errorMessage(".slide-from-side");
     console.log(data.header);
   }
@@ -122,7 +131,7 @@ function favorit(data) {
   if (!isSaved) {
     changeIcon("#favorit", true);
     showFeedback()
-    wishlist.push(data);
+    wishlist.unshift(data);
   } else {
     changeIcon("#favorit", false);
     const index = wishlist.findIndex(item => parseInt(item.id) === parseInt(data.id));
@@ -144,12 +153,6 @@ function changeIcon(icon, isSaved) {
   heartIcon.src = isSaved ? "img/icons/heart-active.svg" : "img/icons/heart.svg";
 }
 
-// Leon - Hides the initial loader
-function hideFullScreenLoader() {
-  const loader = document.querySelector(".loader-wrapper");
-  loader.classList.add("loader-hidden");
-}
-
 /*CODE FOR RECOMMENDATIONS*/
 var swiper = new Swiper(".mySwiper", {
   slidesPerView: 1.5,
@@ -157,6 +160,7 @@ var swiper = new Swiper(".mySwiper", {
   freeMode: true
 });
 
+// Leon - Get recomendations from smapi based on result
 async function getRecommended(lat, lng) {
   const category = localStorage.getItem("type");
   let type = "";
@@ -197,7 +201,8 @@ function printRecommendedResults(data) {
   const swiperSlides = document.querySelectorAll(".swiper-slide");
 
   if (filteredArray.length == 0) {
-    document.querySelector("#recommendations").style.display = "none";
+    getElement("#recommendations").style.display = "none";
+    getElement("main").style.marginBottom = "6rem";
     return;
   }
 
@@ -205,7 +210,7 @@ function printRecommendedResults(data) {
     swiperSlides[i].appendChild(generateRecommendedHTML(filteredArray[i]));
   }
 
-  for (let i = data.length; i < swiperSlides.length; i++) {
+  for (let i = filteredArray.length; i < swiperSlides.length; i++) {
     swiperSlides[i].style.display = 'none';
   }
 }

@@ -1,9 +1,9 @@
-import { showFeedback } from "/js/utils.js";
+import { showFeedback, savePageLink } from "/js/utils.js";
 
 function init() {
   const pageId = document.querySelector("body").id 
   const choices = document.querySelectorAll(".choices a");
-  
+  savePageLink();
   if (pageId == "cities") {
     document.querySelector("#my-position").addEventListener("click", userLocation);
   } 

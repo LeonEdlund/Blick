@@ -60,7 +60,7 @@ header {
     border-radius: 20px;
     width: 100%;
     margin-bottom: 1rem;
-    background-color: #789373;
+    background-color: var(--light-green);
     color: white;
 }
 
@@ -166,14 +166,15 @@ dialog input {
     height: 1.5rem;
 }
 
-#close {
+#close,
+#save {
     margin-top: 2rem;
     background-color: #495f37;
     font-size: 3rem;
     border-radius: 20px;
     width: 100%;
     margin-bottom: 1rem;
-    background-color: #789373;
+    background-color: var(--light-green);
     color: white;
 }
 
@@ -215,17 +216,6 @@ dialog input {
     border: solid;
     border-radius: 1rem;
     border-color: rgb(190, 183, 183);
-}
-
-#save {
-    margin-top: 2rem;
-    background-color: #495f37;
-    font-size: 3rem;
-    border-radius: 20px;
-    width: 100%;
-    margin-bottom: 1rem;
-    background-color: #789373;
-    color: white;
 }
 
 .option-label {

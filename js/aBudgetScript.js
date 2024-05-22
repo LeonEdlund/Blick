@@ -1,6 +1,9 @@
+import { changeExploreBtn } from "/js/utils.js";
+
 let spendings = []//ALEX - array for expenditures
 let amountSpent = 0;//ALEX -  the amount spent by the user
 let minBudget = 0;//ALEX - the user budget
+let fromResult;
 let fromResultOne;
 let fromResultTwo;
 let names = []
@@ -27,7 +30,7 @@ function init() {
     getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
     fromResultFunc()
-
+    changeExploreBtn()
     let newTripBtn = document.querySelector("#remove-trip")
     newTripBtn.addEventListener("click", function () {
         let removeBtns = document.querySelectorAll(".remove")
@@ -280,9 +283,9 @@ function listSpednings() {
     let ul = document.querySelector("#ul")
     ul.innerHTML = "";
     amountSpent = 0;
-    for (b = 0; b < spendings.length; b++) {
+    for (let b = 0; b < spendings.length; b++) {
         let c = spendings[b];
-        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/trash.svg"></button></li>`
+        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/trash.svg" alt="ta bort utgift" aria-label="Ta bort utgift"></button></li>`
         amountSpent += c.price
     }
     removeBtnFunc()
