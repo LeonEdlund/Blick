@@ -5,11 +5,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Budget</title>
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
 	<link rel="stylesheet" href="styles/style.css">
 	<link rel="stylesheet" href="styles/budget.css">
 	<link rel="stylesheet" href="styles/search-bar.css">
 	<script type="module" src="js/aBudgetScript.js"></script>
-	<!-- <script src="js/nav-bar.js"></script> -->
 </head>
 
 
@@ -48,6 +48,7 @@
 		</div>
 
 		<section class="expenditure">
+			<h2 class="sr-only">alla utgifter</h2>
 			<ul id="ul"></ul>
 		</section>
 	</main>
@@ -56,11 +57,9 @@
 		<div class="holder">
 			<button id="close-modal" aria-label="stäng"><img src="img/icons/close.svg" alt="stäng"></button>
 
-			<label for="belopp">
-				<h3>Skriv in din budget för resan</h3>
-				<input type="text" id="money-to-spend">
-				<button id="save">+</button>
-			</label>
+			<h3>Skriv in din budget för resan</h3>
+			<input type="text" id="money-to-spend" aria-label="skriv in budget">
+			<button id="save" aria-label="spara budget">+</button>
 		</div>
 	</dialog>
 
@@ -69,17 +68,14 @@
 			<button id="exit"><img src="img/icons/close.svg" alt="stäng"></button>
 			<h3>Ny utgift</h3>
 			<div id="div-for-name">
-				<label for="name">
-					<input type="search" id="name">
-				</label>
-
+				<input type="text" id="name" aria-label="skriv in namn på utgift">
 				<ul id="results-budget"></ul>
 			</div>
+
 			<div id="div-for-amount">
-				<label for="amount">
-					<input type="text" id="amount">
-				</label>
+				<input type="text" id="amount" aria-label="skriv in pris på utgift">
 			</div>
+
 			<div id="div-for-cat">
 				<label for="accommodation" class="option-label">
 					Boende
@@ -102,7 +98,7 @@
 					<input type="radio" id="other" name="option" class="option">
 				</label>
 			</div>
-			<button id="close">+</button>
+			<button id="close" aria-label="spara utgift">+</button>
 		</div>
 	</dialog>
 
