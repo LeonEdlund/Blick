@@ -73,24 +73,24 @@ export function showFeedback() {
 
 // Leon - save users location
 export function savePageLink() {
-  let location = window.location.pathname.substring(1);
+  const location = window.location.pathname.substring(1);
   localStorage.setItem("lastLocation", location);
   if (window.location.search) {
-    let locationId = window.location.search;
+    const locationId = window.location.search;
     localStorage.setItem("lastLocationId", locationId);
   }
 }
 
 // Leon - Change href for "explore btn"
 export function changeExploreBtn() {
-  let storedLocation = localStorage.getItem("lastLocation");
-  let storedLocationId = localStorage.getItem("lastLocationId");
-
+  const storedLocation = localStorage.getItem("lastLocation");
+  const storedLocationId = localStorage.getItem("lastLocationId");
+  
   if (storedLocation) {
     document.querySelector(".explore-btn").href = storedLocation;
   };
 
-  if (storedLocationId) {
+  if (storedLocationId && storedLocation === "result.html") {
     document.querySelector(".explore-btn").href += storedLocationId;
   }
 }
