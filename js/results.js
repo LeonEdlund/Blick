@@ -59,6 +59,7 @@ function changeTitle() {
   titleElem.textContent = title;
 }
 
+// Leon - Set url parameters for smapi based on users choices
 function setURLParams() {
   const { location, category, lat, lng, } = USER_CHOICES;
 
@@ -202,7 +203,7 @@ function checkSortOptions() {
   }
 }
 
-// save the scroll position too local storage
+// Leon - save the scroll position too local storage
 function saveScrollPosition() {
   const scrollPosition = {
     scrollPosition: window.scrollY,

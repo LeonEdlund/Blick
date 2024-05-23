@@ -1,5 +1,6 @@
 import { showFeedback, savePageLink } from "/js/utils.js";
 
+// Leon - saves users choices from index and categories
 function init() {
   const pageId = document.querySelector("body").id 
   const choices = document.querySelectorAll(".choices a");
@@ -30,7 +31,7 @@ function init() {
 }
 window.addEventListener("load", init);
 
-// save users location
+// Leon - save users location in localStorage
 function userLocation() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(success, error);
