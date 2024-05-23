@@ -473,7 +473,8 @@ function radioLabelsFunc(radioLabel) {
         radioLabels[h].style.backgroundColor = ""
         radioLabels[h].firstChild.checked = false;
     }
-    radioLabel.firstChild.checked = true;
+    if (radioLabel) radioLabel.firstChild.checked = true;
+    
     for (let h = 0; h < radioLabels.length; h++) {
         if (radioLabels[h].firstChild.checked == true) {
             radioLabels[h].style.backgroundColor = "rgb(190, 183, 183)"
