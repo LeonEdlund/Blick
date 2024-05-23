@@ -61,6 +61,7 @@ function newTripFunc(wrong) {
     let input = document.querySelector("#money-to-spend")
     input.setAttribute("class", "exempel")
     input.value = "ex. 5000kr"
+    input.style.borderColor = ""
     input.blur()
     input.addEventListener("focus", function () {
         input.value = "";
@@ -76,6 +77,7 @@ function newTripFunc(wrong) {
     save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
 
     if (wrong == true) {
+        input.value = "Fyll i en budget";
         input.style.borderColor = "#972A2A";
     }
 
@@ -252,6 +254,7 @@ function newSpendFunc(wrong) {
         return;
     }
     if (wrong == true) {
+        input.value = "Skriv in ett nummer"
         input.style.borderColor = "#972A2A";
         return;
     }
@@ -268,6 +271,7 @@ function newSpendFunc(wrong) {
     }
 
     if (wrong == "needs name") {
+        name.value = "Skriv in ett namn"
         name.style.borderColor = "#972A2A";
     }
 
