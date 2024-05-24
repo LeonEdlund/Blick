@@ -16,8 +16,8 @@ function init() {
         })
     }
     if (!localStorage.getItem("minBudget")) {
-        let getBudget = localStorage.getItem("minBudget")
-        minBudget = parseInt(getBudget)
+        // let getBudget = localStorage.getItem("minBudget")
+        //  minBudget = parseInt(getBudget)
         newTripFunc(false)
 
     }
@@ -397,6 +397,7 @@ function fromResultFunc() {
 //Alex - saves the users choices
 function setStorage() {
     let dataToSave = "/";
+    console.log(spendings);
     for (let j = 0; j < spendings.length; j++) {
         let name = spendings[j].name
         let price = spendings[j].price
