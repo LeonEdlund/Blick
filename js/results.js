@@ -74,10 +74,6 @@ function setURLParams() {
       case "öland":
         API_PARAMS.location = `provinces=${location.param}`;
         break;
-      case "gränna":
-      case "visingsö":
-        API_PARAMS.location = `cities=${location.param}`;
-        break;
       default:
         API_PARAMS.location = `municipalities=${location.param} kommun`;
         break;
