@@ -37,7 +37,7 @@ function init() {
         for (let f = 0; f < removeBtns.length; f++) {
             removeBtnFunc(true, removeBtns[f].parentElement)
         }
-        listSpednings()
+        listSpendings()
         newTripFunc(false)
     })
 
@@ -88,6 +88,7 @@ function newTripFunc(wrong) {
         }
     })
 }
+
 //ALEX - checks if a the correct input is provided by the user
 function checkIfNumber(close, input, newBudget) {
     close.close()
@@ -126,7 +127,7 @@ function checkIfNumber(close, input, newBudget) {
             let nameElem = document.querySelector("#name")
             let name = nameElem.value
             spendings.unshift(new Spending(name, number, category))
-            listSpednings()
+            listSpendings()
             nameElem.value = ""
 
         }
@@ -140,6 +141,7 @@ function checkIfNumber(close, input, newBudget) {
 
 
 }
+
 //ALEX - Sets the budget
 function setBudget() {
     localStorage.setItem("minBudget", minBudget)
@@ -148,7 +150,6 @@ function setBudget() {
     let budgetElem = document.querySelector("#kvar")
     budgetElem.innerHTML = (minBudget - amountSpent) + ".00";
     checkHeaderColor(budgetElem);
-
 }
 
 //ALEX - opens dialog for the user to put in an expenditure
@@ -276,23 +277,37 @@ function newSpendFunc(wrong) {
     }
 
 }
+
 //ALEX - Constructor for object Spending
 function Spending(name, price, category) {
     this.name = name;
     this.price = price;
     this.category = category;
 }
+
 //ALEX - Skriver ut alla utgifter
-function listSpednings() {
-    let ul = document.querySelector("#ul")
+function listSpendings() {
+    let ul = document.querySelector("#ul");
     ul.innerHTML = "";
-    amountSpent = 0;
-    for (let b = 0; b < spendings.length; b++) {
-        let c = spendings[b];
-        ul.innerHTML += "<li class='" + c.category + "'><div><h3>" + c.name + "</h3>" + c.price + " Kr" + "</div>" + `<button class="remove"><img src="img/icons/trash.svg" alt="ta bort utgift" aria-label="Ta bort utgift"></button></li>`
-        amountSpent += c.price
-    }
-    removeBtnFunc()
+    let amountSpent = 0;
+
+    spendings.forEach((item, index) => {
+        console.log(item)
+        console.log(index)
+        let li = document.createElement("li");
+        li.className = item.category;
+        li.innerHTML = `
+        <div><h3>${item.name}</h3>${item.price} Kr</div>
+        <button class="remove">
+            <img src="img/icons/trash.svg" alt="ta bort utgift" aria-label="Ta bort utgift">
+        </button>`;
+        ul.appendChild(li);
+
+        li.querySelector(".remove").addEventListener("click", () => removeBtnFunc(index));
+        amountSpent += item.price;
+    });
+
+    // removeBtnFunc()
     calculatePerCategory()
     setBudget()
     setStorage()
@@ -371,17 +386,13 @@ function calculatePerCategory() {
         };
     };
 }
+
 //Alex - Adds functionality for removing expenditure
-function removeBtnFunc(remove, e) {
-    let removeBtns = document.querySelectorAll(".remove")
-    for (let f = 0; f < removeBtns.length; f++) {
-        removeBtns[f].addEventListener("click", function () { removeBtnFunc(true, this.parentElement) })
-    }
-    if (remove == true) {
-        spendings.splice(e, 1)
-        listSpednings();
-    }
+function removeBtnFunc(index) {
+    spendings.splice(index, 1)
+    listSpendings();
 }
+
 //Alex - Gets the session-storage from result
 function fromResultFunc() {
     if (fromResult == null || fromResult == "") {
@@ -394,38 +405,25 @@ function fromResultFunc() {
     newSpendFunc(fromResult)
 
 }
+
 //Alex - saves the users choices
 function setStorage() {
-    let dataToSave = "/";
-    console.log(spendings);
-    for (let j = 0; j < spendings.length; j++) {
-        let name = spendings[j].name
-        let price = spendings[j].price
-        let category = spendings[j].category
-        dataToSave += name + "&" + price + "&" + category + "/"
-    }
-    localStorage.setItem("storedData", dataToSave)
+    localStorage.setItem("storedData", JSON.stringify(spendings));
 }
+
 //Alex - Gets the users previous choices
 function getStorage() {
     let storedData = localStorage.getItem("storedData")
-    if (storedData == null) {
-        return;
-    }
-    let dataArray = storedData.split("/")
-    for (let l = 0; l < dataArray.length; l++) {
-        if (dataArray[l].length > 0) {
-            let dataArrayArray = dataArray[l].split("&")
-            spendings.unshift(new Spending(dataArrayArray[0], parseInt(dataArrayArray[1]), dataArrayArray[2]))
-            listSpednings()
-        }
-    }
+    if (!storedData) return;
+    spendings = JSON.parse(storedData);
+    listSpendings();
 }
+
 //Alex - Gets the suggestions
 async function getSearchData() {
     let response = await fetch("https://smapi.lnu.se/api/?api_key=KZmupnUS&controller=establishment&method=getAll")
-    
-    if(!response.ok){
+
+    if (!response.ok) {
         console.log("FEL")
         return;
     }
@@ -437,6 +435,7 @@ async function getSearchData() {
         names.push(data[u].name)
     }
 }
+
 //Alex- Writes the suggestions
 function searchFunc(input) {
     if (input == null) {
@@ -471,6 +470,7 @@ function searchFunc(input) {
         search.innerHTML = "";
     }
 }
+
 //Alex- Makes the labels replace the radio inputs
 function radioLabelsFunc(radioLabel) {
     let radioLabels = document.querySelectorAll(".option-label")
@@ -479,7 +479,7 @@ function radioLabelsFunc(radioLabel) {
         radioLabels[h].firstChild.checked = false;
     }
     if (radioLabel) radioLabel.firstChild.checked = true;
-    
+
     for (let h = 0; h < radioLabels.length; h++) {
         if (radioLabels[h].firstChild.checked == true) {
             radioLabels[h].style.backgroundColor = "rgb(190, 183, 183)"
