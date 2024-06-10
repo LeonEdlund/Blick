@@ -7,6 +7,7 @@ let fromResult;
 let fromResultOne;
 let fromResultTwo;
 let names = []
+
 //ALEX-initializes the page  
 function init() {
     let radioLabels = document.querySelectorAll(".option-label")
@@ -16,16 +17,14 @@ function init() {
         })
     }
     if (!localStorage.getItem("minBudget")) {
-        // let getBudget = localStorage.getItem("minBudget")
-        //  minBudget = parseInt(getBudget)
         newTripFunc(false)
-
     }
     if (localStorage.getItem("minBudget")) {
         let value = localStorage.getItem("minBudget")
         minBudget = parseInt(value)
         setBudget()
     }
+    
     getStorage();
     getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
@@ -33,11 +32,6 @@ function init() {
     changeExploreBtn()
     let newTripBtn = document.querySelector("#remove-trip")
     newTripBtn.addEventListener("click", function () {
-        let removeBtns = document.querySelectorAll(".remove")
-        for (let f = 0; f < removeBtns.length; f++) {
-            removeBtnFunc(true, removeBtns[f].parentElement)
-        }
-        listSpendings()
         newTripFunc(false)
     })
 
@@ -52,12 +46,14 @@ window.addEventListener("load", init)
 
 //ALEX - opens a dialog for the user to write their budget
 function newTripFunc(wrong) {
+    console.log(wrong)
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
     let exit = document.querySelector("#close-modal")
     exit.addEventListener("click", function () {
         newTripDialog.close();
     })
+
     let input = document.querySelector("#money-to-spend")
     input.setAttribute("class", "exempel")
     input.value = "ex. 5000kr"
@@ -289,11 +285,9 @@ function Spending(name, price, category) {
 function listSpendings() {
     let ul = document.querySelector("#ul");
     ul.innerHTML = "";
-    let amountSpent = 0;
+    amountSpent = 0;
 
     spendings.forEach((item, index) => {
-        console.log(item)
-        console.log(index)
         let li = document.createElement("li");
         li.className = item.category;
         li.innerHTML = `
@@ -307,7 +301,6 @@ function listSpendings() {
         amountSpent += item.price;
     });
 
-    // removeBtnFunc()
     calculatePerCategory()
     setBudget()
     setStorage()
