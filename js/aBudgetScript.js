@@ -24,7 +24,7 @@ function init() {
         minBudget = parseInt(value)
         setBudget()
     }
-    
+
     getStorage();
     getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
@@ -39,7 +39,7 @@ function init() {
     newSpendBtn.addEventListener("click", function () { newSpendFunc(false) })
 
     let removeTrip = document.querySelector("#change-budget")
-    removeTrip.addEventListener("click", function () { newTripFunc() })
+    removeTrip.addEventListener("click", function () { newTripFunc("change") })
 
 }
 window.addEventListener("load", init)
@@ -70,12 +70,18 @@ function newTripFunc(wrong) {
         }
     })
     let save = document.querySelector("#save")
-    save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
+    if (wrong === "change") {
+        save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, "change") })
+    } else {
+        save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
+
+    }
 
     if (wrong == true) {
         input.value = "Fyll i en budget";
         input.style.borderColor = "#972A2A";
     }
+
 
     window.addEventListener("click", function (e) {
         if (e.target == newTripDialog) {
@@ -130,6 +136,13 @@ function checkIfNumber(close, input, newBudget) {
 
 
         if (newBudget == true) {
+            minBudget = number
+            spendings.length = 0;
+            listSpendings();
+            setBudget()
+        }
+
+        if (newBudget === "change") {
             minBudget = number
             setBudget()
         }
@@ -211,6 +224,7 @@ function newSpendFunc(wrong) {
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
+
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     window.addEventListener("click", function (e) {
         if (e.target == newSpendDialog) {
