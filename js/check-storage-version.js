@@ -8,6 +8,6 @@ function checkStorageVersion() {
   if (storedVersion === null || storedVersion !== currentStorageVersion) {
     localStorage.clear();
     localStorage.setItem("storageVersion", currentStorageVersion);
-    console.log("Local storage was cleared because no version or an outdated version was detected.");
+    console.log("Local storage cleared. New storage version found.");
   }
 }
