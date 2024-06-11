@@ -46,7 +46,6 @@ window.addEventListener("load", init)
 
 //ALEX - opens a dialog for the user to write their budget
 function newTripFunc(wrong) {
-    console.log(wrong)
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
     let exit = document.querySelector("#close-modal")
