@@ -30,22 +30,23 @@ function init() {
     fromResult = sessionStorage.getItem("fromResult")
     fromResultFunc()
     changeExploreBtn()
-    let newTripBtn = document.querySelector("#remove-trip")
+
+    let newTripBtn = document.querySelector("#remove-trip");
     newTripBtn.addEventListener("click", function () {
-        newTripFunc(false)
+        newTripFunc(false, true);
     })
 
     let newSpendBtn = document.querySelector("#new-spend-btn")
     newSpendBtn.addEventListener("click", function () { newSpendFunc(false) })
 
-    let removeTrip = document.querySelector("#change-budget")
-    removeTrip.addEventListener("click", function () { newTripFunc("change") })
+    let changeBudget = document.querySelector("#change-budget")
+    changeBudget.addEventListener("click", function () { newTripFunc(false) })
 
 }
 window.addEventListener("load", init)
 
 //ALEX - opens a dialog for the user to write their budget
-function newTripFunc(wrong) {
+function newTripFunc(wrong, resetSpendings = false) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
     let exit = document.querySelector("#close-modal")
@@ -69,12 +70,8 @@ function newTripFunc(wrong) {
         }
     })
     let save = document.querySelector("#save")
-    if (wrong === "change") {
-        save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, "change") })
-    } else {
-        save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
 
-    }
+    save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true, resetSpendings) });
 
     if (wrong == true) {
         input.value = "Fyll i en budget";
@@ -91,7 +88,7 @@ function newTripFunc(wrong) {
 }
 
 //ALEX - checks if a the correct input is provided by the user
-function checkIfNumber(close, input, newBudget) {
+function checkIfNumber(close, input, newBudget, resetSpendings = false) {
     close.close()
 
     let number = parseInt(input.value)
@@ -136,18 +133,14 @@ function checkIfNumber(close, input, newBudget) {
 
         if (newBudget == true) {
             minBudget = number
-            spendings.length = 0;
+            if (resetSpendings) {
+                spendings.length = 0; // Reset spendings if the flag is true
+            }
             listSpendings();
-            setBudget()
-        }
-
-        if (newBudget === "change") {
-            minBudget = number
-            setBudget()
+            setBudget();
+            location.reload();
         }
     }
-
-
 }
 
 //ALEX - Sets the budget
@@ -184,13 +177,7 @@ function newSpendFunc(wrong) {
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function () {
-        let options = document.querySelectorAll(".option");
-        for (let a = 0; a < options.length; a++) {
-            if (options[a].checked) {
-                options[a].checked = false;
-                radioLabelsFunc(null)
-            }
-        }
+        clearRadioLabelsBackground();
         name.value = "NAMN"
         name.setAttribute("class", "exempel")
         input.setAttribute("class", "exempel")
@@ -227,13 +214,7 @@ function newSpendFunc(wrong) {
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     window.addEventListener("click", function (e) {
         if (e.target == newSpendDialog) {
-            let options = document.querySelectorAll(".option");
-            for (let a = 0; a < options.length; a++) {
-                if (options[a].checked) {
-                    options[a].checked = false;
-                    radioLabelsFunc(null)
-                }
-            }
+            clearRadioLabelsBackground();
             name.value = "NAMN"
             name.setAttribute("class", "exempel")
             input.setAttribute("class", "exempel")
@@ -246,13 +227,7 @@ function newSpendFunc(wrong) {
         }
     })
     if (wrong == false) {
-        let options = document.querySelectorAll(".option");
-        for (let a = 0; a < options.length; a++) {
-            if (options[a].checked) {
-                options[a].checked = false;
-                radioLabelsFunc(null)
-            }
-        }
+        clearRadioLabelsBackground();
         name.value = "NAMN"
         name.setAttribute("class", "exempel")
         input.setAttribute("class", "exempel")
