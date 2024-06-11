@@ -130,7 +130,7 @@ function checkIfNumber(close, input, newBudget) {
             spendings.unshift(new Spending(name, number, category))
             listSpendings()
             nameElem.value = ""
-
+            clearRadioLabelsBackground();
         }
 
 
@@ -490,6 +490,14 @@ function radioLabelsFunc(radioLabel) {
         if (radioLabels[h].firstChild.checked == true) {
             radioLabels[h].style.backgroundColor = "rgb(190, 183, 183)"
         }
+    }
+}
+
+function clearRadioLabelsBackground() {
+    let radioLabels = document.querySelectorAll(".option-label");
+    for (let i = 0; i < radioLabels.length; i++) {
+        radioLabels[i].style.backgroundColor = "";
+        radioLabels[i].firstChild.checked = false;
     }
 }
 
