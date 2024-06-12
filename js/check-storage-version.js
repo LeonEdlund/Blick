@@ -1,4 +1,4 @@
-const currentStorageVersion = "2.0";
+const currentStorageVersion = "2.1";
 
 window.addEventListener("load", checkStorageVersion);
 

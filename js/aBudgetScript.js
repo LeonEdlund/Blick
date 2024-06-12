@@ -7,7 +7,6 @@ let fromResult;
 let fromResultOne;
 let fromResultTwo;
 let names = []
-
 //ALEX-initializes the page  
 function init() {
     let radioLabels = document.querySelectorAll(".option-label")
@@ -18,42 +17,42 @@ function init() {
     }
     if (!localStorage.getItem("minBudget")) {
         newTripFunc(false)
+
     }
     if (localStorage.getItem("minBudget")) {
         let value = localStorage.getItem("minBudget")
         minBudget = parseInt(value)
         setBudget()
     }
-
     getStorage();
     getSearchData()
     fromResult = sessionStorage.getItem("fromResult")
     fromResultFunc()
     changeExploreBtn()
-
-    let newTripBtn = document.querySelector("#remove-trip");
+    let newTripBtn = document.querySelector("#remove-trip")
     newTripBtn.addEventListener("click", function () {
-        newTripFunc(false, true);
+        spendings.length = 0;
+        listSpednings();
+        newTripFunc(false)
     })
 
     let newSpendBtn = document.querySelector("#new-spend-btn")
     newSpendBtn.addEventListener("click", function () { newSpendFunc(false) })
 
-    let changeBudget = document.querySelector("#change-budget")
-    changeBudget.addEventListener("click", function () { newTripFunc(false) })
+    let removeTrip = document.querySelector("#change-budget")
+    removeTrip.addEventListener("click", function () { newTripFunc() })
 
 }
 window.addEventListener("load", init)
 
 //ALEX - opens a dialog for the user to write their budget
-function newTripFunc(wrong, resetSpendings = false) {
+function newTripFunc(wrong) {
     let newTripDialog = document.querySelector("#new-trip-dialog");
     newTripDialog.showModal()
     let exit = document.querySelector("#close-modal")
     exit.addEventListener("click", function () {
         newTripDialog.close();
     })
-
     let input = document.querySelector("#money-to-spend")
     input.setAttribute("class", "exempel")
     input.value = "ex. 5000kr"
@@ -70,14 +69,12 @@ function newTripFunc(wrong, resetSpendings = false) {
         }
     })
     let save = document.querySelector("#save")
-
-    save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true, resetSpendings) });
+    save.addEventListener("click", function () { checkIfNumber(newTripDialog, input, true) })
 
     if (wrong == true) {
         input.value = "Fyll i en budget";
         input.style.borderColor = "#972A2A";
     }
-
 
     window.addEventListener("click", function (e) {
         if (e.target == newTripDialog) {
@@ -86,9 +83,8 @@ function newTripFunc(wrong, resetSpendings = false) {
         }
     })
 }
-
 //ALEX - checks if a the correct input is provided by the user
-function checkIfNumber(close, input, newBudget, resetSpendings = false) {
+function checkIfNumber(close, input, newBudget) {
     close.close()
 
     let number = parseInt(input.value)
@@ -119,26 +115,20 @@ function checkIfNumber(close, input, newBudget, resetSpendings = false) {
             for (let a = 0; a < options.length; a++) {
                 if (options[a].checked) {
                     category = options[a].getAttribute("id")
-                    options[a].checked = false;
                 }
             }
             let nameElem = document.querySelector("#name")
             let name = nameElem.value
             spendings.unshift(new Spending(name, number, category))
-            listSpendings()
+            listSpednings()
             nameElem.value = ""
-            clearRadioLabelsBackground();
+
         }
 
 
         if (newBudget == true) {
             minBudget = number
-            if (resetSpendings) {
-                spendings.length = 0; // Reset spendings if the flag is true
-            }
-            listSpendings();
-            setBudget();
-            location.reload();
+            setBudget()
         }
     }
 }
@@ -177,7 +167,13 @@ function newSpendFunc(wrong) {
     newSpendDialog.showModal()
     let exit = document.querySelector("#exit")
     exit.addEventListener("click", function () {
-        clearRadioLabelsBackground();
+        let options = document.querySelectorAll(".option");
+        for (let a = 0; a < options.length; a++) {
+            if (options[a].checked) {
+                options[a].checked = false;
+                radioLabelsFunc(null)
+            }
+        }
         name.value = "NAMN"
         name.setAttribute("class", "exempel")
         input.setAttribute("class", "exempel")
@@ -210,11 +206,16 @@ function newSpendFunc(wrong) {
     let save = document.querySelector("#close")
     let cloneSave = save.cloneNode(true)
     save.parentElement.replaceChild(cloneSave, save)
-
     cloneSave.addEventListener("click", function () { checkIfNumber(newSpendDialog, input, false) })
     window.addEventListener("click", function (e) {
         if (e.target == newSpendDialog) {
-            clearRadioLabelsBackground();
+            let options = document.querySelectorAll(".option");
+            for (let a = 0; a < options.length; a++) {
+                if (options[a].checked) {
+                    options[a].checked = false;
+                    radioLabelsFunc(null)
+                }
+            }
             name.value = "NAMN"
             name.setAttribute("class", "exempel")
             input.setAttribute("class", "exempel")
@@ -227,7 +228,13 @@ function newSpendFunc(wrong) {
         }
     })
     if (wrong == false) {
-        clearRadioLabelsBackground();
+        let options = document.querySelectorAll(".option");
+        for (let a = 0; a < options.length; a++) {
+            if (options[a].checked) {
+                options[a].checked = false;
+                radioLabelsFunc(null)
+            }
+        }
         name.value = "NAMN"
         name.setAttribute("class", "exempel")
         input.setAttribute("class", "exempel")
@@ -270,7 +277,7 @@ function Spending(name, price, category) {
 }
 
 //ALEX - Skriver ut alla utgifter
-function listSpendings() {
+function listSpednings() {
     let ul = document.querySelector("#ul");
     ul.innerHTML = "";
     amountSpent = 0;
@@ -370,8 +377,8 @@ function calculatePerCategory() {
 
 //Alex - Adds functionality for removing expenditure
 function removeBtnFunc(index) {
-    spendings.splice(index, 1)
-    listSpendings();
+    spendings.splice(index, 1);
+    listSpednings();
 }
 
 //Alex - Gets the session-storage from result
@@ -397,7 +404,7 @@ function getStorage() {
     let storedData = localStorage.getItem("storedData")
     if (!storedData) return;
     spendings = JSON.parse(storedData);
-    listSpendings();
+    listSpednings();
 }
 
 //Alex - Gets the suggestions
@@ -468,17 +475,9 @@ function radioLabelsFunc(radioLabel) {
     }
 }
 
-function clearRadioLabelsBackground() {
-    let radioLabels = document.querySelectorAll(".option-label");
-    for (let i = 0; i < radioLabels.length; i++) {
-        radioLabels[i].style.backgroundColor = "";
-        radioLabels[i].firstChild.checked = false;
-    }
-}
-
 // Leon - change color of header if user overspends
 function checkHeaderColor(budgetElem) {
-    const header = document.querySelector("header")
+    const header = document.querySelector("header");
     if (parseInt(budgetElem.textContent) < 0) {
         header.style.backgroundColor = "#8b0000";
     } else {
