@@ -286,7 +286,7 @@ function listSpednings() {
         let li = document.createElement("li");
         li.className = item.category;
         li.innerHTML = `
-        <div><h3>${item.name}</h3>${item.price} Kr</div>
+        <div><h3>${item.name}</h3><p>${item.price} Kr</p></div>
         <button class="remove">
             <img src="img/icons/trash.svg" alt="ta bort utgift" aria-label="Ta bort utgift">
         </button>`;
