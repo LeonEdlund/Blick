@@ -102,7 +102,7 @@ function checkIfNumber(close, input, newBudget) {
     if (newBudget == false) {
         let nameElem = document.querySelector("#name")
         let name = nameElem.value
-        if (name == "" || name == "NAMN") {
+        if (name == "" || name == "NAMN" || name === "Skriv in ett namn") {
             newSpendFunc("needs name")
             return;
         } else { nameElem.style.borderColor = "" }
